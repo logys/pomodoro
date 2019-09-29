@@ -1,0 +1,146 @@
+\hypertarget{drivers_8h}{}\section{/home/antonio/\+Documentos/\+P\+C\+Bs/\+Pomodoro/\+Attiny/src/drivers.h File Reference}
+\label{drivers_8h}\index{/home/antonio/\+Documentos/\+P\+C\+Bs/\+Pomodoro/\+Attiny/src/drivers.\+h@{/home/antonio/\+Documentos/\+P\+C\+Bs/\+Pomodoro/\+Attiny/src/drivers.\+h}}
+
+
+Drivers, para buzzer, led y pushbuttons.  
+
+
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{drivers_8h_ad76d1750a6cdeebd506bfcd6752554d2}{ON}}~1
+\item 
+\#define \mbox{\hyperlink{drivers_8h_a29e413f6725b2ba32d165ffaa35b01e5}{O\+FF}}~0
+\item 
+\mbox{\Hypertarget{drivers_8h_accbfbd1b178367ac1a576cafc721cb3e}\label{drivers_8h_accbfbd1b178367ac1a576cafc721cb3e}} 
+\#define {\bfseries B\+O\+T\+O\+N1}~1
+\item 
+\mbox{\Hypertarget{drivers_8h_a1c77a37e7988a4b2502ef3ecf1ba5703}\label{drivers_8h_a1c77a37e7988a4b2502ef3ecf1ba5703}} 
+\#define {\bfseries B\+O\+T\+O\+N2}~2
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{drivers_8h_ae3ea5f6d39ffbbb3c28c07488fb7f043}\label{drivers_8h_ae3ea5f6d39ffbbb3c28c07488fb7f043}} 
+void \mbox{\hyperlink{drivers_8h_ae3ea5f6d39ffbbb3c28c07488fb7f043}{open\+Buzzer}} ()
+\begin{DoxyCompactList}\small\item\em Inicia el buzzer. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{drivers_8h_adfc29ba8464f3d53fa7d9f63697a9032}\label{drivers_8h_adfc29ba8464f3d53fa7d9f63697a9032}} 
+void \mbox{\hyperlink{drivers_8h_adfc29ba8464f3d53fa7d9f63697a9032}{open\+Led}} ()
+\begin{DoxyCompactList}\small\item\em Inicia el L\+ED. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{drivers_8h_afe26ed8a09d34c72eaadf252c0f21813}\label{drivers_8h_afe26ed8a09d34c72eaadf252c0f21813}} 
+void \mbox{\hyperlink{drivers_8h_afe26ed8a09d34c72eaadf252c0f21813}{open\+Push}} ()
+\begin{DoxyCompactList}\small\item\em Inicia push Buttons. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{drivers_8h_a2d8621c7c4f4531bee805e91595b6b76}\label{drivers_8h_a2d8621c7c4f4531bee805e91595b6b76}} 
+void {\bfseries open\+Log} ()
+\item 
+void \mbox{\hyperlink{drivers_8h_a656a642912ac6b984e50b8e3dee5d047}{close\+Buzzer}} ()
+\item 
+void \mbox{\hyperlink{drivers_8h_a240db9813a1ea537d2496c961ec3ecc5}{close\+Led}} ()
+\item 
+void \mbox{\hyperlink{drivers_8h_ad45c06846eb1872a58616816754f1e85}{close\+Push}} ()
+\item 
+\mbox{\Hypertarget{drivers_8h_ac51ed3863a291e7293bea4c111ac8f9c}\label{drivers_8h_ac51ed3863a291e7293bea4c111ac8f9c}} 
+void {\bfseries close\+Log} ()
+\item 
+void \mbox{\hyperlink{drivers_8h_acb69f6a4e60b906b16696981732ad9d6}{write\+Buzz}} (short const estado)
+\begin{DoxyCompactList}\small\item\em Enciende y apaga el buzzer. \end{DoxyCompactList}\item 
+unsigned short \mbox{\hyperlink{drivers_8h_a3d0be325bde14d2488f9b25400fc66c0}{read\+Buzz}} ()
+\begin{DoxyCompactList}\small\item\em obtiene el estado del buzzer \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{drivers_8h_af6abd7e02a78eb37f613a1827a1041c2}\label{drivers_8h_af6abd7e02a78eb37f613a1827a1041c2}} 
+void \mbox{\hyperlink{drivers_8h_af6abd7e02a78eb37f613a1827a1041c2}{write\+Led}} (short intensidad)
+\begin{DoxyCompactList}\small\item\em Enciende el Led a la intensidad indicada 0-\/100 param intensidad 0-\/100. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{drivers_8h_a7595eb4d3fe8ce37d2c4835128f46290}\label{drivers_8h_a7595eb4d3fe8ce37d2c4835128f46290}} 
+void {\bfseries write\+Log} (short const estado)
+\item 
+\mbox{\Hypertarget{drivers_8h_ae6503f4822e6cf09ca325625db0937cd}\label{drivers_8h_ae6503f4822e6cf09ca325625db0937cd}} 
+short int {\bfseries read\+Log} ()
+\item 
+short int \mbox{\hyperlink{drivers_8h_a5a68a505e12ec28c2aee93edb5e96e06}{read\+Push}} (short const button)
+\begin{DoxyCompactList}\small\item\em Retorna el estado del botón. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Drivers, para buzzer, led y pushbuttons. 
+
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{drivers_8h_a29e413f6725b2ba32d165ffaa35b01e5}\label{drivers_8h_a29e413f6725b2ba32d165ffaa35b01e5}} 
+\index{drivers.\+h@{drivers.\+h}!O\+FF@{O\+FF}}
+\index{O\+FF@{O\+FF}!drivers.\+h@{drivers.\+h}}
+\subsubsection{\texorpdfstring{O\+FF}{OFF}}
+{\footnotesize\ttfamily \#define O\+FF~0}
+
+Apagado \mbox{\Hypertarget{drivers_8h_ad76d1750a6cdeebd506bfcd6752554d2}\label{drivers_8h_ad76d1750a6cdeebd506bfcd6752554d2}} 
+\index{drivers.\+h@{drivers.\+h}!ON@{ON}}
+\index{ON@{ON}!drivers.\+h@{drivers.\+h}}
+\subsubsection{\texorpdfstring{ON}{ON}}
+{\footnotesize\ttfamily \#define ON~1}
+
+Encendido 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{drivers_8h_a656a642912ac6b984e50b8e3dee5d047}\label{drivers_8h_a656a642912ac6b984e50b8e3dee5d047}} 
+\index{drivers.\+h@{drivers.\+h}!close\+Buzzer@{close\+Buzzer}}
+\index{close\+Buzzer@{close\+Buzzer}!drivers.\+h@{drivers.\+h}}
+\subsubsection{\texorpdfstring{close\+Buzzer()}{closeBuzzer()}}
+{\footnotesize\ttfamily void close\+Buzzer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Detiene buzzer \mbox{\Hypertarget{drivers_8h_a240db9813a1ea537d2496c961ec3ecc5}\label{drivers_8h_a240db9813a1ea537d2496c961ec3ecc5}} 
+\index{drivers.\+h@{drivers.\+h}!close\+Led@{close\+Led}}
+\index{close\+Led@{close\+Led}!drivers.\+h@{drivers.\+h}}
+\subsubsection{\texorpdfstring{close\+Led()}{closeLed()}}
+{\footnotesize\ttfamily void close\+Led (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Detiene L\+ED \mbox{\Hypertarget{drivers_8h_ad45c06846eb1872a58616816754f1e85}\label{drivers_8h_ad45c06846eb1872a58616816754f1e85}} 
+\index{drivers.\+h@{drivers.\+h}!close\+Push@{close\+Push}}
+\index{close\+Push@{close\+Push}!drivers.\+h@{drivers.\+h}}
+\subsubsection{\texorpdfstring{close\+Push()}{closePush()}}
+{\footnotesize\ttfamily void close\+Push (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Detiene Push Buttons \mbox{\Hypertarget{drivers_8h_a3d0be325bde14d2488f9b25400fc66c0}\label{drivers_8h_a3d0be325bde14d2488f9b25400fc66c0}} 
+\index{drivers.\+h@{drivers.\+h}!read\+Buzz@{read\+Buzz}}
+\index{read\+Buzz@{read\+Buzz}!drivers.\+h@{drivers.\+h}}
+\subsubsection{\texorpdfstring{read\+Buzz()}{readBuzz()}}
+{\footnotesize\ttfamily unsigned short read\+Buzz (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+obtiene el estado del buzzer 
+
+\begin{DoxyReturn}{Returns}
+unsigned short 
+\end{DoxyReturn}
+\mbox{\Hypertarget{drivers_8h_a5a68a505e12ec28c2aee93edb5e96e06}\label{drivers_8h_a5a68a505e12ec28c2aee93edb5e96e06}} 
+\index{drivers.\+h@{drivers.\+h}!read\+Push@{read\+Push}}
+\index{read\+Push@{read\+Push}!drivers.\+h@{drivers.\+h}}
+\subsubsection{\texorpdfstring{read\+Push()}{readPush()}}
+{\footnotesize\ttfamily short int read\+Push (\begin{DoxyParamCaption}\item[{short const}]{button }\end{DoxyParamCaption})}
+
+
+
+Retorna el estado del botón. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em button} & B\+O\+T\+O\+N1, B\+O\+T\+O\+N2 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+short 
+\end{DoxyReturn}
+\mbox{\Hypertarget{drivers_8h_acb69f6a4e60b906b16696981732ad9d6}\label{drivers_8h_acb69f6a4e60b906b16696981732ad9d6}} 
+\index{drivers.\+h@{drivers.\+h}!write\+Buzz@{write\+Buzz}}
+\index{write\+Buzz@{write\+Buzz}!drivers.\+h@{drivers.\+h}}
+\subsubsection{\texorpdfstring{write\+Buzz()}{writeBuzz()}}
+{\footnotesize\ttfamily void write\+Buzz (\begin{DoxyParamCaption}\item[{short const}]{estado }\end{DoxyParamCaption})}
+
+
+
+Enciende y apaga el buzzer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em estado} & ON, O\+FF \\
+\hline
+\end{DoxyParams}

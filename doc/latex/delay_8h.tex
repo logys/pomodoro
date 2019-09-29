@@ -1,0 +1,37 @@
+\hypertarget{delay_8h}{}\section{/home/antonio/\+Documentos/\+P\+C\+Bs/\+Pomodoro/\+Attiny/src/delay.h File Reference}
+\label{delay_8h}\index{/home/antonio/\+Documentos/\+P\+C\+Bs/\+Pomodoro/\+Attiny/src/delay.\+h@{/home/antonio/\+Documentos/\+P\+C\+Bs/\+Pomodoro/\+Attiny/src/delay.\+h}}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+unsigned long \mbox{\hyperlink{delay_8h_a6ff7f2532a22366f0013bc41397129fd}{millis}} ()
+\begin{DoxyCompactList}\small\item\em Regresa el número de milisegundos desde que se inicio el programa. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{delay_8h_a461607932d9aa385662890b38152eeef}\label{delay_8h_a461607932d9aa385662890b38152eeef}} 
+void {\bfseries init\+Timer1\+Millis} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{delay_8h_a6ff7f2532a22366f0013bc41397129fd}\label{delay_8h_a6ff7f2532a22366f0013bc41397129fd}} 
+\index{delay.\+h@{delay.\+h}!millis@{millis}}
+\index{millis@{millis}!delay.\+h@{delay.\+h}}
+\subsubsection{\texorpdfstring{millis()}{millis()}}
+{\footnotesize\ttfamily unsigned long millis (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Regresa el número de milisegundos desde que se inicio el programa. 
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} a = \mbox{\hyperlink{delay_8c_a6ff7f2532a22366f0013bc41397129fd}{millis}}();
+...
+do something
+...
+unsigned \textcolor{keywordtype}{long} tiempo\_transcurrido\_ms = \mbox{\hyperlink{delay_8c_a6ff7f2532a22366f0013bc41397129fd}{millis}}() - a;
+\end{DoxyCode}
+ \begin{DoxyReturn}{Returns}
+unsigned long 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Se reserva timer 1 para esta función 
+\end{DoxyNote}

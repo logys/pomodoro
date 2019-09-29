@@ -1,0 +1,22 @@
+#ifndef DRIVERS_H
+#define DRIVERS_H
+#include<stdint.h>
+#define ON 1	/**< Encendido */
+#define OFF 0	/**< Apagado*/
+
+/** \file drivers.h 
+ * \brief 
+ * Drivers, para buzzer, led y pushbuttons*/
+/** \brief Inicia el LED*/
+void openLed(void);
+/** Detiene LED*/
+void closeLed(void);
+
+/** \brief Enciende el Led a la intensidad indicada 0-100
+ * param intensidad 0-100*/
+void writeLed(double intensidad);
+
+/** \brief Toggle */
+void toggleLed(void);
+
+#endif

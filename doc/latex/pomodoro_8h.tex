@@ -1,0 +1,93 @@
+\hypertarget{pomodoro_8h}{}\section{/home/antonio/\+Documentos/\+P\+C\+Bs/\+Pomodoro/\+Attiny/src/pomodoro.h File Reference}
+\label{pomodoro_8h}\index{/home/antonio/\+Documentos/\+P\+C\+Bs/\+Pomodoro/\+Attiny/src/pomodoro.\+h@{/home/antonio/\+Documentos/\+P\+C\+Bs/\+Pomodoro/\+Attiny/src/pomodoro.\+h}}
+
+
+Simplemente es un pomodoro.  
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structpomodoro}{pomodoro}}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{pomodoro_8h_a96ad7756a87f5f7475920ca66ee7aaaa}{set\+Sesiones}}(\mbox{\hyperlink{structpomodoro}{pomodoro}}, ...)
+\begin{DoxyCompactList}\small\item\em Crea un nuevo pomodoro. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{pomodoro_8h_a4a90bf50b072319cc00a4a4207547152}\label{pomodoro_8h_a4a90bf50b072319cc00a4a4207547152}} 
+void {\bfseries nuevo\+Sesion} (struct \mbox{\hyperlink{structpomodoro}{pomodoro}} $\ast$objeto, float const sesiones\mbox{[}$\,$\mbox{]})
+\item 
+void \mbox{\hyperlink{pomodoro_8h_afbe8dd508edb4a8361888f54a54d3073}{free\+Pomodoro}} (struct \mbox{\hyperlink{structpomodoro}{pomodoro}} $\ast$const objeto)
+\begin{DoxyCompactList}\small\item\em libera pomodoro \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{pomodoro_8h_a44496c0fba5740606557a9129cc01e0f}{actualizar}} (struct \mbox{\hyperlink{structpomodoro}{pomodoro}} $\ast$const objeto)
+\begin{DoxyCompactList}\small\item\em actualiza la cuenta y estado del pomodoro \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Simplemente es un pomodoro. 
+
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{pomodoro_8h_a96ad7756a87f5f7475920ca66ee7aaaa}\label{pomodoro_8h_a96ad7756a87f5f7475920ca66ee7aaaa}} 
+\index{pomodoro.\+h@{pomodoro.\+h}!set\+Sesiones@{set\+Sesiones}}
+\index{set\+Sesiones@{set\+Sesiones}!pomodoro.\+h@{pomodoro.\+h}}
+\subsubsection{\texorpdfstring{set\+Sesiones}{setSesiones}}
+{\footnotesize\ttfamily \#define set\+Sesiones(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{structpomodoro}{pomodoro}},  }\item[{}]{... }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}
+nuevoSesion(\mbox{\hyperlink{structpomodoro}{pomodoro}}, \(\backslash\)
+        (\textcolor{keywordtype}{float} [])\{\_\_VA\_ARGS\_\_, NAN\})
+\end{DoxyCode}
+
+
+Crea un nuevo pomodoro. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sesiones} & Minutos de cada sesión \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+apuntador a pomodoro 
+\end{DoxyReturn}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{pomodoro_8h_a44496c0fba5740606557a9129cc01e0f}\label{pomodoro_8h_a44496c0fba5740606557a9129cc01e0f}} 
+\index{pomodoro.\+h@{pomodoro.\+h}!actualizar@{actualizar}}
+\index{actualizar@{actualizar}!pomodoro.\+h@{pomodoro.\+h}}
+\subsubsection{\texorpdfstring{actualizar()}{actualizar()}}
+{\footnotesize\ttfamily uint8\+\_\+t actualizar (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structpomodoro}{pomodoro}} $\ast$const}]{objeto }\end{DoxyParamCaption})}
+
+
+
+actualiza la cuenta y estado del pomodoro 
+
+
+\begin{DoxyParams}{Parameters}
+{\em objeto} & dirección de pomodoro \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{pomodoro_8h_afbe8dd508edb4a8361888f54a54d3073}\label{pomodoro_8h_afbe8dd508edb4a8361888f54a54d3073}} 
+\index{pomodoro.\+h@{pomodoro.\+h}!free\+Pomodoro@{free\+Pomodoro}}
+\index{free\+Pomodoro@{free\+Pomodoro}!pomodoro.\+h@{pomodoro.\+h}}
+\subsubsection{\texorpdfstring{free\+Pomodoro()}{freePomodoro()}}
+{\footnotesize\ttfamily void free\+Pomodoro (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structpomodoro}{pomodoro}} $\ast$const}]{objeto }\end{DoxyParamCaption})}
+
+
+
+libera pomodoro 
+
+
+\begin{DoxyParams}{Parameters}
+{\em objeto} & dirección de pomodoro \\
+\hline
+\end{DoxyParams}

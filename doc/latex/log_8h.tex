@@ -1,0 +1,83 @@
+\hypertarget{log_8h}{}\section{/home/antonio/\+Documentos/\+P\+C\+Bs/\+Pomodoro/\+Attiny/src/log.h File Reference}
+\label{log_8h}\index{/home/antonio/\+Documentos/\+P\+C\+Bs/\+Pomodoro/\+Attiny/src/log.\+h@{/home/antonio/\+Documentos/\+P\+C\+Bs/\+Pomodoro/\+Attiny/src/log.\+h}}
+
+
+cabecera de logging  
+
+
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{log_8h_a4d7a42500434ec6947ccb8ac9ae931e6}{B\+U\+ZZ}}~0
+\item 
+\#define \mbox{\hyperlink{log_8h_a431b92b32ec924789b2be268651a3fdd}{P\+U\+SH}}~1
+\item 
+\#define \mbox{\hyperlink{log_8h_a8fe83ac76edc595f6b98cd4a4127aed5}{E\+R\+R\+OR}}~0
+\item 
+\#define \mbox{\hyperlink{log_8h_ad72dbcf6d0153db1b8d8a58001feed83}{D\+E\+B\+UG}}~1
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{log_8h_afe2a901861e9490f45ebcd2d029edd02}{log\+Led}} (short const sistema, short const nivel, char const $\ast$mensaje)
+\begin{DoxyCompactList}\small\item\em Interfaz del sistema de logging. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{log_8h_a7e260479801dabd5f7bd6a43d99f37ac}\label{log_8h_a7e260479801dabd5f7bd6a43d99f37ac}} 
+void \mbox{\hyperlink{log_8h_a7e260479801dabd5f7bd6a43d99f37ac}{log\+Global\+On}} ()
+\begin{DoxyCompactList}\small\item\em Activa el logging globalmente. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{log_8h_a1954fdca8b624b2a4fc081e3ff1e6923}\label{log_8h_a1954fdca8b624b2a4fc081e3ff1e6923}} 
+void \mbox{\hyperlink{log_8h_a1954fdca8b624b2a4fc081e3ff1e6923}{log\+Global\+Off}} ()
+\begin{DoxyCompactList}\small\item\em Desactiva el logging globalmente. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+cabecera de logging 
+
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{log_8h_a4d7a42500434ec6947ccb8ac9ae931e6}\label{log_8h_a4d7a42500434ec6947ccb8ac9ae931e6}} 
+\index{log.\+h@{log.\+h}!B\+U\+ZZ@{B\+U\+ZZ}}
+\index{B\+U\+ZZ@{B\+U\+ZZ}!log.\+h@{log.\+h}}
+\subsubsection{\texorpdfstring{B\+U\+ZZ}{BUZZ}}
+{\footnotesize\ttfamily \#define B\+U\+ZZ~0}
+
+sistema buzzer \mbox{\Hypertarget{log_8h_ad72dbcf6d0153db1b8d8a58001feed83}\label{log_8h_ad72dbcf6d0153db1b8d8a58001feed83}} 
+\index{log.\+h@{log.\+h}!D\+E\+B\+UG@{D\+E\+B\+UG}}
+\index{D\+E\+B\+UG@{D\+E\+B\+UG}!log.\+h@{log.\+h}}
+\subsubsection{\texorpdfstring{D\+E\+B\+UG}{DEBUG}}
+{\footnotesize\ttfamily \#define D\+E\+B\+UG~1}
+
+Nivel D\+E\+B\+UG \mbox{\Hypertarget{log_8h_a8fe83ac76edc595f6b98cd4a4127aed5}\label{log_8h_a8fe83ac76edc595f6b98cd4a4127aed5}} 
+\index{log.\+h@{log.\+h}!E\+R\+R\+OR@{E\+R\+R\+OR}}
+\index{E\+R\+R\+OR@{E\+R\+R\+OR}!log.\+h@{log.\+h}}
+\subsubsection{\texorpdfstring{E\+R\+R\+OR}{ERROR}}
+{\footnotesize\ttfamily \#define E\+R\+R\+OR~0}
+
+Nivel E\+R\+R\+OR \mbox{\Hypertarget{log_8h_a431b92b32ec924789b2be268651a3fdd}\label{log_8h_a431b92b32ec924789b2be268651a3fdd}} 
+\index{log.\+h@{log.\+h}!P\+U\+SH@{P\+U\+SH}}
+\index{P\+U\+SH@{P\+U\+SH}!log.\+h@{log.\+h}}
+\subsubsection{\texorpdfstring{P\+U\+SH}{PUSH}}
+{\footnotesize\ttfamily \#define P\+U\+SH~1}
+
+sistema P\+U\+SH 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{log_8h_afe2a901861e9490f45ebcd2d029edd02}\label{log_8h_afe2a901861e9490f45ebcd2d029edd02}} 
+\index{log.\+h@{log.\+h}!log\+Led@{log\+Led}}
+\index{log\+Led@{log\+Led}!log.\+h@{log.\+h}}
+\subsubsection{\texorpdfstring{log\+Led()}{logLed()}}
+{\footnotesize\ttfamily void log\+Led (\begin{DoxyParamCaption}\item[{short const}]{sistema,  }\item[{short const}]{nivel,  }\item[{char const $\ast$}]{mensaje }\end{DoxyParamCaption})}
+
+
+
+Interfaz del sistema de logging. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sistema} & B\+U\+ZZ, P\+U\+SH \\
+\hline
+{\em nivel} & E\+R\+R\+OR, D\+E\+B\+UG \\
+\hline
+{\em mensaje} & \char`\"{}mensaje a enviar\char`\"{} \\
+\hline
+\end{DoxyParams}
