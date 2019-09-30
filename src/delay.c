@@ -2,14 +2,12 @@
  * \brief  Funciones para calcular el tiempo*/
 #include<stdint.h>
 #include"delay.h"
-#ifdef ATTINY
+#ifdef TEST
+#include<stub_io.h>
+#include<stub_interrupt.h>
+#else
 #include<avr/io.h>
 #include<avr/interrupt.h>
-#else
-#include<libopencm3/stm32/rcc.h>
-#include<libopencm3/stm32/gpio.h>
-#include<libopencm3/stm32/timer.h>
-#include<libopencm3/cm3/nvic.h>
 #endif
 
 volatile uint32_t tiempo = 0;
@@ -40,13 +38,12 @@ uint32_t millis(void)
 ISR(TIM1_COMPA_vect)
 {
 	tiempo += 1;
-	TCNT1 = 0;
 }
 /* Configura el timer 1 para 1ms */
 void initTimer1Millis(void)
 {
-	TCCR1 |= (1<<CS12)|(1<<CS11)|(0<<CS10);
-	OCR1A = 218;
+	TCCR1 |= (0<<CS12)|(1<<CS11)|(1<<CS10);
+	OCR1A = 240;
 	sei();
 	TIMSK |= (1<<OCIE1A);
 }
@@ -60,7 +57,7 @@ void reiniciarMillis(void)
 	SREG = oldSREG;
 	sei();
 }
-#else
+#elif STM32
 //Delay stm32
 void initTimer1Millis(void)
 {
@@ -96,25 +93,3 @@ void reiniciarMillis(void)
 	timer_disable_irq(TIM17, TIM_DIER_UIE);
 }
 #endif
-
-/* delayms */
-void delay(uint32_t tiempo_ms)
-{
-	uint32_t tmp = millis();
-	while((millis()-tmp) < tiempo_ms)
-		__asm__ __volatile__("nop");
-}
-
-void initTimer(struct timer *tim, uint16_t tiempo_segundos)
-{
-	tim->tiempo_inicio = millis();
-	tim->tiempo_deseado = tiempo_segundos*1000.0;
-}
-
-uint8_t checkTimer(struct timer *tim)
-{
-	if((millis() - tim->tiempo_inicio) > tim->tiempo_deseado){
-		return 0;
-	}
-	return 1;
-}

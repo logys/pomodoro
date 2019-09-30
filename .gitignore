@@ -6,3 +6,6 @@ drivers
 log
 buzzer
 pomodoro
+vendor
+ceedling
+build
