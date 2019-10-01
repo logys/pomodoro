@@ -1,50 +1,63 @@
 #include "timer.h"
-
+#define MAX_ALARMS 3
 typedef struct Timer{
+	int8_t id;
 	int32_t tiempo;
 	int8_t unidad;
 	int8_t reached;
 	uint32_t time_milliseconds;
+	uint32_t init_time_milliseconds;
 }timer;
-static timer clock;
+static timer clock_general[MAX_ALARMS];
 
-static void updateClock(void);
+static void updateClock(int8_t);
 
 void initTimer(void)
 {
 	initTimer1Millis();
-	clock.tiempo = UNKNOWN;
-	clock.unidad = UNKNOWN;
-	clock.reached = UNKNOWN;
-	clock.time_milliseconds = 0;
+	for(int i = 0; i< MAX_ALARMS; i++){
+		clock_general[i].id = i;
+		clock_general[i].tiempo = UNKNOWN;
+		clock_general[i].unidad = UNKNOWN;
+		clock_general[i].reached = UNKNOWN;
+		clock_general[i].time_milliseconds = 0;
+	}
 }
 
-ALARM_STATE getAlarm(void)
+ALARM_STATE getAlarm(ALARM_ID id)
 {
-	updateClock();
-	if(clock.tiempo == UNKNOWN)
+	updateClock(id);
+	if(clock_general[id].tiempo == UNKNOWN)
 		return UNKNOWN;
-	if(clock.reached)
+	if(clock_general[id].reached)
 		return READY;
 	return UNREACHED;
 }
 
-static void updateClock(void)
+static void updateClock(int8_t id)
 {
-	if(clock.time_milliseconds <= millis())
-		clock.reached = READY;
+	if(	(millis() - clock_general[id].init_time_milliseconds) >=
+		clock_general[id].time_milliseconds)
+		clock_general[id].reached = READY;
 }
 
-void setAlarm(uint16_t time, UNIT_TIME unit)
+void setAlarm(ALARM_ID id, uint16_t time, UNIT_TIME unit)
 {
-	clock.tiempo = time;
-	clock.unidad = unit;
-	clock.reached = UNREACHED;
-	reiniciarMillis();
+	clock_general[id].tiempo = time;
+	clock_general[id].unidad = unit;
+	clock_general[id].reached = UNREACHED;
+	clock_general[id].init_time_milliseconds = millis();
 	if(unit == MINUTES)
-		clock.time_milliseconds = time*60*1000;
+		clock_general[id].time_milliseconds = time*60*1000;
 	else if(unit == SECONDS)
-		clock.time_milliseconds = time*1000;
+		clock_general[id].time_milliseconds = time*1000;
 	else if(unit == MILLISECONDS)
-		clock.time_milliseconds = time;
+		clock_general[id].time_milliseconds = time;
+}
+
+void delay(uint32_t time_ms)
+{
+	setAlarm(TIMER_DELAY,time_ms, MILLISECONDS);
+	while(getAlarm(TIMER_DELAY) <= UNREACHED)
+		__asm__("nop");
 }

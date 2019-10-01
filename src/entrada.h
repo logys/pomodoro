@@ -15,7 +15,9 @@
  *
  * =====================================================================================
  */
-
+#ifndef _ENTRADA_H
+#define _ENTRADA_H
+#include "timer.h"
 /** \file entrada.h 
  * \brief Control de el botón en entrada
  * controla tres funciones inicio, pausa y apagado*/
@@ -27,4 +29,6 @@ void openPush(void);
 void closePush(void);
 /** \brief Retorna el estado del botón
  * \return short Estado del botón*/
+enum {OFF = 0, ON};
 uint8_t readPush(void);
+#endif

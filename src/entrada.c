@@ -2,11 +2,13 @@
 #include"entrada.h"
 #include"delay.h"
 #include<stdlib.h>
-#ifdef ATTINY
-#include<avr/io.h>
-#else
-#include<libopencm3/stm32/rcc.h>
-#include<libopencm3/stm32/gpio.h>
+#ifdef TEST
+	#include"stub_io.h"
+#elif ATTINY
+	#include<avr/io.h>
+#elif STM32
+	#include<libopencm3/stm32/rcc.h>
+	#include<libopencm3/stm32/gpio.h>
 #endif
 
 #define APAGA 2
@@ -53,8 +55,8 @@ void closePush(void)
 uint8_t readPush(void)
 {
         if(PINB&(1<<PB3))
-                return 1;
-        return 0;
+                return 0;
+        return 1;
 }
 #else
 //Drivers Stm32f0
