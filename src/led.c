@@ -1,14 +1,14 @@
 #include"led.h"
-#ifdef ATTINY
-#include<avr/io.h>
-#else
-#include<libopencm3/stm32/gpio.h>
-#include<libopencm3/stm32/rcc.h>
-#include<libopencm3/stm32/timer.h>
+#ifdef TEST
+	#include "stub_io.h"
+#elif ATTINY
+	#include<avr/io.h>
+#elif STM32
+	#include<libopencm3/stm32/gpio.h>
+	#include<libopencm3/stm32/rcc.h>
+	#include<libopencm3/stm32/timer.h>
 #endif
 
-#include"delay.h"
-#include<stdlib.h>
 
 //Drivers attiny
 #ifdef ATTINY
@@ -17,40 +17,20 @@ void openLed()
 	/*Inicia el driver Led*/
 	DDRB |= (1<<PB0);
 	PORTB &= ~(1<<PB0);
-	TCCR0A |= (1<<COM0A1)|(1<<WGM00);
-	TCCR0B |= (1<<CS00);
-	OCR0A = 0;
 }
 void closeLed()
 {
 	/*Inicia el driver Led*/
 	DDRB &= ~(1<<PB0);
 	PORTB &= ~(1<<PB0);
-	TCCR0A &= ~((1<<COM0A1)|(1<<WGM00));
-	TCCR0B &= ~(1<<CS00);
-	OCR0A = 0;
-}
-
-void writeLed(double intensidad)
-{
-	/*Intensidad del LED PWM 0-100*/
-	if(intensidad > 100)
-		intensidad = 100;
-	else if(intensidad < 0)
-		intensidad = 0;
-	/*set PWM*/
-	OCR0A =(int)(intensidad*255/(double)100);
 }
 
 void toggleLed()
 {
-	for(uint8_t i = 0; i < 6; i++){
-		if(OCR0A < 255)
-			writeLed(100);
-		else
-			writeLed(0);
-		delay(40);
-	}
+	if(PORTB & 1)
+		PORTB &= ~(1<<PB0);
+	else
+		PORTB |= 1<<PB0;
 }
 //End drivers ATTINY
 #else

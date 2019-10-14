@@ -1,6 +1,7 @@
 #ifndef _EVENT_INPUT_H
 #define _EVENT_INPUT_H
 #include "entrada.h"
+#include "timer.h"
 #include <stdint.h>
 
 enum {NONE = 0, PLAY_PAUSE, POWEROFF};

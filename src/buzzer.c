@@ -1,28 +1,26 @@
-#ifdef ATTINY
-#include<avr/io.h>
+#ifdef TEST
+	#include "stub_io.h"
+#elif ATTINY
+	#include<avr/io.h>
 #else
 #include<libopencm3/stm32/gpio.h>
 #include<libopencm3/stm32/rcc.h>
 #endif
 
 #include"buzzer.h"
-#include"delay.h"
-#include<stdint.h>
 
-void buzzer(uint8_t const ticks, uint32_t const tiempoms)
+void buzzer(int8_t ticks, int32_t  tiempoms)
 {
-	uint32_t tiempo = millis();
-	openBuzzer();
+	if(ticks <= 0 || tiempoms <= 0)
+		return;
+	if(ticks > 10)
+		ticks = 10;
+	if(tiempoms > 1000)
+		tiempoms = 1000;
 	for(uint8_t i = 0; i < ticks*2; i++){
-		if(readBuzz()) //Si esta encendido apágalo
-			writeBuzz(OFF);
-		else 
-			writeBuzz(ON);
-		while(tiempoms > (millis()-tiempo))
-			__asm__ __volatile__ ("nop");
-		tiempo = millis();
+		delay(tiempoms);
+		toggle();
 	}
-	closeBuzzer();
 }
 
 //Drivers ATTINY
@@ -31,7 +29,7 @@ void openBuzzer(void)
 {
 	        /* Inicia el driver buzzer*/
 	        DDRB |= (1<<PB1);
-		        PORTB &= ~(1<<PB1);
+	        PORTB &= ~(1<<PB1);
 }
 void closeBuzzer(void)
 {
@@ -50,7 +48,7 @@ void writeBuzz(short const estado)
 unsigned short readBuzz(void)
 {
         /*Regresa el estado del buzzer*/
-        return PINB&(1<<PB1);
+        return PINB&(1<<PB1)?ON:OFF;
 }
 //End drivers ATTINY
 #else
@@ -88,3 +86,8 @@ unsigned short readBuzz(void)
 }
 //End drivers stm32
 #endif
+
+void toggle(void)
+{
+	PINB |= 1<<PB1;
+}

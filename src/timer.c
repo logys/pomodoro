@@ -16,19 +16,19 @@ void initTimer(void)
 {
 	initTimer1Millis();
 	for(int i = 0; i< MAX_ALARMS; i++){
-		clock_general[i].id = i;
-		clock_general[i].tiempo = UNKNOWN;
-		clock_general[i].unidad = UNKNOWN;
-		clock_general[i].reached = UNKNOWN;
-		clock_general[i].time_milliseconds = 0;
+			clock_general[i].id = i;
+			clock_general[i].tiempo = UNKNOWN;
+			clock_general[i].unidad = UNKNOWN;
+			clock_general[i].reached = UNKNOWN;
+			clock_general[i].time_milliseconds = 0;
 	}
 }
 
 ALARM_STATE getAlarm(ALARM_ID id)
 {
-	updateClock(id);
 	if(clock_general[id].tiempo == UNKNOWN)
 		return UNKNOWN;
+	updateClock(id);
 	if(clock_general[id].reached)
 		return READY;
 	return UNREACHED;

@@ -1,6 +1,7 @@
 #ifndef DRIVERS_H
 #define DRIVERS_H
-#include<stdint.h>
+#include <stdint.h>
+#include "timer.h"
 #define ON 1	/**< Encendido */
 #define OFF 0	/**< Apagado*/
 
@@ -11,10 +12,6 @@
 void openLed(void);
 /** Detiene LED*/
 void closeLed(void);
-
-/** \brief Enciende el Led a la intensidad indicada 0-100
- * param intensidad 0-100*/
-void writeLed(double intensidad);
 
 /** \brief Toggle */
 void toggleLed(void);
