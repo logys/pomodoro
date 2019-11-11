@@ -1,64 +1,25 @@
 #include "handleLed.h"
-
-typedef struct LedHandler{
-	int8_t state;
-	int8_t toggling;
-	int8_t alarm;
-	int8_t cicle;
-	uint16_t time;
-}ledHandler;
-static ledHandler led;
-
+struct Led{
+	uint16_t time_toggle;
+}led;
+static TIMER led_timer;
 void initHandleLed(void)
 {
 	initTimer();
 	openLed();
-	led.state = UNKNOWN;
-	led.toggling = UNKNOWN;
-	led.time = UNKNOWN;
-	led.alarm = UNKNOWN;
-	led.cicle = UNKNOWN;
+	led_timer = newTimer();
+	led.time_toggle = 0;
 }
 
 void writeToLed(double workCicle)
 {
- 	if(led.state != ON)
-		return;
-	//Set limit workcicle
-	if(workCicle > 100)
-		workCicle = 100;
-	if(workCicle < 0)
-		workCicle = 0;
-
-	if(led.toggling != ON){
-		led.time = (uint16_t)(-492/100.0*workCicle + 500);
-		led.toggling = ON;
-		led.cicle = 1;
-		setAlarm(TIMER_LED, led.time, MILLISECONDS); 
-	}
+	led.time_toggle = 500;
+	setTimer(led_timer, led.time_toggle, MILLISECONDS);
 }
 
 void updateLed(void)
 {
- 	if(led.state != ON)
-		return;
-
-	led.alarm = getAlarm(TIMER_LED);
-	if(led.alarm == READY){
+	uint16_t elapsed_time = getTimer(led_timer, MILLISECONDS);
+	if(elapsed_time >= led.time_toggle)
 		toggleLed();
-		setAlarm(TIMER_LED, led.time, MILLISECONDS); 
-		led.cicle++;
-		if(led.cicle >= 2)
-			led.toggling = OFF;
-	}
-}
-
-void handleLedOn(void)
-{
-	led.state = ON;
-}
-
-void handleLedOff(void)
-{
-	led.state = OFF;
 }
