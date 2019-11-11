@@ -1,63 +1,105 @@
 #include "timer.h"
-#define MAX_ALARMS 3
-typedef struct Timer{
-	int8_t id;
-	int32_t tiempo;
-	int8_t unidad;
-	int8_t reached;
-	uint32_t time_milliseconds;
-	uint32_t init_time_milliseconds;
-}timer;
-static timer clock_general[MAX_ALARMS];
 
-static void updateClock(int8_t);
+struct Timer{
+	uint32_t init_time;
+	uint32_t end_time;
+	uint32_t accumulated_time;
+	uint32_t last_millis;
+	bool paused;
+};
 
 void initTimer(void)
 {
 	initTimer1Millis();
-	for(int i = 0; i< MAX_ALARMS; i++){
-			clock_general[i].id = i;
-			clock_general[i].tiempo = UNKNOWN;
-			clock_general[i].unidad = UNKNOWN;
-			clock_general[i].reached = UNKNOWN;
-			clock_general[i].time_milliseconds = 0;
+}
+
+TIMER newTimer(void)
+{
+	TIMER tmp = calloc(1, sizeof(struct Timer));
+	return tmp;
+}
+
+#define MILLISECONDS_IN_MILLISECOND 1
+#define MILLISECONDS_IN_SECOND 1000
+#define MILLISECONDS_IN_MINUTE 60000
+typedef enum {SET = 1, GET}ACTION;
+
+static void setSesionTime(TIMER timer, uint32_t time);
+static double setOrGetTime(ACTION, TIMER, double time, UNIT_TIME);
+static double getSesionTime(TIMER timer, int time_scale);
+
+void setTimer(TIMER timer, double time, UNIT_TIME unit)
+{
+	reinitTimer(timer);
+	setOrGetTime(SET, timer, time, unit);
+}
+static double setOrGetTime(ACTION action, TIMER timer, double time, UNIT_TIME unit)
+{
+	int time_scale;
+ 	unit == MILLISECONDS ? time_scale = MILLISECONDS_IN_MILLISECOND:
+	unit == SECONDS ? time_scale = MILLISECONDS_IN_SECOND:
+	unit == MINUTES ? time_scale = MILLISECONDS_IN_MINUTE:
+			(time_scale = UNKNOWN); 
+	if(time_scale == UNKNOWN)
+		return UNKNOWN;
+	if(action == SET){
+		setSesionTime(timer, time*time_scale);
+	}else if(action == GET){
+		return getSesionTime(timer, time_scale);
+	}
+	return 0;
+}
+static double getSesionTime(TIMER timer, int time_scale)
+{
+		return timer->accumulated_time/time_scale;
+}
+static void setSesionTime(TIMER timer, uint32_t time)
+{
+	timer->end_time = time + timer->init_time;
+}
+
+
+static void updateTime(TIMER timer);
+double getTimer(TIMER timer, UNIT_TIME unit)
+{
+	updateTime(timer);
+	return setOrGetTime(GET, timer, 0, unit);
+}
+static void updateTime(TIMER timer)
+{
+	if(!timer->paused){
+		uint32_t actual_time = millis();
+		timer->accumulated_time += actual_time - timer->last_millis;
+		timer->last_millis = actual_time;
 	}
 }
 
-ALARM_STATE getAlarm(ALARM_ID id)
+void reinitTimer(TIMER timer)
 {
-	if(clock_general[id].tiempo == UNKNOWN)
-		return UNKNOWN;
-	updateClock(id);
-	if(clock_general[id].reached)
-		return READY;
-	return UNREACHED;
+	timer->init_time = millis();
+	timer->accumulated_time = 0;
+	timer->last_millis = timer->init_time;
 }
 
-static void updateClock(int8_t id)
+void pauseTimer(TIMER timer)
 {
-	if(	(millis() - clock_general[id].init_time_milliseconds) >=
-		clock_general[id].time_milliseconds)
-		clock_general[id].reached = READY;
+	updateTime(timer);
+	timer->paused = true;
 }
 
-void setAlarm(ALARM_ID id, uint16_t time, UNIT_TIME unit)
+void resumeTimer(TIMER timer)
 {
-	clock_general[id].tiempo = time;
-	clock_general[id].unidad = unit;
-	clock_general[id].reached = UNREACHED;
-	clock_general[id].init_time_milliseconds = millis();
-	if(unit == MINUTES)
-		clock_general[id].time_milliseconds = time*60*1000;
-	else if(unit == SECONDS)
-		clock_general[id].time_milliseconds = time*1000;
-	else if(unit == MILLISECONDS)
-		clock_general[id].time_milliseconds = time;
+	if(timer->paused){
+		timer->last_millis = millis();
+		timer->paused = false;
+	}
 }
-
 void delay(uint32_t time_ms)
 {
-	setAlarm(TIMER_DELAY,time_ms, MILLISECONDS);
-	while(getAlarm(TIMER_DELAY) <= UNREACHED)
+	TIMER delay_ms = newTimer();
+	setTimer(delay_ms, time_ms, MILLISECONDS);
+	while(getTimer(delay_ms, MILLISECONDS) < time_ms){
 		__asm__("nop");
+	}
+	free(delay_ms);
 }

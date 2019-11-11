@@ -8,6 +8,7 @@ typedef struct LedHandler{
 	uint16_t time;
 }ledHandler;
 static ledHandler led;
+
 void initHandleLed(void)
 {
 	initTimer();
@@ -23,10 +24,12 @@ void writeToLed(double workCicle)
 {
  	if(led.state != ON)
 		return;
+	//Set limit workcicle
 	if(workCicle > 100)
 		workCicle = 100;
 	if(workCicle < 0)
 		workCicle = 0;
+
 	if(led.toggling != ON){
 		led.time = (uint16_t)(-492/100.0*workCicle + 500);
 		led.toggling = ON;
@@ -39,6 +42,7 @@ void updateLed(void)
 {
  	if(led.state != ON)
 		return;
+
 	led.alarm = getAlarm(TIMER_LED);
 	if(led.alarm == READY){
 		toggleLed();

@@ -3,6 +3,7 @@
 #include "entrada.h"
 #include "timer.h"
 #include <stdint.h>
+#include <stdbool.h>
 
 enum {NONE = 0, PLAY_PAUSE, POWEROFF};
 void initEventInput(void);

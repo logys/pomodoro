@@ -12,6 +12,7 @@ void tearDown(void)
 {
 	closeBuzzer();
 }
+
 uint8_t buzzerBit = (1<<PB1);
 uint8_t buzzerBitOn = (1<<PB1);
 uint8_t buzzerBitOff = ~(1<<PB1);
