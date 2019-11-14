@@ -20,15 +20,12 @@
 #include "timer.h"
 /** \file entrada.h 
  * \brief Control de el botón en entrada
- * controla tres funciones inicio, pausa y apagado*/
-/**Controla el evento del botón */
-uint8_t botonEvent(void);
 /** \brief Inicia el pushbutton */
 void openPush(void);
 /** \brief Detiene el pushbutton */
 void closePush(void);
 /** \brief Retorna el estado del botón
  * \return short Estado del botón*/
-enum {OFF = 0, ON};
-uint8_t readPush(void);
+typedef enum {OFF = 0, ON}PUSH_STATE;
+PUSH_STATE readPush(void);
 #endif

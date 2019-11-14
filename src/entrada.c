@@ -1,7 +1,4 @@
-#include<stdint.h>
 #include"entrada.h"
-#include"delay.h"
-#include<stdlib.h>
 #ifdef TEST
 	#include"stub_io.h"
 #elif ATTINY
@@ -11,32 +8,13 @@
 	#include<libopencm3/stm32/gpio.h>
 #endif
 
-#define APAGA 2
-#define TOGGLE 1
-#define NADA 0
+struct button{
+	short state;
+	short last_state;
+	bool timer_seted;
+}button;
 
-uint8_t botonEvent(void)
-{
-	static uint8_t sum = 0;
-	static uint8_t estado = 0;
-	estado = readPush();
-	if(estado == 1)
-		return NADA;
-	else{
-		delay(40);
-		while(readPush() == 0){
-			sum++;
-			if(sum > 50){
-				sum = 0;
-				return APAGA;
-			}
-			delay(40);
-		}
-		sum = 0;
-		return TOGGLE;
-	}
-	return NADA;
-}
+TIMER button_timer;
 #ifdef ATTINY
 //Drivers Attiny
 void openPush(void)
@@ -44,19 +22,38 @@ void openPush(void)
         /*Inicia el driver push Buttons*/
         DDRB &= ~(1<<PB3);
         PORTB |= (1<<PB3);
+	button_timer = newTimer();
+	button.state = OFF;
+	button.last_state = OFF;
+	button.timer_seted = false;
 }
 void closePush(void)
 {
         /*Inicia el driver push Buttons*/
         DDRB &= ~((1<<PB3));
         PORTB &= ~((1<<PB3));
+	free(button_timer);
 }
 /*Push buttons*/
-uint8_t readPush(void)
+PUSH_STATE readPush(void)
 {
-        if(PINB&(1<<PB3))
-                return 0;
-        return 1;
+        if(PINB&(1<<PB3)){
+		button.state = OFF;
+	}else{
+		button.state = ON;
+	}
+	if(button.state != button.last_state && !button.timer_seted){
+		setTimer(button_timer, 50, MILLISECONDS);
+		button.timer_seted = true;
+	}else if(button.timer_seted){
+		getTimer(button_timer, MILLISECONDS) < 50 ? 
+			button.state = button.last_state :
+			(button.timer_seted = false);
+	}
+
+	button.last_state = button.state;
+        return button.state;
+
 }
 #else
 //Drivers Stm32f0
