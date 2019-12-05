@@ -18,14 +18,8 @@
 #ifndef _ENTRADA_H
 #define _ENTRADA_H
 #include "timer.h"
-/** \file entrada.h 
- * \brief Control de el botón en entrada
-/** \brief Inicia el pushbutton */
 void openPush(void);
-/** \brief Detiene el pushbutton */
 void closePush(void);
-/** \brief Retorna el estado del botón
- * \return short Estado del botón*/
 typedef enum {OFF = 0, ON}PUSH_STATE;
 PUSH_STATE readPush(void);
 #endif

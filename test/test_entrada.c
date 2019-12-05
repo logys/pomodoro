@@ -33,14 +33,14 @@ void test_close_driver(void)
 void test_read_edge(void)
 {
 	PINB = 0;
-	setTimer_Expect(NULL, 50, MILLISECONDS);
+	enableTimer_Expect(NULL);
 	TEST_ASSERT_EQUAL(ON, readPush());
 }
 
 void test_mantain_state_in_the_first_50_ms(void)
 {
 	PINB = 0;
-	setTimer_Expect(NULL, 50, MILLISECONDS);
+	enableTimer_Expect(NULL);
 	TEST_ASSERT_EQUAL(ON, readPush());
 
 	PINB = 0xff;
@@ -55,7 +55,7 @@ void test_mantain_state_in_the_first_50_ms(void)
 void test_after_50ms_read_again(void)
 {
 	PINB = 0;
-	setTimer_Expect(NULL, 50, MILLISECONDS);
+	enableTimer_Expect(NULL);
 	TEST_ASSERT_EQUAL(ON, readPush());
 
 	PINB = 0xff;

@@ -28,7 +28,6 @@ void initPomodoro(void)
 	initEventInput();
 	initHandleLed();
 	openBuzzer();
-
 	timer_pomodoro = newTimer();
 }
 /* inicia el pomodoro con las sesiones indicada */
@@ -42,8 +41,10 @@ void nuevoSesion(float const sesiones[])
 		pomodoro.sesiones[i+1] = NAN;
 	}
 	pomodoro.indice_sesion = 0;
-	setTimer(timer_pomodoro, pomodoro.sesiones[pomodoro.indice_sesion], MINUTES);
+	enableTimer(timer_pomodoro);
 	enablePomodoro();
+	apagar();
+	reinitPomodoro();
 }
 
 static void computePercent(void);
@@ -54,13 +55,16 @@ static void togglePomodoroPlay(void);
 uint8_t actualizar(void)
 {
 	pomodoro.button = readEvent();
-	pomodoro.elapsed_time = getTimer(timer_pomodoro, MINUTES);
+	pomodoro.elapsed_time = getTimer(timer_pomodoro, MINUTES);////60.0;
 
 	if(pomodoro.state == OFF ||
 			(isnan(pomodoro.sesiones[pomodoro.indice_sesion])) ||
 			pomodoro.button == POWEROFF){
+//		buzzer(3, 500);
+//		delay(1000);
 		apagar();
 		reinitPomodoro();
+//		buzzer(1, 700);
 		return OFF;
 	}else if(pomodoro.button == NONE){
 		if(pomodoro.play == true){
@@ -92,14 +96,13 @@ static void togglePomodoroPlay(void)
 static void sesionReached(void)
 {
 	pomodoro.indice_sesion++;
-	setTimer(timer_pomodoro, 
-	pomodoro.sesiones[pomodoro.indice_sesion], MINUTES);
+	enableTimer(timer_pomodoro);
 	pomodoro.sesion_porcentaje = 0;
 }
 static void selectBuzzer(void)
 {
 			if(pomodoro.indice_sesion % 2 == 0)
-				buzzer(2, 500);
+				buzzer(2, 300);
 			else
 				buzzer(5, 100);
 }
@@ -127,10 +130,11 @@ void reinitPomodoro(void)
 	pomodoro.indice_sesion = 0;
 	pomodoro.elapsed_time = 0;
 	pomodoro.sesion_porcentaje = 0;
+	pomodoro.state = ON;
+	pomodoro.button = NONE;
 	reinitTimer(timer_pomodoro);
 }
 
 void pausa(void)
 {
 }
-

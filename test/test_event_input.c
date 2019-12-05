@@ -25,7 +25,7 @@ void test_event_no_push(void)
 void test_event_first_push(void)
 {
 	readPush_ExpectAndReturn(ON);
-	setTimer_Expect(NULL, 2, SECONDS);
+	enableTimer_Expect(NULL);
 	TEST_ASSERT_EQUAL(PLAY_PAUSE, readEvent());
 }
  
@@ -35,7 +35,7 @@ void test_event_push_return_play_pause_only_one_time(void)
 	TEST_ASSERT_EQUAL(NONE, readEvent());
 
 	readPush_ExpectAndReturn(ON);
-	setTimer_Expect(NULL, 2, SECONDS);
+	enableTimer_Expect(NULL);
 	TEST_ASSERT_EQUAL(PLAY_PAUSE, readEvent());
 
 	readPush_ExpectAndReturn(ON);
@@ -53,7 +53,7 @@ void test_event_return_after_2_seconds_poweroff(void)
 	TEST_ASSERT_EQUAL(NONE, readEvent());
 
 	readPush_ExpectAndReturn(ON);
-	setTimer_Expect(NULL, 2, SECONDS);
+	enableTimer_Expect(NULL);
 	TEST_ASSERT_EQUAL(PLAY_PAUSE, readEvent());
 
 	readPush_ExpectAndReturn(ON);

@@ -43,7 +43,7 @@ PUSH_STATE readPush(void)
 		button.state = ON;
 	}
 	if(button.state != button.last_state && !button.timer_seted){
-		setTimer(button_timer, 50, MILLISECONDS);
+		enableTimer(button_timer);
 		button.timer_seted = true;
 	}else if(button.timer_seted){
 		getTimer(button_timer, MILLISECONDS) < 50 ? 

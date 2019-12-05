@@ -12,7 +12,6 @@
 #define MAX_SESIONES 10
 /** \file pomodoro.h 
 	double tiempo_acumulado;
-/** Establece las sesiones y su duración
  * \param pomodoro Apuntador a pomodoro
  * \param Sesiones separadas por comas*/
 #define setSesiones(...) nuevoSesion( \

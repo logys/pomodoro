@@ -28,7 +28,7 @@ void setWorkCicle(double work_cicle)
 	else if(work_cicle < 0)
 		work_cicle = 0;
 	double time_toggle = -492/100.0*work_cicle + 500;
-	setTimer_Expect(NULL, time_toggle, MILLISECONDS);
+	enableTimer_Expect(NULL);
 	writeToLed(work_cicle);
 }
 
@@ -45,6 +45,7 @@ void assertToggleOnWorkCicle(uint32_t time_to_toggle)
 {
 	getTimer_ExpectAndReturn(NULL, MILLISECONDS, time_to_toggle);
 	toggleLed_Expect();
+	reinitTimer_Expect(NULL);
 	updateLed();
 }
 void test_toggle_after_8ms_on_100_wc(void)

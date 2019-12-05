@@ -4,6 +4,7 @@
 
 void setUp(void)
 {
+	initTimer1Millis();
 }
 
 void tearDown(void)

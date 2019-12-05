@@ -8,6 +8,7 @@
 #endif
 
 #include"buzzer.h"
+#include"timer.h"
 
 void buzzer(int8_t ticks, int32_t  tiempoms)
 {

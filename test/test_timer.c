@@ -2,10 +2,6 @@
 #include "timer.h"
 #include "mock_delay.h"
 
-struct Timer{
-	uint32_t init_time;
-	uint32_t end_time;;
-};
 static void setTimerOnTime(TIMER, double time, UNIT_TIME unit, uint32_t init_time);
 void setUp(void)
 {
@@ -17,55 +13,16 @@ void tearDown(void)
 {
 }
 
-void test_initTimer_at_cero(void)
-{
-	TIMER test = newTimer();
-	TEST_ASSERT_EQUAL(0, test->init_time);
-	TEST_ASSERT_EQUAL(0, test->end_time);
-}
 
 int time_on_init = 1000;
 int time_elapsed = 0;
-void test_set_timer_milliseconds(void)
-{
-	TIMER test = newTimer();
-	int milliseconds_for_set_timer = 2000;
-	millis_ExpectAndReturn(time_on_init);
-	setTimer(test, milliseconds_for_set_timer, MILLISECONDS);
-
-	int total_time_in_timer = milliseconds_for_set_timer + time_on_init;
-	TEST_ASSERT_EQUAL(time_on_init, test->init_time);
-	TEST_ASSERT_EQUAL(total_time_in_timer, test->end_time);
-}
-void test_set_timer_seconds(void)
-{
-	TIMER test = newTimer();
-	int seconds_for_set_timer = 5;
-	millis_ExpectAndReturn(time_on_init);
-	setTimer(test, seconds_for_set_timer, SECONDS);
-
-	int total_time_in_timer = seconds_for_set_timer*1000 + time_on_init;
-	TEST_ASSERT_EQUAL(time_on_init, test->init_time);
-	TEST_ASSERT_EQUAL(total_time_in_timer, test->end_time);
-}
-void test_set_timer_minutes(void)
-{
-	TIMER test = newTimer();
-	int minutes_for_set_timer = 7;
-	millis_ExpectAndReturn(time_on_init);
-	setTimer(test, minutes_for_set_timer, MINUTES);
-
-	int total_time_in_timer = minutes_for_set_timer*1000*60 + time_on_init;
-	TEST_ASSERT_EQUAL(time_on_init, test->init_time);
-	TEST_ASSERT_EQUAL(total_time_in_timer, test->end_time);
-}
 
 void test_get_timer_milliseconds(void)
 {
 	TIMER test = newTimer();
 	millis_ExpectAndReturn(time_on_init);
 	int session_time_milliseconds = 2000;
-	setTimer(test, session_time_milliseconds, MILLISECONDS);
+	enableTimer(test);
 
 	int milliseconds_elapsed = 1000;
 	int milliseconds_from_init = milliseconds_elapsed + time_on_init;
@@ -77,31 +34,31 @@ void test_get_timer_seconds(void)
 {
 	TIMER test = newTimer();
 	millis_ExpectAndReturn(time_on_init);
-	setTimer(test, 2, SECONDS);
+	enableTimer(test);
 
 	int seconds_elapsed = 5;
 	int milliseconds_from_init = seconds_elapsed*1000 + time_on_init;
 	millis_ExpectAndReturn(milliseconds_from_init);
-	TEST_ASSERT_EQUAL(seconds_elapsed, getTimer(test, SECONDS));
+	TEST_ASSERT_FLOAT_WITHIN(0.00001, seconds_elapsed, getTimer(test, SECONDS));
 }
 
 void test_get_timer_minutes(void)
 {
 	TIMER test = newTimer();
 	millis_ExpectAndReturn(time_on_init);
-	setTimer(test, 10, MINUTES);
+	enableTimer(test);
 
 	int minutes_elapsed = 7;
 	int milliseconds_from_init = minutes_elapsed*1000*60 + time_on_init;
 	millis_ExpectAndReturn(milliseconds_from_init);
-	TEST_ASSERT_EQUAL(minutes_elapsed, getTimer(test, MINUTES));
+	TEST_ASSERT_FLOAT_WITHIN(0.00001, minutes_elapsed, getTimer(test, MINUTES));
 }
 
 void test_reinit_timer(void)
 {
 	TIMER test = newTimer();
 	millis_ExpectAndReturn(time_on_init);
-	setTimer(test, 10, MINUTES);
+	enableTimer(test);
 
 	int milliseconds_on_reinit = 10000;
 	millis_ExpectAndReturn(milliseconds_on_reinit);
@@ -188,7 +145,7 @@ void test_delay(void)
 static void setTimerOnTime(TIMER timer, double time, UNIT_TIME unit, uint32_t init_time)
 {
 	millis_ExpectAndReturn(init_time);
-	setTimer(timer, time, unit);
+	enableTimer(timer);
 }
 
 void test_get_wrong_unit(void)

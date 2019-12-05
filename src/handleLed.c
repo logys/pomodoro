@@ -32,7 +32,7 @@ static bool timerSeted(void)
 static void writeToTimer(double work_cicle)
 {
 		updateTimeToggle(work_cicle);
-		setTimer(led_timer, led.time_toggle, MILLISECONDS);
+		enableTimer(led_timer);
 		led.work_cicle_seted = true;
 }
 static void updateTimeToggle(double work_cicle)
@@ -54,6 +54,7 @@ void updateLed(void)
 	if(timeReached()){
 		toggleLed();
 		checkMinimunToggles();
+		reinitTimer(led_timer);
 	}
 }
 static bool timeReached(void)

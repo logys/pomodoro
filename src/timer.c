@@ -21,14 +21,14 @@ TIMER newTimer(void)
 
 #define MILLISECONDS_IN_MILLISECOND 1
 #define MILLISECONDS_IN_SECOND 1000
-#define MILLISECONDS_IN_MINUTE 60000
+#define MILLISECONDS_IN_MINUTE 60000UL
 typedef enum {SET = 1, GET}ACTION;
 
 static void setSesionTime(TIMER timer, uint32_t time);
 static double setOrGetTime(ACTION, TIMER, double time, UNIT_TIME);
 static double getSesionTime(TIMER timer, int time_scale);
 
-void setTimer(TIMER timer, double time, UNIT_TIME unit)
+void setAlarm(TIMER timer, double time, UNIT_TIME unit)
 {
 	reinitTimer(timer);
 	setOrGetTime(SET, timer, time, unit);
@@ -51,7 +51,7 @@ static double setOrGetTime(ACTION action, TIMER timer, double time, UNIT_TIME un
 }
 static double getSesionTime(TIMER timer, int time_scale)
 {
-		return timer->accumulated_time/time_scale;
+		return timer->accumulated_time/(double)time_scale;
 }
 static void setSesionTime(TIMER timer, uint32_t time)
 {
@@ -97,9 +97,18 @@ void resumeTimer(TIMER timer)
 void delay(uint32_t time_ms)
 {
 	TIMER delay_ms = newTimer();
-	setTimer(delay_ms, time_ms, MILLISECONDS);
+	enableTimer(delay_ms);
 	while(getTimer(delay_ms, MILLISECONDS) < time_ms){
 		__asm__("nop");
 	}
 	free(delay_ms);
+}
+
+void enableTimer(TIMER timer)
+{
+	reinitTimer(timer);
+}
+
+void disableTimer(TIMER timer)
+{
 }

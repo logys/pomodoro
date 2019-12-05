@@ -1,6 +1,5 @@
 /** \file 
  * \brief  Funciones para calcular el tiempo*/
-#include<stdint.h>
 #include"delay.h"
 #ifdef TEST
 #include<stub_io.h>

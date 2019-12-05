@@ -16,7 +16,6 @@ void initEventInput(void)
 }
 
 static void eventOff(void);
-static bool buttonPressed(void);
 
 int8_t readEvent(void)
 {
@@ -25,7 +24,7 @@ int8_t readEvent(void)
 		eventOff();
 	}else if(handler.button == ON){ //Button pressed
 		if(handler.last_button == OFF){
-			setTimer(timer_power_off, 2, SECONDS);
+			enableTimer(timer_power_off);
 			handler.state = PLAY_PAUSE;
 		}else{
 			handler.time_power_off = getTimer(timer_power_off, SECONDS);
