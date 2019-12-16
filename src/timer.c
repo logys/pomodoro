@@ -16,6 +16,7 @@ void initTimer(void)
 TIMER newTimer(void)
 {
 	TIMER tmp = calloc(1, sizeof(struct Timer));
+	tmp->init_time = -1;
 	return tmp;
 }
 
@@ -51,7 +52,9 @@ static double setOrGetTime(ACTION action, TIMER timer, double time, UNIT_TIME un
 }
 static double getSesionTime(TIMER timer, int time_scale)
 {
-		return timer->accumulated_time/(double)time_scale;
+	if(timer->init_time == -1)
+		return -1;
+	return timer->accumulated_time/(double)time_scale;
 }
 static void setSesionTime(TIMER timer, uint32_t time)
 {
@@ -111,4 +114,9 @@ void enableTimer(TIMER timer)
 
 void disableTimer(TIMER timer)
 {
+}
+
+void destroyTimer(TIMER timer)
+{
+	free(timer);
 }

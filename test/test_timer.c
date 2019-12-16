@@ -17,6 +17,15 @@ void tearDown(void)
 int time_on_init = 1000;
 int time_elapsed = 0;
 
+void test_get_timer_unknown_whitout_set(void)
+{
+	TIMER test = newTimer();
+	
+
+	millis_ExpectAndReturn(time_on_init);
+	TEST_ASSERT_EQUAL(-1, getTimer(test, MILLISECONDS));
+
+}
 void test_get_timer_milliseconds(void)
 {
 	TIMER test = newTimer();

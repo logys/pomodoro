@@ -1,11 +1,11 @@
 #include "unity.h"
-#include <math.h>
 #include "pomodoro.h"
 #include "mock_timer.h"
 #include "mock_event_input.h"
 #include "mock_handleLed.h"
 #include "mock_buzzer.h"
 #include "mock_apagar.h"
+#include "pomodoro_sessions.h"
 
 void setUp(void)
 {
@@ -15,273 +15,116 @@ void setUp(void)
 	openBuzzer_Expect();
 	newTimer_ExpectAndReturn(NULL);
 	initPomodoro();
+	enableTimer_Expect(NULL);
+	enablePomodoro();
 }
 
 void tearDown(void)
 {
 }
 
-void test_if_no_sessions_update_off(void)
+void setTimerTime(double time, UNIT_TIME unit_time);
+void assertBuzzerOddSession(void);
+void assertBuzzerEvenSession(void);
+void test_pomodoro_enable_return_normal_output(void)
 {
-	//set no sessions
-	double time_sessions = NAN;
-	enableTimer_Expect(NULL);
-	apagar_Expect();
-	reinitTimer_Expect(NULL);
-	setSesiones(time_sessions);
-
-	readEvent_ExpectAndReturn(NONE);
-	float time_returned_from_timer = 5;
-	getTimer_ExpectAndReturn(NULL, MINUTES, time_returned_from_timer);
-	apagar_Expect();
-	reinitTimer_Expect(NULL);
-	TEST_ASSERT_EQUAL(OFF, actualizar());
+	setTimerTime(-1, MINUTES);
+	TEST_ASSERT_EQUAL(INPROGRESS, updatePomodoro());
+}
+void test_pomodoro_disable_return_DISABLED(void)
+{
+	disablePomodoro();
+	TEST_ASSERT_EQUAL(DISABLED, updatePomodoro());
 }
 
-void test_set_sessions_unreached_session_time(void)
+void test_session_one_minute_unreached(void)
 {
-	double time_sessions = 5;
-	enableTimer_Expect(NULL);
-	apagar_Expect();
-	reinitTimer_Expect(NULL);
-	setSesiones(time_sessions);
-
-	readEvent_ExpectAndReturn(NONE);
-	getTimer_ExpectAndReturn(NULL, MINUTES, 0);
-	getTimer_IgnoreArg_timer();
-	writeToLed_Expect(0);
-	TEST_ASSERT_EQUAL(ON, actualizar());
-}
-
-void assertSetsession(int8_t time);
-void test_near_of_finish_99_percent(void)
-{
-	int8_t time_sessions = 5;
-	assertSetsession(time_sessions);
-
-	readEvent_ExpectAndReturn(NONE);
-	double time_returned_from_timer = 4.95;
-	getTimer_ExpectAndReturn(NULL, MINUTES, time_returned_from_timer);
-	getTimer_IgnoreArg_timer();
-	writeToLed_Expect(99);
-	TEST_ASSERT_EQUAL(ON, actualizar());
-
-}
-void assertSetsession(int8_t time)
-{
-	enableTimer_Expect(NULL);
-	apagar_Expect();
-	reinitTimer_Expect(NULL);
-	setSesiones(time);
-}
-
-void test_reached_time_session_call_buzzer(void)
-{
-	int8_t time_sessions = 5;
-	assertSetsession(time_sessions);
-
-	readEvent_ExpectAndReturn(NONE);
-	float time_returned_from_timer = 5;
-	getTimer_ExpectAndReturn(NULL, MINUTES, time_returned_from_timer);
-	writeToLed_Expect(100);
-	buzzer_Expect(2, 300);//2 slow beep
-	enableTimer_Expect(NULL);
+	int minutes_for_session = 1;
+	setSesiones(minutes_for_session);
 	
-	TEST_ASSERT_EQUAL(ON, actualizar());
+	int actual_minute_time = 0.5;
+	setTimerTime(actual_minute_time, MINUTES);
+	TEST_ASSERT_EQUAL(INPROGRESS, updatePomodoro());
 }
 
-void assertReachedFirstSession(void);
-void test_on_reached_change_next_sesion(void)
+void setTimerTime(double time, UNIT_TIME unit_time)
 {
-	float session1 = 5,
-	      session2 = 1;
-	enableTimer_Expect(NULL);
-	apagar_Expect();
-	reinitTimer_Expect(NULL);
-	setSesiones(session1, session2);
-
-	assertReachedFirstSession();
-
-	//second session
-	readEvent_ExpectAndReturn(NONE);
-	float time_returned_from_timer = 0.5;
-	getTimer_ExpectAndReturn(NULL, MINUTES, time_returned_from_timer);
-	writeToLed_Expect(50);
-	TEST_ASSERT_EQUAL(ON, actualizar());
+	getTimer_ExpectAndReturn(NULL, MINUTES, time);
 }
-void assertReachedFirstSession(void)
+
+void test_session_one_minute_reached(void)
 {
-	float session2 = 1;
-	readEvent_ExpectAndReturn(NONE);
-	float time_returned_from_timer = 5;
-	getTimer_ExpectAndReturn(NULL, MINUTES, time_returned_from_timer);
-	getTimer_IgnoreArg_timer();
-	writeToLed_Expect(100);
-	buzzer_Expect(2, 300);
-	enableTimer_Expect(NULL);
+	int minutes_for_session = 1;
+	setSesiones(minutes_for_session);
+
+	int actual_minute_time = 1;
+	setTimerTime(actual_minute_time, MINUTES);
+	assertBuzzerOddSession();
+	TEST_ASSERT_EQUAL(REACHED, updatePomodoro());
+}
+void assertBuzzerOddSession(void)
+{
+	buzzer_Expect(2, 400);
+}
+
+void test_two_buzzer_on_reached_session(void)
+{
+	int minutes_for_session = 1;
+	setSesiones(minutes_for_session);
+
+	int actual_minute_time = minutes_for_session;
+	setTimerTime(actual_minute_time, MINUTES);
+	assertBuzzerOddSession();
+	TEST_ASSERT_EQUAL(REACHED, updatePomodoro());
+}
+
+void test_two_sessions_unreached_second_session(void)
+{
+	int minutes_for_session_one = 2,
+	    minutes_for_session_two = 3;
+	setSesiones(minutes_for_session_one, minutes_for_session_two);
+
+	setTimerTime(minutes_for_session_one, MINUTES);
+	assertBuzzerOddSession();
+	TEST_ASSERT_EQUAL(REACHED, updatePomodoro());
+
+	setTimerTime(minutes_for_session_two -1, MINUTES);
+	TEST_ASSERT_EQUAL(INPROGRESS, updatePomodoro());
+}
+
+void test_two_sessions_reached_second_session(void)
+{
+	int minutes_for_session_one = 2,
+	    minutes_for_session_two = 3;
+	setSesiones(minutes_for_session_one, minutes_for_session_two);
+
+	setTimerTime(minutes_for_session_one, MINUTES);
+	assertBuzzerOddSession();
+	TEST_ASSERT_EQUAL(REACHED, updatePomodoro());
+
+	setTimerTime(minutes_for_session_two, MINUTES);
+	assertBuzzerEvenSession();
+	TEST_ASSERT_EQUAL(REACHED, updatePomodoro());
+}
+void assertBuzzerEvenSession(void)
+{
+	buzzer_Expect(4, 100);
+}
+
+void assertBuzzerNanSession(void)
+{
+	buzzer_Expect(1, 1000);
+}
+void test_buzzer_long_after_last_session(void)
+{
+	int minutes_for_session = 10;
+	setSesiones(minutes_for_session);
+
+	setTimerTime(minutes_for_session, MINUTES);
+	assertBuzzerOddSession();
+	TEST_ASSERT_EQUAL(REACHED, updatePomodoro());
 	
-	TEST_ASSERT_EQUAL(ON, actualizar());
-}
-void assertSet2Sessions(void);
-void test_reached_rest_time_buzzer_fast(void)
-{
-	assertSet2Sessions();
-	assertReachedFirstSession();
-
-	//second session reached
-	readEvent_ExpectAndReturn(NONE);
-	float time_returned_from_timer = 1;
-	getTimer_ExpectAndReturn(NULL, MINUTES, time_returned_from_timer);
-	getTimer_IgnoreArg_timer();
-	writeToLed_Expect(100);
-	buzzer_Expect(5, 100);
-	enableTimer_Expect(NULL);
-	
-	TEST_ASSERT_EQUAL(ON, actualizar());
-}
-void assertSet2Sessions(void)
-{
-	float session1 = 5,
-	      session2 = 1;
-	enableTimer_Expect(NULL);
-	apagar_Expect();
-	reinitTimer_Expect(NULL);
-	setSesiones(session1, session2);
-}
-
-void test_set_more_sessions_than_maximun(void)
-{
-	//set many sessions
-	enableTimer_Expect(NULL);
-	apagar_Expect();
-	reinitTimer_Expect(NULL);
-	setSesiones(3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3);
-
-	//reached maximun MAX_SESIONES sessions
-	for(int i = 0; i < MAX_SESIONES; i++){
-		readEvent_ExpectAndReturn(NONE);
-		float time_returned_from_timer = 3;
-		getTimer_ExpectAndReturn(NULL, MINUTES, time_returned_from_timer);
-		getTimer_IgnoreArg_timer();
-		writeToLed_Expect(100);
-		if(i%2 == 0)
-			buzzer_Expect(2, 300);
-		else
-			buzzer_Expect(5, 100);
-		if( i < MAX_SESIONES -1){
-			enableTimer_Expect(NULL);
-			
-		}else{ //last session, no reset timer, session 10
-			enableTimer_Expect(NULL);
-			
-		}
-		TEST_ASSERT_EQUAL(ON, actualizar());
-	}
-}
-
-void test_set_nan_session(void)
-{
-	enableTimer_Expect(NULL);
-	apagar_Expect();
-	reinitTimer_Expect(NULL);
-	setSesiones(NAN);
-}
-
-void test_shutdown_on_nan_sesion(void)
-{
-	enableTimer_Expect(NULL);
-	apagar_Expect();
-	reinitTimer_Expect(NULL);
-	setSesiones(NAN);
-
-	readEvent_ExpectAndReturn(POWEROFF);
-	float time_returned_from_timer = 5;
-	getTimer_ExpectAndReturn(NULL, MINUTES, time_returned_from_timer);
-	getTimer_IgnoreArg_timer();
-	apagar_Expect();
-	reinitTimer_Expect(NULL);
-	TEST_ASSERT_EQUAL(OFF, actualizar());
-}
-
-void test_shutdown_on_POWEROFF_event(void)
-{
-	float session1 = 10;
-	enableTimer_Expect(NULL);
-	apagar_Expect();
-	reinitTimer_Expect(NULL);
-	setSesiones(session1);
-
-	readEvent_ExpectAndReturn(POWEROFF);
-	float time_returned_from_timer = 5;
-	getTimer_ExpectAndReturn(NULL, MINUTES, time_returned_from_timer);
-	getTimer_IgnoreArg_timer();
-	apagar_Expect();
-	reinitTimer_Expect(NULL);
-	TEST_ASSERT_EQUAL(OFF, actualizar());
-}
-
-void test_reinit_after_poweroff(void)
-{
-	//set two sessions
-	float session1 = 10;
-	float session2 = 20;
-	enableTimer_Expect(NULL);
-	apagar_Expect();
-	reinitTimer_Expect(NULL);
-	setSesiones(session1, session2);
-
-	//get power off from button
-	readEvent_ExpectAndReturn(POWEROFF);
-	float time_returned_from_timer = session1;
-	getTimer_ExpectAndReturn(NULL, MINUTES, time_returned_from_timer);
-	getTimer_IgnoreArg_timer();
-	apagar_Expect();
-	reinitTimer_Expect(NULL);
-	TEST_ASSERT_EQUAL(OFF, actualizar());
-
-	//after shutdown the pomodoro reinit to first session and after this
-	//finish reset timer to second session
-	readEvent_ExpectAndReturn(NONE);
-	getTimer_ExpectAndReturn(NULL, MINUTES, time_returned_from_timer);
-	getTimer_IgnoreArg_timer();
-	writeToLed_Expect(100);
-	buzzer_Expect(2, 300);
-	enableTimer_Expect(NULL);
-	
-	TEST_ASSERT_EQUAL(ON, actualizar());
-}
-
-void test_toggle_play_pause_timer(void)
-{	
-	//set 3 sessions
-	float session1 = 25;
-	enableTimer_Expect(NULL);
-	apagar_Expect();
-	reinitTimer_Expect(NULL);
-	setSesiones(session1, 10, 25);
-
-	//only toggle play/pause
-	float time_returned_from_timer = session1/3;
-	readEvent_ExpectAndReturn(PLAY_PAUSE);
-	getTimer_ExpectAndReturn(NULL, MINUTES, time_returned_from_timer);
-	getTimer_IgnoreArg_timer();
-	pauseTimer_Expect(NULL);
-	pauseTimer_IgnoreArg_timer();
-	TEST_ASSERT_EQUAL(ON, actualizar());
-
-	//handle pause
-	readEvent_ExpectAndReturn(NONE);
-	getTimer_ExpectAndReturn(NULL, MINUTES, time_returned_from_timer);
-	getTimer_IgnoreArg_timer();
-	writeToLed_Expect(50);
-	TEST_ASSERT_EQUAL(ON, actualizar());
-
-	//only toggle play/pause
-	time_returned_from_timer = session1/3;
-	readEvent_ExpectAndReturn(PLAY_PAUSE);
-	getTimer_ExpectAndReturn(NULL, MINUTES, time_returned_from_timer);
-	getTimer_IgnoreArg_timer();
-	resumeTimer_Expect(NULL);
-	resumeTimer_IgnoreArg_timer();
-	TEST_ASSERT_EQUAL(ON, actualizar());
+	setTimerTime(minutes_for_session, MINUTES);
+	assertBuzzerNanSession();
+	TEST_ASSERT_EQUAL(REACHED, updatePomodoro());
 }

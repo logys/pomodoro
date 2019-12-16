@@ -1,5 +1,6 @@
 #ifndef POMODORO_H
 #define POMODORO_H
+
 #include<stdint.h>
 #include<stdbool.h>
 #include<math.h>
@@ -8,20 +9,18 @@
 #include "buzzer.h"
 #include "handleLed.h"
 #include "apagar.h"
+#include "pomodoro_sessions.h"
 
-#define MAX_SESIONES 10
-/** \file pomodoro.h 
-	double tiempo_acumulado;
- * \param pomodoro Apuntador a pomodoro
- * \param Sesiones separadas por comas*/
-#define setSesiones(...) nuevoSesion( \
-		(float []){__VA_ARGS__, NAN})
-void nuevoSesion(float const sesiones[]);
+#define setSesiones(...) setSessions(__VA_ARGS__)
 /** \brief actualiza la cuenta y estado del pomodoro
  * \param objeto dirección de pomodoro*/
-uint8_t actualizar(void);
+typedef enum {INPROGRESS, REACHED, DISABLED}POMODORO_STATE;
+POMODORO_STATE updatePomodoro(void);
 /** \brief Pausa sesiones 
  * \param objeto dirección de pomodoro*/
 void pausa(void);
 void initPomodoro(void);
+void destroyPomodoro(void);
+void enablePomodoro(void);
+void disablePomodoro(void);
 #endif

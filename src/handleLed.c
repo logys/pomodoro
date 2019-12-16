@@ -1,76 +1,75 @@
 #include "handleLed.h"
-struct Led{
-	double time_toggle;
-	bool work_cicle_seted;
-	short num_toggles;
-}led;
+static struct HandleLed{
+	bool timer_seted;
+	short counter_toggles;
+}handleLed;
 static TIMER led_timer;
 void initHandleLed(void)
 {
 	initTimer();
 	openLed();
 	led_timer = newTimer();
-	led.time_toggle = 0;
-	led.work_cicle_seted = false;
-	led.num_toggles = 0;
+	handleLed.timer_seted = false;
+	handleLed.counter_toggles = 0;
 }
 
-static void updateTimeToggle(double work_cicle);
-static void writeToTimer(double work_cicle);
-static bool timerSeted(void);
-
-void writeToLed(double work_cicle)
+#define SLOPE -492
+#define ABSICE 500
+static double calculateHalfPeriod(double work_cicle)
 {
-	if(!timerSeted()){
-		writeToTimer(work_cicle);
-	}
-}
-static bool timerSeted(void)
-{
-	return led.work_cicle_seted;
-}
-static void writeToTimer(double work_cicle)
-{
-		updateTimeToggle(work_cicle);
-		enableTimer(led_timer);
-		led.work_cicle_seted = true;
-}
-static void updateTimeToggle(double work_cicle)
-{
-	if(work_cicle > 100)
-		work_cicle = 100;
-	else if(work_cicle < 0)
+	if(work_cicle <0)
 		work_cicle = 0;
-
-	led.time_toggle =-492/100.0*work_cicle+500;
+	else if(work_cicle > 100)
+		work_cicle = 100;
+	return SLOPE*work_cicle/100.0 + ABSICE;
 }
-
-static void enableRewriteCicle(void);
-static void checkMinimunToggles(void);
-static bool timeReached(void);
-
-void updateLed(void)
+static bool isTimeReached(double half_period_time, double actual_time)
 {
-	if(timeReached()){
-		toggleLed();
-		checkMinimunToggles();
-		reinitTimer(led_timer);
+	return half_period_time <= actual_time;
+}
+static void toggleAndReinit(void)
+{
+	reinitTimer(led_timer);
+	toggleLed();
+}
+static bool isTimerNoSeted(void)
+{
+	return !handleLed.timer_seted;
+}
+static void setTimer(void)
+{
+	enableTimer(led_timer);
+	handleLed.timer_seted = true;
+}
+static LED_STATE state;
+LED_STATE updateLed(double work_cicle)
+{
+	static double half_period_time = 0;
+	if(isTimerNoSeted()){
+		setTimer();
+		half_period_time = calculateHalfPeriod(work_cicle);
+		state = TOGGLING;
 	}
-}
-static bool timeReached(void)
-{
-	uint16_t elapsed_time = getTimer(led_timer, MILLISECONDS);
-	return elapsed_time >= led.time_toggle;
-}
-static void checkMinimunToggles(void)
-{
-	led.num_toggles++;
-	if(led.num_toggles == 2){
-		enableRewriteCicle();
+	double actual_time = getTimer(led_timer, MILLISECONDS);
+	if(isTimeReached(half_period_time, actual_time)){
+		toggleAndReinit();
+		handleLed.counter_toggles ++;
+		if(handleLed.counter_toggles > 1){
+			handleLed.counter_toggles = 0;
+			state = READY;
+			handleLed.timer_seted = false;
+		}
 	}
+	return state;
 }
-static void enableRewriteCicle(void)
+
+void destroyHandleLed(void)
 {
-	led.num_toggles = 0;
-	led.work_cicle_seted = false;
+	closeLed();
+	destroyTimer(led_timer);
+}
+
+void ledOff(void)
+{
+
 }

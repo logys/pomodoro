@@ -6,97 +6,101 @@
 
 void setUp(void)
 {
-	initTimer_Ignore();
-	openLed_Ignore();
+	initTimer_Expect();
+	openLed_Expect();
 	newTimer_ExpectAndReturn(NULL);
 	initHandleLed();
 }
 
 void tearDown(void)
 {
+	closeLed_Ignore();
+	destroyTimer_Ignore();
+	destroyHandleLed();
 }
 
-void setWorkCicle(double work_cicle);
-void test_set_sesion(void)
+static void getTimeFromInit(double time)
 {
-	setWorkCicle(0);
-}
-void setWorkCicle(double work_cicle)
-{
-	if(work_cicle > 100)
-		work_cicle = 100;
-	else if(work_cicle < 0)
-		work_cicle = 0;
-	double time_toggle = -492/100.0*work_cicle + 500;
 	enableTimer_Expect(NULL);
-	writeToLed(work_cicle);
+	getTimer_ExpectAndReturn(NULL, MILLISECONDS, time);
 }
-
-void assertToggleOnWorkCicle(uint32_t time_to_toggle);
-void test_toggle_after_500ms_on_0_wc(void)
+static void assertToggleReached(void)
 {
-	double work_cicle = 0;
-	setWorkCicle(work_cicle);
-
-	double time_toggle = 500;
-	assertToggleOnWorkCicle(time_toggle);
-}
-void assertToggleOnWorkCicle(uint32_t time_to_toggle)
-{
-	getTimer_ExpectAndReturn(NULL, MILLISECONDS, time_to_toggle);
-	toggleLed_Expect();
 	reinitTimer_Expect(NULL);
-	updateLed();
+	toggleLed_Expect();
 }
-void test_toggle_after_8ms_on_100_wc(void)
+void test_toggle_reached_500ms_on_zero_work_cicle(void)
 {
-	double work_cicle = 100;
-	setWorkCicle(work_cicle);
-
-	double time_toggle = 8;
-	assertToggleOnWorkCicle(time_toggle);
+	getTimeFromInit(500);
+	assertToggleReached();
+	TEST_ASSERT_EQUAL(TOGGLING, updateLed(0));
 }
 
-void test_toggle_two_times_after_one_cicle(void)
+void test_unreached_toggle_500ms(void)
 {
-	double work_cicle = 100;
-	setWorkCicle(work_cicle);
-
-	double time_toggle = 500;
-	for(int i = 0; i<2; i++)
-		assertToggleOnWorkCicle(time_toggle);
+	getTimeFromInit(100);
+	TEST_ASSERT_EQUAL(TOGGLING, updateLed(0));
 }
 
-void test_only_set_one_time_on_each_cicle(void)
+void test_toggle_8ms_on_100_work_cicle(void)
 {
-	int work_cicle = 0;
-	setWorkCicle(work_cicle);
-	int pretend_rewrite_work_cicle = 10;
-	writeToLed(pretend_rewrite_work_cicle);
-
-	int time_correspond_to_first_work_cicle = 500;
-	assertToggleOnWorkCicle(time_correspond_to_first_work_cicle);
+	getTimeFromInit(8);
+	assertToggleReached();
+	TEST_ASSERT_EQUAL(TOGGLING, updateLed(100));
 }
 
-void test_on_finish_cicle_enable_rewrite_cile(void)
+void test_reinitTimer_on_toggling(void)
 {
-	int primer_ciclo = 0;
-	setWorkCicle(primer_ciclo);
-	int expect_time = 500;
-	assertToggleOnWorkCicle(expect_time);
-	assertToggleOnWorkCicle(expect_time);
-
-	int second_cicle = 100;
-	setWorkCicle(100);
-	int second_time = 8;
-	assertToggleOnWorkCicle(second_time);
-	assertToggleOnWorkCicle(second_time);
+	getTimeFromInit(500);
+	assertToggleReached();
+	TEST_ASSERT_EQUAL(TOGGLING, updateLed(0));
 }
 
-void test_write_out_boundaries(void)
+void test_first_toggle_reached_second_no_reached(void)
 {
+	getTimeFromInit(500);
+	assertToggleReached();
+	TEST_ASSERT_EQUAL(TOGGLING, updateLed(0));
 
-	setWorkCicle(1000);
+	getTimer_ExpectAndReturn(NULL, MILLISECONDS, 400);
+	TEST_ASSERT_EQUAL(TOGGLING, updateLed(0));
+}
 
-	assertToggleOnWorkCicle(500);
+void test_boundes_low_work_cycle(void)
+{
+	getTimeFromInit(500);
+	assertToggleReached();
+	TEST_ASSERT_EQUAL(TOGGLING, updateLed(-10));
+}
+
+void test_boundes_high_work_cycle(void)
+{
+	getTimeFromInit(8);
+	assertToggleReached();
+	TEST_ASSERT_EQUAL(TOGGLING, updateLed(200));
+}
+
+void test_only_one_write_on_cycle(void)
+{
+	getTimeFromInit(500);
+	assertToggleReached();
+	TEST_ASSERT_EQUAL(TOGGLING, updateLed(0));
+
+	getTimer_ExpectAndReturn(NULL, MILLISECONDS, 400);
+	TEST_ASSERT_EQUAL(TOGGLING, updateLed(100));
+}
+
+void test_enable_write_after_two_toggles(void)
+{
+	getTimeFromInit(500);
+	assertToggleReached();
+	TEST_ASSERT_EQUAL(TOGGLING, updateLed(0));
+
+	getTimer_ExpectAndReturn(NULL, MILLISECONDS, 500);
+	assertToggleReached();
+	TEST_ASSERT_EQUAL(READY, updateLed(0));
+
+	getTimeFromInit(8);
+	assertToggleReached();
+	TEST_ASSERT_EQUAL(TOGGLING, updateLed(100));
 }

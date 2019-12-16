@@ -8,11 +8,11 @@ typedef struct Timer * TIMER;
 typedef enum {UNKNOWN = -1, MINUTES, SECONDS, MILLISECONDS}UNIT_TIME;
 
 void initTimer(void);
-void destroyTimer(void);
+void destroyTimer(TIMER timer);
 TIMER newTimer(void);
-void setAlarm(TIMER timer, double time, UNIT_TIME);
 void enableTimer(TIMER);
 void disableTimer(TIMER);
+void setAlarm(TIMER timer, double time, UNIT_TIME);
 double getTimer(TIMER timer, UNIT_TIME);
 void pauseTimer(TIMER timer);
 void resumeTimer(TIMER timer);

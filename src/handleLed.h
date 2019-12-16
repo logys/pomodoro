@@ -6,7 +6,9 @@
 #include <stdbool.h>
 
 void initHandleLed(void);
-void writeToLed(double workCicle);
-void updateLed(void);
+void destroyHandleLed(void);
+typedef enum {READY, TOGGLING} LED_STATE;
+LED_STATE updateLed(double work_cicle);
+void ledOff(void);
 
 #endif // _HANDLELED_H

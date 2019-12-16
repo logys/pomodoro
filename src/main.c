@@ -14,7 +14,6 @@
  * */
 
 #include"main.h"
-#include"pomodoro.h"
 #ifdef TEST
 	#define LOOP
 #else
@@ -30,7 +29,7 @@ int appMain(void)
 	initPomodoro();
 	setSesiones(20,8,20,8,20);
 	LOOP{
-		actualizar();
+		updatePomodoro();
 		updateLed();
 	}
 	return 1;
