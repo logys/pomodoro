@@ -32,6 +32,10 @@ void toggleLed()
 	else
 		PORTB |= 1<<PB0;
 }
+void offLed(void)
+{
+	PORTB &= ~(1<<PB0);
+}
 //End drivers ATTINY
 #else
 //Drivers STM32

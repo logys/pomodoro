@@ -13,5 +13,6 @@ void closeLed(void);
 
 /** \brief Toggle */
 void toggleLed(void);
+void offLed(void);
 
 #endif
