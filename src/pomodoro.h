@@ -4,11 +4,7 @@
 #include<stdint.h>
 #include<stdbool.h>
 #include<math.h>
-#include "timer.h"
 #include "event_input.h"
-#include "buzzer.h"
-#include "handleLed.h"
-#include "apagar.h"
 #include "pomodoro_sessions.h"
 
 #define setSesiones(...) setSessions(__VA_ARGS__)
