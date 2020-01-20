@@ -5,7 +5,8 @@
 #include "mock_handleLed.h"
 #include "mock_buzzer.h"
 #include "pomodoro_sessions.h"
-
+#include <stdio.h>
+long oneMinute = 1000*60;
 void setUp(void)
 {
 	initTimer_Expect();
@@ -24,9 +25,9 @@ void tearDown(void)
 	destroyHandleLed_Ignore();
 	destroyRun();
 }
-void setTimeToGet(double time)
+void setMillisecondsToTime(double time)
 {
-	getTimer_ExpectAndReturn(NULL, MINUTES, time);
+	getTimer_ExpectAndReturn(NULL, MILLISECONDS, time);
 }
 void assertWorkCicle(double wc)
 {
@@ -34,22 +35,21 @@ void assertWorkCicle(double wc)
 }
 void test_init_run(void)
 {
-	setTimeToGet(0.5);
+	setMillisecondsToTime(oneMinute*0.5);
 	assertWorkCicle(50);
-	TEST_ASSERT_EQUAL(RUNNING, run(ON));
+	TEST_ASSERT_EQUAL(RUNNING, run());
 }
-
-void test_on_parameter_off_return_off(void)
+void test_session_unreached_0_percent_time(void)
 {
-	pauseTimer_Expect(NULL);
-	TEST_ASSERT_EQUAL(PAUSE, run(OFF));
+	setMillisecondsToTime(0);
+	assertWorkCicle(0);
+	TEST_ASSERT_EQUAL(RUNNING, run());
 }
-
 void test_session_unreached(void)
 {
-	setTimeToGet(0.5);
-	assertWorkCicle(50);
-	TEST_ASSERT_EQUAL(RUNNING, run(ON));
+	setMillisecondsToTime(oneMinute*0.6);
+	assertWorkCicle(60);
+	TEST_ASSERT_EQUAL(RUNNING, run());
 }
 
 void assertReachedOddBuzzer(void)
@@ -60,85 +60,104 @@ void assertReachedEvenBuzzer(void)
 {
 	buzzer_Expect(4, 100);
 }
-void test_session_reached(void)
+void assertReinitTimer(void)
 {
-	setTimeToGet(1);
+	reinitTimer_Expect(NULL);
+}
+void test_session_reached_100_percet_work_cicle(void)
+{
+	setMillisecondsToTime(oneMinute*1);
 	assertWorkCicle(100);
 	assertReachedOddBuzzer();
-	TEST_ASSERT_EQUAL(REACHED, run(ON));
+	assertReinitTimer();
+	TEST_ASSERT_EQUAL(RUNNING, run());
 }
 
 void test_advance_session(void)
 {
-	setTimeToGet(1);
+	setMillisecondsToTime(oneMinute*1);
 	assertWorkCicle(100);
 	assertReachedOddBuzzer();
-	run(ON);
+	assertReinitTimer();
+	run();
 
-	setTimeToGet(1.5);
-	assertWorkCicle(75);
-	TEST_ASSERT_EQUAL(RUNNING, run(ON));
+	setMillisecondsToTime(oneMinute*0 + 49);
+	assertWorkCicle(0.0408333);
+	TEST_ASSERT_EQUAL(RUNNING, run());
 }
 
-void test_on_parameter_off_pause_timer(void)
+void test_on_interrupt_call_save_time_and_resume_after(void)
 {
-	pauseTimer_Expect(NULL);
-	TEST_ASSERT_EQUAL(PAUSE, run(OFF));
+	setMillisecondsToTime(oneMinute*0.5);
+	assertWorkCicle(50);
+	TEST_ASSERT_EQUAL(RUNNING, run());
+
+	setMillisecondsToTime(oneMinute*0.5+50);
+	assertWorkCicle(50);
+	TEST_ASSERT_EQUAL(RUNNING, run());
 }
 
 void test_buzzer_session_odd_two_long_buzz(void)
 {
-	setTimeToGet(1);
+	setMillisecondsToTime(oneMinute);
 	assertWorkCicle(100);
 	assertReachedOddBuzzer();
-	TEST_ASSERT_EQUAL(REACHED, run(ON));
+	assertReinitTimer();
+	TEST_ASSERT_EQUAL(RUNNING, run());
 }
 
 void test_buzzer_session_even_four_short_buzz(void)
 {
-	setTimeToGet(1);
+	setMillisecondsToTime(1*oneMinute);
 	assertWorkCicle(100);
 	assertReachedOddBuzzer();
-	run(ON);
-	setTimeToGet(2);
+	assertReinitTimer();
+	run();
+
+	setMillisecondsToTime(2*oneMinute);
 	assertWorkCicle(100);
 	assertReachedEvenBuzzer();
-	TEST_ASSERT_EQUAL(REACHED, run(ON));
+	assertReinitTimer();
+	TEST_ASSERT_EQUAL(RUNNING, run());
 }
-
+ 
 void test_on_end_all_sessions_return_POWEROFF_buzz_to_long(void)
 {
-	setTimeToGet(1);
+	setMillisecondsToTime(1*oneMinute);
 	assertWorkCicle(100);
 	assertReachedOddBuzzer();
-	run(ON);
-	setTimeToGet(2);
+	assertReinitTimer();
+	run();
+	setMillisecondsToTime(2*oneMinute);
 	assertWorkCicle(100);
 	assertReachedEvenBuzzer();
-	run(ON);
-	setTimeToGet(1);
+	assertReinitTimer();
+	run();
+	setMillisecondsToTime(1*oneMinute);
 	assertWorkCicle(100);
 	assertReachedOddBuzzer();
-	run(ON);
-	setTimeToGet(0);
+	assertReinitTimer();
+	run();
+
+	setMillisecondsToTime(0);
 	assertWorkCicle(NAN);
 	buzzer_Expect(1,1000);
-	TEST_ASSERT_EQUAL(POWEROFF, run(ON));
-}
-
-void test_resume_timer_after_pause(void)
-{
-	pauseTimer_Expect(NULL);
-	run(OFF);
-	resumeTimer_Expect(NULL);
-	setTimeToGet(0.5);
-	assertWorkCicle(50);
-	TEST_ASSERT_EQUAL(RUNNING, run(ON));
+	TEST_ASSERT_EQUAL(REACHED, run());
 }
 
 void test_on_time_cero_calculate_cero_workcicle(void)
 {
-	setTimeToGet(0);
+	setMillisecondsToTime(0);
 	assertWorkCicle(0);
-	TEST_ASSERT_EQUAL(RUNNING, run(ON));
+	TEST_ASSERT_EQUAL(RUNNING, run());
+}
+
+void test_reinit_timer_reached_session(void)
+{
+	setMillisecondsToTime(oneMinute*1);
+	assertWorkCicle(100);
+	assertReachedOddBuzzer();
+	assertReinitTimer();
+	TEST_ASSERT_EQUAL(RUNNING, run());
+
 }

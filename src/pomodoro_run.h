@@ -11,7 +11,7 @@ typedef enum {RUNNING, REACHED, POWEROFF, PAUSE}RUN_STATE;
 void initRun(void);
 void destroyRun(void);
 
-RUN_STATE run(bool play);
+RUN_STATE run(void);
 
 
 #endif // POMODORO_RUN_H
