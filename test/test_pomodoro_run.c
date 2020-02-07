@@ -33,23 +33,23 @@ void assertWorkCicle(double wc)
 {
 	updateLed_ExpectAndReturn(wc,1);
 }
-void test_init_run(void)
+void test_init_pomodoro_run(void)
 {
 	setMillisecondsToTime(oneMinute*0.5);
 	assertWorkCicle(50);
-	TEST_ASSERT_EQUAL(RUNNING, run());
+	TEST_ASSERT_EQUAL(ACTION_RUNNING, pomodoro_run());
 }
 void test_session_unreached_0_percent_time(void)
 {
 	setMillisecondsToTime(0);
 	assertWorkCicle(0);
-	TEST_ASSERT_EQUAL(RUNNING, run());
+	TEST_ASSERT_EQUAL(ACTION_RUNNING, pomodoro_run());
 }
 void test_session_unreached(void)
 {
 	setMillisecondsToTime(oneMinute*0.6);
 	assertWorkCicle(60);
-	TEST_ASSERT_EQUAL(RUNNING, run());
+	TEST_ASSERT_EQUAL(ACTION_RUNNING, pomodoro_run());
 }
 
 void assertReachedOddBuzzer(void)
@@ -70,7 +70,7 @@ void test_session_reached_100_percet_work_cicle(void)
 	assertWorkCicle(100);
 	assertReachedOddBuzzer();
 	assertReinitTimer();
-	TEST_ASSERT_EQUAL(RUNNING, run());
+	TEST_ASSERT_EQUAL(ACTION_RUNNING, pomodoro_run());
 }
 
 void test_advance_session(void)
@@ -79,22 +79,22 @@ void test_advance_session(void)
 	assertWorkCicle(100);
 	assertReachedOddBuzzer();
 	assertReinitTimer();
-	run();
+	pomodoro_run();
 
 	setMillisecondsToTime(oneMinute*0 + 49);
 	assertWorkCicle(0.0408333);
-	TEST_ASSERT_EQUAL(RUNNING, run());
+	TEST_ASSERT_EQUAL(ACTION_RUNNING, pomodoro_run());
 }
 
 void test_on_interrupt_call_save_time_and_resume_after(void)
 {
 	setMillisecondsToTime(oneMinute*0.5);
 	assertWorkCicle(50);
-	TEST_ASSERT_EQUAL(RUNNING, run());
+	TEST_ASSERT_EQUAL(ACTION_RUNNING, pomodoro_run());
 
 	setMillisecondsToTime(oneMinute*0.5+50);
 	assertWorkCicle(50);
-	TEST_ASSERT_EQUAL(RUNNING, run());
+	TEST_ASSERT_EQUAL(ACTION_RUNNING, pomodoro_run());
 }
 
 void test_buzzer_session_odd_two_long_buzz(void)
@@ -103,7 +103,7 @@ void test_buzzer_session_odd_two_long_buzz(void)
 	assertWorkCicle(100);
 	assertReachedOddBuzzer();
 	assertReinitTimer();
-	TEST_ASSERT_EQUAL(RUNNING, run());
+	TEST_ASSERT_EQUAL(ACTION_RUNNING, pomodoro_run());
 }
 
 void test_buzzer_session_even_four_short_buzz(void)
@@ -112,13 +112,13 @@ void test_buzzer_session_even_four_short_buzz(void)
 	assertWorkCicle(100);
 	assertReachedOddBuzzer();
 	assertReinitTimer();
-	run();
+	pomodoro_run();
 
 	setMillisecondsToTime(2*oneMinute);
 	assertWorkCicle(100);
 	assertReachedEvenBuzzer();
 	assertReinitTimer();
-	TEST_ASSERT_EQUAL(RUNNING, run());
+	TEST_ASSERT_EQUAL(ACTION_RUNNING, pomodoro_run());
 }
  
 void test_on_end_all_sessions_return_POWEROFF_buzz_to_long(void)
@@ -127,29 +127,29 @@ void test_on_end_all_sessions_return_POWEROFF_buzz_to_long(void)
 	assertWorkCicle(100);
 	assertReachedOddBuzzer();
 	assertReinitTimer();
-	run();
+	pomodoro_run();
 	setMillisecondsToTime(2*oneMinute);
 	assertWorkCicle(100);
 	assertReachedEvenBuzzer();
 	assertReinitTimer();
-	run();
+	pomodoro_run();
 	setMillisecondsToTime(1*oneMinute);
 	assertWorkCicle(100);
 	assertReachedOddBuzzer();
 	assertReinitTimer();
-	run();
+	pomodoro_run();
 
 	setMillisecondsToTime(0);
 	assertWorkCicle(NAN);
 	buzzer_Expect(1,1000);
-	TEST_ASSERT_EQUAL(REACHED, run());
+	TEST_ASSERT_EQUAL(ACTION_REACHED, pomodoro_run());
 }
 
 void test_on_time_cero_calculate_cero_workcicle(void)
 {
 	setMillisecondsToTime(0);
 	assertWorkCicle(0);
-	TEST_ASSERT_EQUAL(RUNNING, run());
+	TEST_ASSERT_EQUAL(ACTION_RUNNING, pomodoro_run());
 }
 
 void test_reinit_timer_reached_session(void)
@@ -158,6 +158,6 @@ void test_reinit_timer_reached_session(void)
 	assertWorkCicle(100);
 	assertReachedOddBuzzer();
 	assertReinitTimer();
-	TEST_ASSERT_EQUAL(RUNNING, run());
+	TEST_ASSERT_EQUAL(ACTION_RUNNING, pomodoro_run());
 
 }

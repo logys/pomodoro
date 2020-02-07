@@ -16,7 +16,7 @@ void initRun(void)
 	openBuzzer();
 	initHandleLed();
 	timer_run = newTimer();
-	runner.run_state = RUNNING;
+	runner.run_state = ACTION_RUNNING;
 	runner.actual_session_time = NAN;
 	runner.actual_time = NAN;
 	runner.last_time = NAN;
@@ -49,7 +49,7 @@ static void reinitForNextSession(void)
 static void wasLastSession(void)
 {
 	if(isnan(runner.actual_session_time)){
-		runner.run_state = REACHED;
+		runner.run_state = ACTION_REACHED;
 		buzzer(1, 1000);
 	}
 }
@@ -65,7 +65,7 @@ static void isSeassonReached(void)
 		reinitForNextSession();
 	}else{
 		runner.last_time = runner.actual_time;
-		runner.run_state = RUNNING;
+		runner.run_state = ACTION_RUNNING;
 	}
 	wasLastSession();
 }
@@ -77,7 +77,7 @@ static void wasPaused(void)
 	if( delta >= TIME_MINIM_FOR_PAUSE)
 		runner.time_paused += delta;
 }
-RUN_STATE run(void)
+RUN_STATE pomodoro_run(void)
 {
 	updateTime();
 	wasPaused();

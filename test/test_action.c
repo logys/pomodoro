@@ -4,13 +4,15 @@
 
 void setUp(void)
 {
+	initAction();
 }
 
 void tearDown(void)
 {
 }
 
-void test_init_actions(void)
+void test_init_action_as_poweroff(void)
 {
-
+	initAction();
+	TEST_ASSERT_EQUAL(*action, NULL);
 }

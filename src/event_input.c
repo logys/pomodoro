@@ -14,6 +14,10 @@ void initEventInput(void)
 	initTimer();
 	timer_power_off = newTimer();
 }
+void destroyEventInput(void)
+{
+
+}
 
 static void eventOff(void);
 

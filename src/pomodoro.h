@@ -6,17 +6,14 @@
 #include<math.h>
 #include "event_input.h"
 #include "pomodoro_sessions.h"
+#include "action.h"
 
 #define setSesiones(...) setSessions(__VA_ARGS__)
 /** \brief actualiza la cuenta y estado del pomodoro
  * \param objeto dirección de pomodoro*/
-typedef enum {INPROGRESS, REACHED, DISABLED}POMODORO_STATE;
+typedef enum {POMODORO_RUNNING, POMODORO_PAUSED, POMODORO_REACHED, 
+	POMODORO_DISABLED}POMODORO_STATE;
 POMODORO_STATE updatePomodoro(void);
-/** \brief Pausa sesiones 
- * \param objeto dirección de pomodoro*/
-void pausa(void);
 void initPomodoro(void);
 void destroyPomodoro(void);
-void enablePomodoro(void);
-void disablePomodoro(void);
 #endif

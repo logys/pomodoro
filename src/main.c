@@ -30,7 +30,6 @@ int appMain(void)
 	setSesiones(20,8,20,8,20);
 	LOOP{
 		updatePomodoro();
-		updateLed();
 	}
 	return 1;
 }

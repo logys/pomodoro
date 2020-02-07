@@ -5,13 +5,12 @@
 #include "buzzer.h"
 #include "handleLed.h"
 #include "pomodoro_sessions.h"
-
-typedef enum {RUNNING, REACHED, POWEROFF, PAUSE}RUN_STATE;
+#include "action.h"
 
 void initRun(void);
 void destroyRun(void);
 
-RUN_STATE run(void);
+RUN_STATE pomodoro_run(void);
 
 
 #endif // POMODORO_RUN_H
