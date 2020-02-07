@@ -31,5 +31,5 @@ int appMain(void)
 	LOOP{
 		updatePomodoro();
 	}
-	return 1;
+	return 0;
 }

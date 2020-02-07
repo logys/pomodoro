@@ -1,11 +1,7 @@
 #include "unity.h"
 #include "main.h"
 #include "mock_pomodoro.h"
-#include "mock_handleLed.h"
-#include "mock_timer.h"
-#include "mock_buzzer.h"
-#include "mock_apagar.h"
-#include "mock_pomodoro_sessions.h"
+#include "pomodoro_sessions.h"
 
 
 void setUp(void)
@@ -16,3 +12,9 @@ void tearDown(void)
 {
 }
 
+void test_set_sessiones(void)
+{
+	initPomodoro_Expect();
+	updatePomodoro_ExpectAndReturn(0);
+	appMain();
+}

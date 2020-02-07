@@ -9,7 +9,7 @@ void destroyPowerOff(void)
 
 }
 
-void pomodoro_off(void)
+RUN_STATE pomodoro_off(void)
 {
 
 }
