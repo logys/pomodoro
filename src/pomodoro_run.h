@@ -5,7 +5,7 @@
 #include "buzzer.h"
 #include "handleLed.h"
 #include "pomodoro_sessions.h"
-#include "action.h"
+#include "private_actions.h"
 
 void initRun(void);
 void destroyRun(void);

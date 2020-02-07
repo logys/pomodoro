@@ -4,10 +4,11 @@
 #include "pomodoro_sessions.h"
 #include "mock_action.h"
 
-void foo(void)
+RUN_STATE foo(void)
 {
 
 }
+
 void setUp(void)
 {
 	initEventInput_Expect();

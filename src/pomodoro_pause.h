@@ -2,7 +2,7 @@
 #define POMODORO_PAUSE_H
 #include "timer.h"
 #include "handleLed.h"
-#include "action.h"
+#include "private_actions.h"
 
 void initPause(void);
 RUN_STATE pomodoro_pause(void);
