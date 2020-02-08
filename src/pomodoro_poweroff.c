@@ -11,5 +11,6 @@ void destroyPowerOff(void)
 
 RUN_STATE pomodoro_off(void)
 {
+	return 0;
 
 }

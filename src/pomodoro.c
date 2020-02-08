@@ -10,6 +10,8 @@ static Pomodoro pomodoro;
 void initPomodoro(void)
 {
 	initEventInput();
+	initSessions();
+	initAction();
 	pomodoro.state = POMODORO_DISABLED;
 	pomodoro.first_call = true;
 }

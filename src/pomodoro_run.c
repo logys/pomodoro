@@ -16,6 +16,7 @@ void initRun(void)
 	openBuzzer();
 	initHandleLed();
 	timer_run = newTimer();
+	enableTimer(timer_run);
 	runner.run_state = ACTION_RUNNING;
 	runner.actual_session_time = NAN;
 	runner.actual_time = NAN;

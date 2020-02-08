@@ -1,4 +1,4 @@
-objects=led.o delay.o log.o buzzer.o pomodoro.o entrada.o timer.o event_input.o handleLed.o apagar.o pomodoro_sessions.o
+objects=led.o delay.o log.o buzzer.o pomodoro.o entrada.o timer.o event_input.o handleLed.o apagar.o pomodoro_sessions.o action.o pomodoro_run.o pomodoro_pause.o pomodoro_poweroff.o
 mmcu=attiny85
 CFLAGS=-Wall -O2 -mmcu=${mmcu} --std=gnu11 -lm -DATTINY
 programer=arduino

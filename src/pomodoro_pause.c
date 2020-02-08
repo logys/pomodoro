@@ -38,7 +38,7 @@ static void reinitTimeFirstCall(void)
 	}
 	pauser.last_time = pauser.actual_time;
 }
-static int const MAX_PAUSE_TIME = 60*1000*5;
+static  const uint32_t MAX_PAUSE_TIME =60*5000UL;
 static void isTimePauseReached(void)
 {
 	if(pauser.actual_time >= MAX_PAUSE_TIME)
@@ -47,7 +47,7 @@ static void isTimePauseReached(void)
 		pauser.state = ACTION_RUNNING;
 }
 
-#define TOGGLE_TIME 15
+#define TOGGLE_TIME 85
 RUN_STATE pomodoro_pause(void)
 {
 	requestTime();
