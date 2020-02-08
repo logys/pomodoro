@@ -11,6 +11,6 @@ void destroyPowerOff(void)
 
 RUN_STATE pomodoro_off(void)
 {
+	reinitSessions();
 	return 0;
-
 }

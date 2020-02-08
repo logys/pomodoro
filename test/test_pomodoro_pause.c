@@ -29,7 +29,7 @@ void setMillisecondsOnTimer(double time)
 }
 void assertLed(void)
 {
-	updateLed_ExpectAndReturn(15, 0);
+	updateLed_ExpectAndReturn(85, 0);
 }
 void test_unreached_time_return_ACTION_RUNNING(void)
 {

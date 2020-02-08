@@ -13,6 +13,7 @@ void setUp(void)
 	openBuzzer_Expect();
 	initHandleLed_Expect();
 	newTimer_ExpectAndReturn(NULL);
+	enableTimer_Expect(NULL);
 	initRun();
 	initSessions();
 	setSessions(1,2,1);

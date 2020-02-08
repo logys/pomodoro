@@ -36,6 +36,10 @@ void advanceSession()
 {
 	session.index++;
 }
+void reinitSessions(void)
+{
+
+}
 
 short getSessionNumber(void)
 {

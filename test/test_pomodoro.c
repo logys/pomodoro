@@ -12,6 +12,7 @@ RUN_STATE foo(void)
 void setUp(void)
 {
 	initEventInput_Expect();
+	initAction_Expect();
 	initPomodoro();
 	action = foo;
 }
@@ -33,6 +34,7 @@ static void setInputEvent(short event)
 void test_init_pomodoro(void)
 {
 	initEventInput_Expect();
+	initAction_Expect();
 	initPomodoro();
 
 	setInputEvent(NONE);

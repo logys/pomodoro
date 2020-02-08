@@ -27,7 +27,7 @@ int main(void)
 int appMain(void)
 {
 	initPomodoro();
-	setSesiones(1,1,1,1,1);
+	setSesiones(10,30,1,1,1);
 	LOOP{
 		updatePomodoro();
 	}

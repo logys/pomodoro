@@ -1,6 +1,7 @@
 #include "unity.h"
 
 #include "pomodoro_poweroff.h"
+#include "pomodoro_sessions.h"
 
 void setUp(void)
 {
