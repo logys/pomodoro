@@ -78,3 +78,12 @@ void test_max_sessions_ten(void)
 	advanceSession();
 	TEST_ASSERT(isnan(getSessionTime()));
 }
+
+void test_reinit_sessions(void)
+{
+	advanceSession();
+	advanceSession();
+	advanceSession();
+	reinitSessions();
+	TEST_ASSERT_EQUAL(1, getSessionNumber());
+}
