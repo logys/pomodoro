@@ -1,13 +1,6 @@
 /** \file 
  * \brief  Funciones para calcular el tiempo*/
 #include"delay.h"
-#ifdef TEST
-#include<stub_io.h>
-#include<stub_interrupt.h>
-#else
-#include<avr/io.h>
-#include<avr/interrupt.h>
-#endif
 
 volatile uint32_t tiempo = 0;
 
@@ -34,10 +27,13 @@ uint32_t millis(void)
 	return tmp;
 }
 /* Interrupción timer 1 comparador A */
+#ifdef TEST
+#else
 ISR(TIM1_COMPA_vect)
 {
 	tiempo += 1;
 }
+#endif
 /* Configura el timer 1 para 1ms */
 void initTimer1Millis(void)
 {

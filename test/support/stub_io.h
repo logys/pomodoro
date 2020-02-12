@@ -81,10 +81,14 @@ uint8_t TCCR1;
 
 uint8_t OCR1A;
 
-#define sei() {}
-#define cli() {}
-
 uint8_t TIMSK;
 #define OCIE1A 6
+
+uint8_t GIMSK;
+uint8_t PCMSK;
+uint8_t PCIE;
+
+#define PCINT0 0
+#define PCINT3 3
 
 #endif // _AVR_IOM328P_H_

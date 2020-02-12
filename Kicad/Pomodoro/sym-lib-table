@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name Pomodoro-rescue)(type Legacy)(uri ${KIPRJMOD}/Pomodoro-rescue.lib)(options "")(descr ""))
+)

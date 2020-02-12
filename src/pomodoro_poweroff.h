@@ -2,6 +2,15 @@
 #define POMODORO_POWEROFF_H
 #include "private_actions.h"
 #include "pomodoro_sessions.h"
+#ifndef TEST
+	#include<avr/sleep.h>
+	#include<avr/interrupt.h>
+#else 
+	#include"stub_io.h"
+	#include"stub_sleep.h"
+	#include"stub_interrupt.h"
+#endif
+
 void initPowerOff(void);
 void destroyPowerOff(void);
 

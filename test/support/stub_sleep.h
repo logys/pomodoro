@@ -15,12 +15,13 @@
  *
  * =====================================================================================
  */
-#ifndef STUB_INTERRUPT_H
-#define STUB_INTERRUPT_H
-
-enum INTERRUPT{PCINT0_vect, TIM1_COMPA_vect};
-
-int ISR(enum INTERRUPT);
-int cli(void);
-int sei(void);
+#ifndef STUB_SLEEP
+#define STUB_SLEEP
+enum MODE_SLEEP{SLEEP_MODE_PWR_DOWN};
+void set_sleep_mode(enum MODE_SLEEP);
+void sleep_enable(void);
+void sleep_disable(void);
+void sleep_cpu(void);
+void sleep_mode(void);
+void sleep_bod_disable(void);
 #endif
