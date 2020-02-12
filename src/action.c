@@ -18,7 +18,7 @@ void setActionTogglePlayPause(void)
 {
 	bool last_action_was_pause = action == pomodoro_pause;
 	if(first_toggle || last_action_was_pause){
-		action = pomodoro_run;
+		setActionPlay();
 		first_toggle = false;
 	}
 	else{
@@ -28,4 +28,8 @@ void setActionTogglePlayPause(void)
 void setActionPowerOff(void)
 {
 	action = pomodoro_off;
+}
+void setActionPlay(void)
+{
+	action = pomodoro_run;
 }

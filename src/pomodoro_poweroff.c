@@ -23,12 +23,12 @@ RUN_STATE pomodoro_off(void)
 	sleep_disable();
 	sei();
 	reinitSessions();
-	return 0;
+	return ACTION_POWEROFF;
 }
 
 #ifndef TEST
 ISR(PCINT0_vect)
 {
-	GIMSK &= ~(1<<PCIE);
+//	GIMSK &= ~(1<<PCIE);
 }
 #endif

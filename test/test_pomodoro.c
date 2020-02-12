@@ -101,3 +101,21 @@ void test_button_return_power_off_setActionPowerOff(void)
 	assertActionPowerOff();
 	TEST_ASSERT_EQUAL(POMODORO_REACHED, updatePomodoro());
 }
+
+static RUN_STATE returnPowerOff(void)
+{
+	return ACTION_REACHED;
+}
+void test_last_action_poweroff(void)
+{
+	assertFirstCallPowerOff();
+
+	setInputEvent(PLAY_PAUSE);
+	assertToggle();
+	action=returnPowerOff;
+	updatePomodoro();
+
+	setInputEvent(NONE);
+	assertActionPowerOff();
+	TEST_ASSERT_EQUAL(POMODORO_REACHED, updatePomodoro());
+}
