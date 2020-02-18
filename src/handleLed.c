@@ -68,8 +68,3 @@ void destroyHandleLed(void)
 	closeLed();
 	destroyTimer(led_timer);
 }
-
-void ledOff(void)
-{
-
-}

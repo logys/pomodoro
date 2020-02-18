@@ -368,31 +368,4 @@ Wire Wire Line
 Wire Wire Line
 	5900 3250 5850 3250
 Connection ~ 5400 3550
-$Comp
-L Connector:Conn_01x02_Female J2
-U 1 1 5DDDF330
-P 6400 3250
-F 0 "J2" H 6428 3226 50  0000 L CNN
-F 1 "Conn_01x02_Female" H 6428 3135 50  0000 L CNN
-F 2 "Connector_PinSocket_2.54mm:PinSocket_1x02_P2.54mm_Vertical" H 6400 3250 50  0001 C CNN
-F 3 "~" H 6400 3250 50  0001 C CNN
-	1    6400 3250
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	6200 3250 5900 3250
-Connection ~ 5900 3250
-$Comp
-L power:GND #PWR0112
-U 1 1 5DDE06BD
-P 6200 3450
-F 0 "#PWR0112" H 6200 3200 50  0001 C CNN
-F 1 "GND" H 6205 3277 50  0000 C CNN
-F 2 "" H 6200 3450 50  0001 C CNN
-F 3 "" H 6200 3450 50  0001 C CNN
-	1    6200 3450
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	6200 3450 6200 3350
 $EndSCHEMATC

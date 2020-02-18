@@ -32,9 +32,13 @@ void toggleLed()
 	else
 		PORTB |= 1<<PB0;
 }
-void offLed(void)
+void sleepLed(void)
 {
-	PORTB &= ~(1<<PB0);
+	closeLed();
+}
+void wakeUpLed(void)
+{
+	openLed();
 }
 //End drivers ATTINY
 #else

@@ -1,5 +1,4 @@
 EESchema Schematic File Version 4
-LIBS:Pomodoro-cache
 EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
@@ -218,7 +217,7 @@ Wire Wire Line
 	7500 1300 7450 1300
 Connection ~ 7450 1300
 $Comp
-L MCU_Microchip_ATtiny:ATtiny85V-10PU U1
+L Pomodoro-rescue:ATtiny85V-10PU-MCU_Microchip_ATtiny U1
 U 1 1 5C80F1C5
 P 3050 2800
 F 0 "U1" H 2520 2846 50  0000 R CNN
@@ -253,7 +252,7 @@ $EndComp
 Wire Wire Line
 	5650 3850 5900 3850
 $Comp
-L Connector:AVR-ISP-6 J1
+L Pomodoro-rescue:AVR-ISP-6-Connector J1
 U 1 1 5DD849F3
 P 2800 4300
 F 0 "J1" H 2521 4396 50  0000 R CNN

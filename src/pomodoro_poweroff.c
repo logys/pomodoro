@@ -13,6 +13,7 @@ static void setupIRButton(void)
 }
 RUN_STATE pomodoro_off(void)
 {
+	sleepLed();
 	setupIRButton();
 	set_sleep_mode(SLEEP_MODE_PWR_DOWN);
 	cli();
@@ -23,6 +24,7 @@ RUN_STATE pomodoro_off(void)
 	sleep_disable();
 	sei();
 	reinitSessions();
+	wakeUpLed();
 	return ACTION_POWEROFF;
 }
 

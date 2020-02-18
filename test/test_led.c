@@ -37,3 +37,8 @@ void test_toggle(void)
 	toggleLed();
 	TEST_ASSERT_BITS(1, 1, PORTB);
 }
+void test_sleep_led(void)
+{
+	sleepLed();
+	TEST_ASSERT_BITS(1, 0, PORTB);
+}

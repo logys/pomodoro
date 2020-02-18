@@ -2,6 +2,7 @@
 #define POMODORO_POWEROFF_H
 #include "private_actions.h"
 #include "pomodoro_sessions.h"
+#include "led.h"
 #ifndef TEST
 	#include<avr/sleep.h>
 	#include<avr/interrupt.h>

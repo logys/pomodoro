@@ -9,6 +9,5 @@ void initHandleLed(void);
 void destroyHandleLed(void);
 typedef enum {READY, TOGGLING} LED_STATE;
 LED_STATE updateLed(double work_cicle);
-void ledOff(void);
 
 #endif // _HANDLELED_H
