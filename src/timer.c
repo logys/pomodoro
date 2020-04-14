@@ -1,122 +1,94 @@
 #include "timer.h"
-
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdlib.h>
 struct Timer{
-	uint32_t init_time;
+	uint32_t time_at_start;
+	bool time_started;
+	bool time_paused;
+	uint32_t time_on_pause;
+	void (*time_callbackFunction)(void);
 	uint32_t end_time;
 	uint32_t accumulated_time;
 	uint32_t last_millis;
-	bool paused;
 };
 
-void initTimer(void)
-{
-	initTimer1Millis();
-}
 
-TIMER newTimer(void)
+TIMER timer_create(void)
 {
+	millis_init();
 	TIMER tmp = calloc(1, sizeof(struct Timer));
-	tmp->init_time = -1;
+	tmp->time_at_start = 0;
+	tmp->time_started = false;
+	tmp->time_paused = false;
+	tmp->time_on_pause = 0;
 	return tmp;
 }
 
-#define MILLISECONDS_IN_MILLISECOND 1
-#define MILLISECONDS_IN_SECOND 1000
-#define MILLISECONDS_IN_MINUTE 60000UL
-typedef enum {SET = 1, GET}ACTION;
-
-static void setSesionTime(TIMER timer, uint32_t time);
-static double setOrGetTime(ACTION, TIMER, double time, UNIT_TIME);
-static double getSesionTime(TIMER timer, int time_scale);
-
-void setAlarm(TIMER timer, double time, UNIT_TIME unit)
+uint32_t timer_getMilliseconds(TIMER timer)
 {
-	reinitTimer(timer);
-	setOrGetTime(SET, timer, time, unit);
-}
-static double setOrGetTime(ACTION action, TIMER timer, double time, UNIT_TIME unit)
-{
-	int time_scale;
- 	unit == MILLISECONDS ? time_scale = MILLISECONDS_IN_MILLISECOND:
-	unit == SECONDS ? time_scale = MILLISECONDS_IN_SECOND:
-	unit == MINUTES ? time_scale = MILLISECONDS_IN_MINUTE:
-			(time_scale = UNKNOWN); 
-	if(time_scale == UNKNOWN)
-		return UNKNOWN;
-	if(action == SET){
-		setSesionTime(timer, time*time_scale);
-	}else if(action == GET){
-		return getSesionTime(timer, time_scale);
-	}
-	return 0;
-}
-static double getSesionTime(TIMER timer, int time_scale)
-{
-	if(timer->init_time == -1)
-		return -1;
-	return timer->accumulated_time/(double)time_scale;
-}
-static void setSesionTime(TIMER timer, uint32_t time)
-{
-	timer->end_time = time + timer->init_time;
-}
-
-
-static void updateTime(TIMER timer);
-double getTimer(TIMER timer, UNIT_TIME unit)
-{
-	updateTime(timer);
-	return setOrGetTime(GET, timer, 0, unit);
-}
-static void updateTime(TIMER timer)
-{
-	if(!timer->paused){
-		uint32_t actual_time = millis();
-		timer->accumulated_time += actual_time - timer->last_millis;
-		timer->last_millis = actual_time;
+	if(!timer->time_started)
+		return 0;
+	else{
+		if(timer->time_paused)
+			return timer->time_on_pause - timer->time_at_start;
+		return millis()-timer->time_at_start;
 	}
 }
-
-void reinitTimer(TIMER timer)
+void timer_reinit(TIMER timer)
 {
-	timer->init_time = millis();
-	timer->accumulated_time = 0;
-	timer->last_millis = timer->init_time;
+	timer->time_at_start = millis();
 }
 
-void pauseTimer(TIMER timer)
-{
-	updateTime(timer);
-	timer->paused = true;
-}
 
-void resumeTimer(TIMER timer)
+void timer_pause(TIMER timer)
 {
-	if(timer->paused){
-		timer->last_millis = millis();
-		timer->paused = false;
+	if(!timer->time_paused){
+		timer->time_paused = true;
+		timer->time_on_pause = millis();
 	}
 }
+static void computeTimeSincePause(TIMER timer)
+{
+	uint32_t time_elapsed_before_pause = timer->time_on_pause - timer->time_at_start;
+	timer->time_at_start = millis() - time_elapsed_before_pause;
+}
+void timer_resume(TIMER timer)
+{
+	if(timer->time_paused){
+		computeTimeSincePause(timer);
+		timer->time_paused = false;
+	}
+}
+void timer_start(TIMER timer)
+{
+	if(timer->time_started)
+		return ;
+	timer->time_at_start = millis();
+	timer->time_started = true;
+}
+
+void timer_destroy(TIMER timer)
+{
+	millis_destroy();
+}
+
 void delay(uint32_t time_ms)
 {
-	TIMER delay_ms = newTimer();
-	enableTimer(delay_ms);
-	while(getTimer(delay_ms, MILLISECONDS) < time_ms){
+	TIMER delay_ms = timer_create();
+	timer_start(delay_ms);
+	while(timer_getMilliseconds(delay_ms) <= time_ms){
 		__asm__("nop");
 	}
+	timer_destroy(delay_ms);
 	free(delay_ms);
 }
 
-void enableTimer(TIMER timer)
+void timer_setCallback(TIMER timer, uint32_t time_ms, void(*callback)(void))
 {
-	reinitTimer(timer);
+	timer->time_callbackFunction = callback;
 }
 
-void disableTimer(TIMER timer)
+void timer_updateLoop(void)
 {
-}
-
-void destroyTimer(TIMER timer)
-{
-	free(timer);
 }

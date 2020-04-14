@@ -12,11 +12,10 @@ TIMER timer_run;
 
 void initRun(void)
 {
-	initTimer();
 	openBuzzer();
 	initHandleLed();
-	timer_run = newTimer();
-	enableTimer(timer_run);
+	timer_run = timer_create();
+	timer_start(timer_run);
 	runner.run_state = ACTION_RUNNING;
 	runner.actual_session_time = NAN;
 	runner.actual_time = NAN;
@@ -26,13 +25,13 @@ void initRun(void)
 
 void destroyRun(void)
 {
-	destroyTimer(timer_run);
+	timer_destroy(timer_run);
 	closeBuzzer();
 	destroyHandleLed();
 }
 static void updateTime(void)
 {
-	runner.actual_time = getTimer(timer_run, MILLISECONDS);
+	runner.actual_time = timer_getMilliseconds(timer_run);
 	runner.actual_session_time = getSessionTime()*1000*60.0;
 }
 static void handleLed(void)
@@ -45,7 +44,7 @@ static void reinitForNextSession(void)
 {
 	runner.time_paused = 0;
 	runner.last_time = NAN;
-	reinitTimer(timer_run);
+	timer_reinit(timer_run);
 }
 static void wasLastSession(void)
 {

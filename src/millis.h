@@ -10,8 +10,7 @@
 #endif
 /** \file delay.h */
 
-/* Retorna el tiempo en milisegundos desde que el programa inicio*/
 uint32_t millis(void);
-void initTimer1Millis(void);
-void reiniciarMillis(void);
+void millis_init(void);
+void millis_destroy(void);
 #endif

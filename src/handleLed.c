@@ -6,9 +6,8 @@ static struct HandleLed{
 static TIMER led_timer;
 void initHandleLed(void)
 {
-	initTimer();
 	openLed();
-	led_timer = newTimer();
+	led_timer = timer_create();
 	handleLed.timer_seted = false;
 	handleLed.counter_toggles = 0;
 }
@@ -29,7 +28,7 @@ static bool isTimeReached(double half_period_time, double actual_time)
 }
 static void toggleAndReinit(void)
 {
-	reinitTimer(led_timer);
+	timer_reinit(led_timer);
 	toggleLed();
 }
 static bool isTimerNoSeted(void)
@@ -38,7 +37,7 @@ static bool isTimerNoSeted(void)
 }
 static void setTimer(void)
 {
-	enableTimer(led_timer);
+	timer_start(led_timer);
 	handleLed.timer_seted = true;
 }
 static LED_STATE state;
@@ -50,7 +49,7 @@ LED_STATE updateLed(double work_cicle)
 		half_period_time = calculateHalfPeriod(work_cicle);
 		state = TOGGLING;
 	}
-	double actual_time = getTimer(led_timer, MILLISECONDS);
+	double actual_time = timer_getMilliseconds(led_timer);
 	if(isTimeReached(half_period_time, actual_time)){
 		toggleAndReinit();
 		handleLed.counter_toggles ++;
@@ -66,5 +65,5 @@ LED_STATE updateLed(double work_cicle)
 void destroyHandleLed(void)
 {
 	closeLed();
-	destroyTimer(led_timer);
+	timer_destroy(led_timer);
 }

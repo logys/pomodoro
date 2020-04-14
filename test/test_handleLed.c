@@ -6,27 +6,26 @@
 
 void setUp(void)
 {
-	initTimer_Expect();
 	openLed_Expect();
-	newTimer_ExpectAndReturn(NULL);
+	timer_create_ExpectAndReturn(NULL);
 	initHandleLed();
 }
 
 void tearDown(void)
 {
 	closeLed_Ignore();
-	destroyTimer_Ignore();
+	timer_destroy_Ignore();
 	destroyHandleLed();
 }
 
 static void getTimeFromInit(double time)
 {
-	enableTimer_Expect(NULL);
-	getTimer_ExpectAndReturn(NULL, MILLISECONDS, time);
+	timer_start_Expect(NULL);
+	timer_getMilliseconds_ExpectAndReturn(NULL, time);
 }
 static void assertToggleReached(void)
 {
-	reinitTimer_Expect(NULL);
+	timer_reinit_Expect(NULL);
 	toggleLed_Expect();
 }
 void test_toggle_reached_500ms_on_zero_work_cicle(void)
@@ -62,7 +61,7 @@ void test_first_toggle_reached_second_no_reached(void)
 	assertToggleReached();
 	TEST_ASSERT_EQUAL(TOGGLING, updateLed(0));
 
-	getTimer_ExpectAndReturn(NULL, MILLISECONDS, 400);
+	timer_getMilliseconds_ExpectAndReturn(NULL, 400);
 	TEST_ASSERT_EQUAL(TOGGLING, updateLed(0));
 }
 
@@ -86,7 +85,7 @@ void test_only_one_write_on_cycle(void)
 	assertToggleReached();
 	TEST_ASSERT_EQUAL(TOGGLING, updateLed(0));
 
-	getTimer_ExpectAndReturn(NULL, MILLISECONDS, 400);
+	timer_getMilliseconds_ExpectAndReturn(NULL, 400);
 	TEST_ASSERT_EQUAL(TOGGLING, updateLed(100));
 }
 
@@ -96,7 +95,7 @@ void test_enable_write_after_two_toggles(void)
 	assertToggleReached();
 	TEST_ASSERT_EQUAL(TOGGLING, updateLed(0));
 
-	getTimer_ExpectAndReturn(NULL, MILLISECONDS, 500);
+	timer_getMilliseconds_ExpectAndReturn(NULL, 500);
 	assertToggleReached();
 	TEST_ASSERT_EQUAL(READY, updateLed(0));
 

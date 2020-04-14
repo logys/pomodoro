@@ -1,8 +1,10 @@
 /** \file 
  * \brief  Funciones para calcular el tiempo*/
-#include"delay.h"
+#include"millis.h"
+#include<stdbool.h>
 
 volatile uint32_t tiempo = 0;
+bool alreadyInit = false;
 
 /** \brief Regresa el número de milisegundos desde que se inicio el programa 
  * \code
@@ -18,6 +20,8 @@ volatile uint32_t tiempo = 0;
 #ifdef ATTINY
 uint32_t millis(void)
 {
+	if(!alreadyInit)
+		return 0;
 	uint32_t tmp = 0;
 	uint8_t oldSREG = 0;
 	oldSREG = SREG;
@@ -26,21 +30,24 @@ uint32_t millis(void)
 	SREG = oldSREG;
 	return tmp;
 }
-/* Interrupción timer 1 comparador A */
-#ifdef TEST
-#else
-ISR(TIM1_COMPA_vect)
+
+void millis_init()
 {
-	tiempo += 1;
+		if(alreadyInit)
+			return ;
+		TCCR1 |= (0<<CS12)|(1<<CS11)|(1<<CS10);
+		TCCR1 &= ~(1<<CS12);
+		OCR1A = 240;
+		sei();
+		TIMSK |= (1<<OCIE1A);
+		tiempo = 0;
+		alreadyInit = true;
 }
-#endif
-/* Configura el timer 1 para 1ms */
-void initTimer1Millis(void)
+
+void millis_destroy(void)
 {
-	TCCR1 |= (0<<CS12)|(1<<CS11)|(1<<CS10);
-	OCR1A = 240;
-	sei();
-	TIMSK |= (1<<OCIE1A);
+	TIMSK &= ~(1<<OCIE1A);
+	alreadyInit = false;
 }
 
 void reiniciarMillis(void)
@@ -51,6 +58,10 @@ void reiniciarMillis(void)
 	tiempo = 0;
 	SREG = oldSREG;
 	sei();
+}
+ISR(TIM1_COMPA_vect)
+{
+	tiempo++;
 }
 #elif STM32
 //Delay stm32
@@ -67,6 +78,7 @@ void initTimer1Millis(void)
 	timer_set_period(TIM17, 1000);
 	timer_enable_counter(TIM17);
 	timer_enable_irq(TIM17, TIM_DIER_UIE);
+	tiempo = 0;
 }
 void tim17_isr(void)
 {

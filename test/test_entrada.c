@@ -2,7 +2,7 @@
 #include "mock_timer.h"
 #include "entrada.h"
 #include "stub_io.h"
-
+/*
 void setUp(void)
 {
 	DDRB = 0xff;
@@ -62,4 +62,4 @@ void test_after_50ms_read_again(void)
 	getTimer_ExpectAndReturn(NULL, MILLISECONDS, 50);
 	TEST_ASSERT_EQUAL(OFF, readPush());
 
-}
+}*/

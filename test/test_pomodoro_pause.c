@@ -6,26 +6,25 @@
 
 void setUp(void)
 {
-	initTimer_Expect();
 	initHandleLed_Expect();
-	newTimer_ExpectAndReturn(NULL);
+	timer_create_ExpectAndReturn(NULL);
 	initPause();
 }
 
 void tearDown(void)
 {
-	destroyTimer_Ignore();
+	timer_destroy_Ignore();
 	destroyHandleLed_Ignore();
 	destroyPause();
 }
 
 void setTimerFirstTime(void)
 {
-	reinitTimer_Expect(NULL);
+	timer_reinit_Expect(NULL);
 }
 void setMillisecondsOnTimer(double time)
 {
-	getTimer_ExpectAndReturn(NULL, MILLISECONDS, time);
+	timer_getMilliseconds_ExpectAndReturn(NULL, time);
 }
 void assertLed(void)
 {

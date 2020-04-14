@@ -77,7 +77,7 @@ uint8_t TCNT1;
 uint8_t TCCR1;
 #define CS10 0
 #define CS11 1
-#define CS12 0
+#define CS12 2
 
 uint8_t OCR1A;
 

@@ -9,11 +9,10 @@
 long oneMinute = 1000*60;
 void setUp(void)
 {
-	initTimer_Expect();
 	openBuzzer_Expect();
 	initHandleLed_Expect();
-	newTimer_ExpectAndReturn(NULL);
-	enableTimer_Expect(NULL);
+	timer_create_ExpectAndReturn(NULL);
+	timer_start_Expect(NULL);
 	initRun();
 	initSessions();
 	setSessions(1,2,1);
@@ -21,14 +20,14 @@ void setUp(void)
 
 void tearDown(void)
 {
-	destroyTimer_Ignore();
+	timer_destroy_Ignore();
 	closeBuzzer_Ignore();
 	destroyHandleLed_Ignore();
 	destroyRun();
 }
 void setMillisecondsToTime(double time)
 {
-	getTimer_ExpectAndReturn(NULL, MILLISECONDS, time);
+	timer_getMilliseconds_ExpectAndReturn(NULL, time);
 }
 void assertWorkCicle(double wc)
 {
@@ -63,7 +62,7 @@ void assertReachedEvenBuzzer(void)
 }
 void assertReinitTimer(void)
 {
-	reinitTimer_Expect(NULL);
+	timer_reinit_Expect(NULL);
 }
 void test_session_reached_100_percet_work_cicle(void)
 {

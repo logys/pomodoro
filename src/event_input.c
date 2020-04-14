@@ -11,8 +11,7 @@ static TIMER timer_power_off;
 void initEventInput(void)
 {
 	openPush();
-	initTimer();
-	timer_power_off = newTimer();
+	timer_power_off = timer_create();
 }
 void destroyEventInput(void)
 {
@@ -28,10 +27,10 @@ int8_t readEvent(void)
 		eventOff();
 	}else if(handler.button == ON){ //Button pressed
 		if(handler.last_button == OFF){
-			enableTimer(timer_power_off);
+			timer_start(timer_power_off);
 			handler.state = PLAY_PAUSE;
 		}else{
-			handler.time_power_off = getTimer(timer_power_off, SECONDS);
+			handler.time_power_off = timer_getMilliseconds(timer_power_off);
 			if(handler.time_power_off >= 2){
 				handler.state = POWEROFF;
 			}else{

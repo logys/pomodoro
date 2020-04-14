@@ -1,4 +1,6 @@
 #include"entrada.h"
+#include<stdbool.h>
+#include<stdlib.h>
 #ifdef TEST
 	#include"stub_io.h"
 #elif ATTINY
@@ -22,7 +24,7 @@ void openPush(void)
         /*Inicia el driver push Buttons*/
         DDRB &= ~(1<<PB3);
         PORTB |= (1<<PB3);
-	button_timer = newTimer();
+	button_timer = timer_create();
 	button.state = OFF;
 	button.last_state = OFF;
 	button.timer_seted = false;
@@ -32,6 +34,7 @@ void closePush(void)
         /*Inicia el driver push Buttons*/
         DDRB &= ~((1<<PB3));
         PORTB &= ~((1<<PB3));
+	timer_destroy(button_timer);
 	free(button_timer);
 }
 /*Push buttons*/
@@ -43,10 +46,10 @@ PUSH_STATE readPush(void)
 		button.state = ON;
 	}
 	if(button.state != button.last_state && !button.timer_seted){
-		enableTimer(button_timer);
+		timer_start(button_timer);
 		button.timer_seted = true;
 	}else if(button.timer_seted){
-		getTimer(button_timer, MILLISECONDS) < 50 ? 
+		timer_getMilliseconds(button_timer) < 50 ? 
 			button.state = button.last_state :
 			(button.timer_seted = false);
 	}

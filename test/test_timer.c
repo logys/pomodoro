@@ -1,166 +1,135 @@
 #include "unity.h"
 #include "timer.h"
-#include "mock_delay.h"
+#include "millis.h"
+#include "stub_interrupt.h"
+#include <stdlib.h>
 
-static void setTimerOnTime(TIMER, double time, UNIT_TIME unit, uint32_t init_time);
+TIMER tim = NULL;
 void setUp(void)
 {
-	initTimer1Millis_Expect();
-	initTimer();
+	tim = timer_create();
 }
 
 void tearDown(void)
 {
+	timer_destroy(tim);
+	free(tim);
 }
-
-
-int time_on_init = 1000;
-int time_elapsed = 0;
-
-void test_get_timer_unknown_whitout_set(void)
+void test_get_time_after_init(void)
 {
-	TIMER test = newTimer();
-	
-
-	millis_ExpectAndReturn(time_on_init);
-	TEST_ASSERT_EQUAL(-1, getTimer(test, MILLISECONDS));
-
+	TEST_ASSERT_EQUAL(0, timer_getMilliseconds(tim));
 }
-void test_get_timer_milliseconds(void)
+static void addMillis(uint32_t time)
 {
-	TIMER test = newTimer();
-	millis_ExpectAndReturn(time_on_init);
-	int session_time_milliseconds = 2000;
-	enableTimer(test);
-
-	int milliseconds_elapsed = 1000;
-	int milliseconds_from_init = milliseconds_elapsed + time_on_init;
-	millis_ExpectAndReturn(milliseconds_from_init);
-	TEST_ASSERT_EQUAL(milliseconds_elapsed, getTimer(test, MILLISECONDS));
+	for(uint32_t i = 0; i<time; i++){
+		TIM1_COMPA_vect();
+	}
 }
-
-void test_get_timer_seconds(void)
+void test_timer_count_after_start(void)
 {
-	TIMER test = newTimer();
-	millis_ExpectAndReturn(time_on_init);
-	enableTimer(test);
-
-	int seconds_elapsed = 5;
-	int milliseconds_from_init = seconds_elapsed*1000 + time_on_init;
-	millis_ExpectAndReturn(milliseconds_from_init);
-	TEST_ASSERT_FLOAT_WITHIN(0.00001, seconds_elapsed, getTimer(test, SECONDS));
+	timer_start(tim);
+	int milliseconds_from_start_timer = 13;
+	addMillis(milliseconds_from_start_timer);
+	TEST_ASSERT_EQUAL(milliseconds_from_start_timer, timer_getMilliseconds(tim));
 }
-
-void test_get_timer_minutes(void)
+void test_start_timer_after_millis_already_is_counting(void)
 {
-	TIMER test = newTimer();
-	millis_ExpectAndReturn(time_on_init);
-	enableTimer(test);
-
-	int minutes_elapsed = 7;
-	int milliseconds_from_init = minutes_elapsed*1000*60 + time_on_init;
-	millis_ExpectAndReturn(milliseconds_from_init);
-	TEST_ASSERT_FLOAT_WITHIN(0.00001, minutes_elapsed, getTimer(test, MINUTES));
+	addMillis(500);
+	timer_start(tim);
+	addMillis(10);
+	TEST_ASSERT_EQUAL(10, timer_getMilliseconds(tim));
 }
-
+void test_second_start_no_effect(void)
+{
+	addMillis(4324);
+	timer_start(tim);
+	addMillis(10);
+	timer_start(tim);
+	TEST_ASSERT_EQUAL(10, timer_getMilliseconds(tim));
+}
 void test_reinit_timer(void)
 {
-	TIMER test = newTimer();
-	millis_ExpectAndReturn(time_on_init);
-	enableTimer(test);
-
-	int milliseconds_on_reinit = 10000;
-	millis_ExpectAndReturn(milliseconds_on_reinit);
-	reinitTimer(test);
-	int milliseconds_after_reinit = 1000;
-	millis_ExpectAndReturn(milliseconds_on_reinit + milliseconds_after_reinit);
-	TEST_ASSERT_EQUAL(milliseconds_after_reinit, getTimer(test, MILLISECONDS));
+	timer_start(tim);
+	addMillis(10);
+	timer_reinit(tim);
+	TEST_ASSERT_EQUAL(0, timer_getMilliseconds(tim));
 }
-
-void test_after_pause_get_same_time(void)
+void test_reinit_when_is_paused(void)
 {
-	TIMER test = newTimer();
-	setTimerOnTime(test, 10, MINUTES, time_on_init);
-
-	int time_on_pause = 2000;
-	millis_ExpectAndReturn(time_on_pause);
-	pauseTimer(test);
-
-	int time_paused = time_on_pause - time_on_init;
-	TEST_ASSERT_EQUAL(time_paused, getTimer(test, MILLISECONDS));
-	TEST_ASSERT_EQUAL(time_paused/1000, getTimer(test, SECONDS));
+	addMillis(132);
+	timer_start(tim);
+	addMillis(10);
+	timer_pause(tim);
+	addMillis(12313);
+	TEST_ASSERT_EQUAL(10, timer_getMilliseconds(tim));
 }
 
-void test_doble_pause(void)
+void test_on_pause_get_same_time(void)
 {
-	TIMER test = newTimer();
-	setTimerOnTime(test, 10, MINUTES, time_on_init);
-
-	int time_on_pause = 2000;
-	millis_ExpectAndReturn(time_on_pause);
-	pauseTimer(test);
-
-	int second_time_on_pause = 3000;
-//	millis_ExpectAndReturn(second_time_on_pause);
-	pauseTimer(test);
-
-//	millis_ExpectAndReturn(5000);
-	int time_paused = time_on_pause - time_on_init;
-	TEST_ASSERT_EQUAL(time_paused, getTimer(test, MILLISECONDS));
+	timer_start(tim);
+	addMillis(10);
+	timer_pause(tim);
+	addMillis(100);
+	addMillis(34);
+	addMillis(4);
+	TEST_ASSERT_EQUAL(10, timer_getMilliseconds(tim));
 }
 
+void test_pause_millis_already_counting(void)
+{
+	addMillis(10);
+	timer_start(tim);
+	addMillis(10);
+	timer_pause(tim);
+	TEST_ASSERT_EQUAL(10, timer_getMilliseconds(tim));
+}
+void test_many_pauses_always_return_same(void)
+{
+	timer_start(tim);
+	addMillis(100);
+	timer_pause(tim);
+	timer_pause(tim);
+	addMillis(1223);
+	timer_pause(tim);
+	TEST_ASSERT_EQUAL(100, timer_getMilliseconds(tim));
+}
 void test_resume_timer(void)
 {
-	TIMER test = newTimer();
-	setTimerOnTime(test, 10, MINUTES, time_on_init);
-
-	int time_on_pause = 2000;
-	millis_ExpectAndReturn(time_on_pause);
-	pauseTimer(test);
-
-	int time_on_resume = 3000;
-	millis_ExpectAndReturn(time_on_resume);
-	resumeTimer(test);
-
-	int time_after_resume = 4000;
-	millis_ExpectAndReturn(time_after_resume);
-	int time_whitout_pause = time_on_pause - time_on_init + time_after_resume - 
-		time_on_resume;
-	TEST_ASSERT_EQUAL(time_whitout_pause, getTimer(test, MILLISECONDS));
+	addMillis(2313);
+	timer_start(tim);
+	addMillis(5);
+	timer_pause(tim);
+	addMillis(2314);
+	timer_resume(tim);
+	addMillis(5);
+	TEST_ASSERT_EQUAL(10, timer_getMilliseconds(tim));
 }
-
-void test_resume_whitout_pause(void)
+void test_resume_no_started(void)
 {
-	TIMER test = newTimer();
-	setTimerOnTime(test, 10, MINUTES, time_on_init);
-
-	resumeTimer(test);
-	resumeTimer(test);
-
-	int time_after_resume = 4000;
-	millis_ExpectAndReturn(time_after_resume);
-	int time_elapsed = time_after_resume - time_on_init;
-	TEST_ASSERT_EQUAL(time_elapsed, getTimer(test, MILLISECONDS));
+	addMillis(463);
+	timer_resume(tim);
+	addMillis(213);
+	TEST_ASSERT_EQUAL(0, timer_getMilliseconds(tim));
 }
-
+int holis = 0;
+static void hola(void)
+{
+	holis = 1;
+}
+void test_callback_on_time(void)
+{
+	addMillis(10);
+	timer_setCallback(tim, 50, hola);
+	timer_updateLoop();
+	TEST_ASSERT_EQUAL(0, holis);
+	addMillis(100);
+	timer_updateLoop();
+	TEST_ASSERT_EQUAL(1, holis);
+}
+/*
 void test_delay(void)
 {
-	millis_ExpectAndReturn(time_on_init);
-	for(int i = 0; i<=100; i++)
-		millis_ExpectAndReturn(time_on_init+i);
-	delay(100);
+	addMillis(100);
+	delay(50);
 }
-
-static void setTimerOnTime(TIMER timer, double time, UNIT_TIME unit, uint32_t init_time)
-{
-	millis_ExpectAndReturn(init_time);
-	enableTimer(timer);
-}
-
-void test_get_wrong_unit(void)
-{
-	TIMER test = newTimer();
-	setTimerOnTime(test, 10, UNKNOWN, time_on_init);
-	millis_ExpectAndReturn(200000);
-	TEST_ASSERT_EQUAL(UNKNOWN, getTimer(test, UNKNOWN));
-}
+*/

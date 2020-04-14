@@ -7,13 +7,12 @@ struct Pause_struct{
 };
 
 static struct Pause_struct pauser = {};
-TIMER timer_pause;
+TIMER timer_paused;
 
 void initPause(void)
 {
-	initTimer();
 	initHandleLed();
-	timer_pause = newTimer();
+	timer_paused = timer_create();
 	pauser.timer_seted = false;
 }
 
@@ -23,7 +22,7 @@ void destroyPause(void)
 
 static void requestTime(void)
 {
-	pauser.actual_time = getTimer(timer_pause, MILLISECONDS);
+	pauser.actual_time = timer_getMilliseconds(timer_paused);
 }
 #define MILLISECONDS_NEED_RESET 50
 static bool wasElapsedManyTime(void)
@@ -34,7 +33,7 @@ static void reinitTimeFirstCall(void)
 {
 	if(!pauser.timer_seted || wasElapsedManyTime() || pauser.actual_time < pauser.last_time){
 		pauser.timer_seted = true;
-		reinitTimer(timer_pause);
+		timer_reinit(timer_paused);
 	}
 	pauser.last_time = pauser.actual_time;
 }

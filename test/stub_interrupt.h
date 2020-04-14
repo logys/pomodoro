@@ -18,9 +18,8 @@
 #ifndef STUB_INTERRUPT_H
 #define STUB_INTERRUPT_H
 
-enum INTERRUPT{PCINT0_vect, TIM1_COMPA_vect};
-
-int ISR(enum INTERRUPT);
-int cli(void);
-int sei(void);
+#define ISR(interrupt) void interrupt(void)
+ISR(TIM1_COMPA_vect);
+#define cli()
+#define sei()
 #endif
