@@ -23,8 +23,6 @@
 #  :output: MyApp.out
 #  :use_assembly: FALSE
 
-:environment:
-
 :extension:
   :executable: .out
 
@@ -79,11 +77,30 @@
 # Ceedling defaults to using gcc for compiling, linking, etc.
 # As [:tools] is blank, gcc will be used (so long as it's in your system path)
 # See documentation to configure a given toolchain for use
+#
+:tools:
+  :test_compiler:
+    :executable: gcc
+    :arguments:
+      - -Wall
+      - -I"$": COLLECTION_PATHS_TEST_TOOLCHAIN_INCLUDE #expands to -I search paths
+      - -I"$": COLLECTION_PATHS_TEST_SUPPORT_SOURCE_INCLUDE_VENDOR #expands to -I search paths
+      - -D$: COLLECTION_DEFINES_TEST_AND_VENDOR #expands to all -D defined symbols
+      - -c ${1}
+      - -o ${2}
+              
+  :test_linker:
+    :executable: gcc
+    :arguments:
+      - ${1} #list of object files to link (Ruby method call param list sub)
+      - -lpthread
+      - -o ${2} #executable file output (Ruby method call param list sub)
 
 # LIBRARIES
 # These libraries are automatically injected into the build process. Those specified as
 # common will be used in all types of builds. Otherwise, libraries can be injected in just
 # tests or releases. These options are MERGED with the options in supplemental yaml files.
+
 
 :plugins:
   :load_paths:

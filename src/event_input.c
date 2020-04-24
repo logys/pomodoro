@@ -1,4 +1,6 @@
 #include "event_input.h"
+#include "push_driver.h"
+#include "timer.h"
 
 typedef struct Event{
 	int8_t state;
@@ -10,8 +12,9 @@ static event handler = { };
 static TIMER timer_power_off;
 void initEventInput(void)
 {
-	openPush();
-	timer_power_off = timer_create();
+	timer_init();
+	push_init();
+	timer_power_off = timer_createNew();
 }
 void destroyEventInput(void)
 {
@@ -22,16 +25,16 @@ static void eventOff(void);
 
 int8_t readEvent(void)
 {
-	handler.button = readPush();
-	if(handler.button == OFF){
+	handler.button = push_read();
+	if(handler.button == PUSH_OFF){
 		eventOff();
-	}else if(handler.button == ON){ //Button pressed
-		if(handler.last_button == OFF){
+	}else if(handler.button == PUSH_ON){ //Button pressed
+		if(handler.last_button == PUSH_OFF){
 			timer_start(timer_power_off);
 			handler.state = PLAY_PAUSE;
 		}else{
 			handler.time_power_off = timer_getMilliseconds(timer_power_off);
-			if(handler.time_power_off >= 2){
+			if(handler.time_power_off >= 2000){
 				handler.state = POWEROFF;
 			}else{
 				handler.state = NONE;

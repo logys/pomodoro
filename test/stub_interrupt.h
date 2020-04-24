@@ -17,9 +17,10 @@
  */
 #ifndef STUB_INTERRUPT_H
 #define STUB_INTERRUPT_H
-
+#include<stdint.h>
 #define ISR(interrupt) void interrupt(void)
 ISR(TIM1_COMPA_vect);
 #define cli()
 #define sei()
+void addMillis(uint32_t time);
 #endif

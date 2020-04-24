@@ -11,7 +11,7 @@ void setUp(void)
 {
 	openBuzzer_Expect();
 	initHandleLed_Expect();
-	timer_create_ExpectAndReturn(NULL);
+	timer_createNew_ExpectAndReturn(NULL);
 	timer_start_Expect(NULL);
 	initRun();
 	initSessions();

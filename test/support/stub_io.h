@@ -20,6 +20,7 @@
 
 #include<stdint.h>
 
+void push_set(short);
 uint8_t DDRB;
 uint8_t PORTB;
 uint8_t PINB;

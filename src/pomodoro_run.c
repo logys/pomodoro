@@ -14,7 +14,7 @@ void initRun(void)
 {
 	openBuzzer();
 	initHandleLed();
-	timer_run = timer_create();
+	timer_run = timer_createNew();
 	timer_start(timer_run);
 	runner.run_state = ACTION_RUNNING;
 	runner.actual_session_time = NAN;
@@ -25,7 +25,7 @@ void initRun(void)
 
 void destroyRun(void)
 {
-	timer_destroy(timer_run);
+	timer_destroy();
 	closeBuzzer();
 	destroyHandleLed();
 }

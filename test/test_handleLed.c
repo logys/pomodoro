@@ -7,7 +7,7 @@
 void setUp(void)
 {
 	openLed_Expect();
-	timer_create_ExpectAndReturn(NULL);
+	timer_createNew_ExpectAndReturn(NULL);
 	initHandleLed();
 }
 

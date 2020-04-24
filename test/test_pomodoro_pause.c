@@ -7,7 +7,7 @@
 void setUp(void)
 {
 	initHandleLed_Expect();
-	timer_create_ExpectAndReturn(NULL);
+	timer_createNew_ExpectAndReturn(NULL);
 	initPause();
 }
 

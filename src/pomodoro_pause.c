@@ -12,7 +12,7 @@ TIMER timer_paused;
 void initPause(void)
 {
 	initHandleLed();
-	timer_paused = timer_create();
+	timer_paused = timer_createNew();
 	pauser.timer_seted = false;
 }
 

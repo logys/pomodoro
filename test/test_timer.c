@@ -7,23 +7,18 @@
 TIMER tim = NULL;
 void setUp(void)
 {
-	tim = timer_create();
+	tim = timer_createNew();
+	timer_init();
 }
 
 void tearDown(void)
 {
-	timer_destroy(tim);
+	timer_destroy();
 	free(tim);
 }
 void test_get_time_after_init(void)
 {
 	TEST_ASSERT_EQUAL(0, timer_getMilliseconds(tim));
-}
-static void addMillis(uint32_t time)
-{
-	for(uint32_t i = 0; i<time; i++){
-		TIM1_COMPA_vect();
-	}
 }
 void test_timer_count_after_start(void)
 {
@@ -111,25 +106,28 @@ void test_resume_no_started(void)
 	addMillis(213);
 	TEST_ASSERT_EQUAL(0, timer_getMilliseconds(tim));
 }
-int holis = 0;
-static void hola(void)
+void test_reference_counting_for_destroy_timer(void)
 {
-	holis = 1;
+
 }
-void test_callback_on_time(void)
+#include <unistd.h>
+#include <pthread.h>
+void *backgroundMillis(void * arg)
 {
-	addMillis(10);
-	timer_setCallback(tim, 50, hola);
-	timer_updateLoop();
-	TEST_ASSERT_EQUAL(0, holis);
-	addMillis(100);
-	timer_updateLoop();
-	TEST_ASSERT_EQUAL(1, holis);
+	sleep(1);
+	addMillis(50);
+	return NULL;
 }
-/*
+void *backgroundDelay(void* arg)
+{
+	delay(50);
+	return NULL;
+}
 void test_delay(void)
 {
-	addMillis(100);
-	delay(50);
+	pthread_t delay, millis;
+	pthread_create(&delay, NULL, backgroundDelay, NULL);
+	pthread_create(&millis, NULL, backgroundMillis, NULL);
+	pthread_join(millis, NULL);
+	pthread_join(delay, NULL);
 }
-*/

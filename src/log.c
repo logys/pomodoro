@@ -5,7 +5,7 @@
 #include<libopencm3/stm32/gpio.h>
 #endif
 #include"log.h"
-#include"delay.h"
+#include"timer.h"
 #include<stdint.h>
 
 #define REPETICIONES 5

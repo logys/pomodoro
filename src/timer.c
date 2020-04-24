@@ -1,4 +1,5 @@
 #include "timer.h"
+#include "millis.h"
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -12,11 +13,15 @@ struct Timer{
 	uint32_t accumulated_time;
 	uint32_t last_millis;
 };
-
-
-TIMER timer_create(void)
+unsigned int countRef = 0;
+void timer_init(void)
 {
 	millis_init();
+	countRef++;
+}
+
+TIMER timer_createNew(void)
+{
 	TIMER tmp = calloc(1, sizeof(struct Timer));
 	tmp->time_at_start = 0;
 	tmp->time_started = false;
@@ -68,27 +73,17 @@ void timer_start(TIMER timer)
 	timer->time_started = true;
 }
 
-void timer_destroy(TIMER timer)
+void timer_destroy(void)
 {
-	millis_destroy();
+	if(countRef == 0){
+		millis_destroy();
+	}
 }
 
 void delay(uint32_t time_ms)
 {
-	TIMER delay_ms = timer_create();
-	timer_start(delay_ms);
-	while(timer_getMilliseconds(delay_ms) <= time_ms){
+	uint32_t time_at_init = millis();
+	while((millis() - time_at_init) < time_ms){
 		__asm__("nop");
 	}
-	timer_destroy(delay_ms);
-	free(delay_ms);
-}
-
-void timer_setCallback(TIMER timer, uint32_t time_ms, void(*callback)(void))
-{
-	timer->time_callbackFunction = callback;
-}
-
-void timer_updateLoop(void)
-{
 }

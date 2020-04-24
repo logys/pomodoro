@@ -7,7 +7,7 @@ static TIMER led_timer;
 void initHandleLed(void)
 {
 	openLed();
-	led_timer = timer_create();
+	led_timer = timer_createNew();
 	handleLed.timer_seted = false;
 	handleLed.counter_toggles = 0;
 }
@@ -65,5 +65,5 @@ LED_STATE updateLed(double work_cicle)
 void destroyHandleLed(void)
 {
 	closeLed();
-	timer_destroy(led_timer);
+	timer_destroy();
 }
