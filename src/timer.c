@@ -8,10 +8,6 @@ struct Timer{
 	bool time_started;
 	bool time_paused;
 	uint32_t time_on_pause;
-	void (*time_callbackFunction)(void);
-	uint32_t end_time;
-	uint32_t accumulated_time;
-	uint32_t last_millis;
 };
 unsigned int countRef = 0;
 void timer_init(void)

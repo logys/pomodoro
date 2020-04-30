@@ -9,7 +9,7 @@ static Pomodoro pomodoro;
 
 void initPomodoro(void)
 {
-	initEventInput();
+	eventInput_create();
 	initSessions();
 	initAction();
 	pomodoro.state = POMODORO_DISABLED;
@@ -17,13 +17,13 @@ void initPomodoro(void)
 }
 void destroyPomodoro(void)
 {
-	destroyEventInput();
+	eventInput_destroy();
 }
 POMODORO_STATE updatePomodoro(void)
 {
 	static short event;
 	static RUN_STATE last_action;
-	event = readEvent();
+	event = eventInput_read();
 	if(event == POWEROFF || pomodoro.first_call || last_action == ACTION_REACHED){
 		last_action = ACTION_RUNNING;
 		setActionPowerOff(); 

@@ -6,7 +6,7 @@
 #include"pomodoro_poweroff.h"
 void initAction(void);
 void destroyAction(void);
-RUN_STATE (*action)(void);
+extern RUN_STATE (*action)(void);
 void setActionPowerOff(void);
 void setActionPlay(void);
 void setActionTogglePlayPause(void);

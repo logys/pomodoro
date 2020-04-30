@@ -2,6 +2,7 @@
 #include "timer.h"
 #include "millis.h"
 #include "stub_interrupt.h"
+#include "stub_io.h"
 #include <stdlib.h>
 
 TIMER tim = NULL;

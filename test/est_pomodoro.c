@@ -11,7 +11,7 @@ RUN_STATE foo(void)
 
 void setUp(void)
 {
-	initEventInput_Expect();
+	eventInput_create_Expect();
 	initAction_Expect();
 	initPomodoro();
 	action = foo;
@@ -19,7 +19,7 @@ void setUp(void)
 
 void tearDown(void)
 {
-	destroyEventInput_Expect();
+	eventInput_destroy_Expect();
 	destroyPomodoro();
 }
 
@@ -29,11 +29,11 @@ static void assertActionPowerOff(void)
 }
 static void setInputEvent(short event)
 {
-	readEvent_ExpectAndReturn(event);
+	eventInput_read_ExpectAndReturn(event);
 }
 void test_init_pomodoro(void)
 {
-	initEventInput_Expect();
+	eventInput_create_Expect();
 	initAction_Expect();
 	initPomodoro();
 
@@ -49,7 +49,7 @@ void test_init_and_call_poweroff(void)
 }
 void test_destroy_pomodoro(void)
 {
-	destroyEventInput_Expect();
+	eventInput_destroy_Expect();
 	destroyPomodoro();
 }
 static void assertFirstCallPowerOff(void)

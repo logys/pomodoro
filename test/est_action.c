@@ -4,7 +4,6 @@
 #include "mock_pomodoro_run.h"
 #include "mock_pomodoro_pause.h"
 #include "mock_pomodoro_poweroff.h"
-
 void setUp(void)
 {
 	initPowerOff_Expect();

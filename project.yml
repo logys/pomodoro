@@ -82,7 +82,7 @@
   :test_compiler:
     :executable: gcc
     :arguments:
-      - -Wall
+      - -Wall -g
       - -I"$": COLLECTION_PATHS_TEST_TOOLCHAIN_INCLUDE #expands to -I search paths
       - -I"$": COLLECTION_PATHS_TEST_SUPPORT_SOURCE_INCLUDE_VENDOR #expands to -I search paths
       - -D$: COLLECTION_DEFINES_TEST_AND_VENDOR #expands to all -D defined symbols

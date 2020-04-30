@@ -4,6 +4,7 @@
 #include "stub_io.h"
 
 #define PIN PB3
+
 void setUp(void)
 {
 	DDRB = 0xFF;

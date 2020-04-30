@@ -1,6 +1,5 @@
 #ifndef PUSH_DRIVER_H
 #define PUSH_DRIVER_H
-
 typedef enum{PUSH_OFF, PUSH_ON}PUSH_STATE;
 
 void push_init(void);
