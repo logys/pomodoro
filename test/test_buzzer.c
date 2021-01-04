@@ -5,12 +5,14 @@
 
 void setUp(void)
 {
-	openBuzzer();
+	DDRB = 0x0;
+	PORTB = 0xFF;
+	buzzer_open();
 }
 
 void tearDown(void)
 {
-	closeBuzzer();
+	buzzer_close();
 }
 
 uint8_t buzzerBit = (1<<PB1);
@@ -18,49 +20,30 @@ uint8_t buzzerBitOn = (1<<PB1);
 uint8_t buzzerBitOff = ~(1<<PB1);
 void test_open_off(void)
 {
-	DDRB = 0x0;
-	PORTB = 0xFF;
-	openBuzzer();
 	TEST_ASSERT_BITS(buzzerBit, buzzerBitOn, DDRB);
 	TEST_ASSERT_BITS(buzzerBit, buzzerBitOff, PORTB);
 }
-
 void test_close(void)
 {
 	DDRB = 0xff;
 	PORTB = 0xff;
-	closeBuzzer();
+	buzzer_close();
 	TEST_ASSERT_BITS(buzzerBit, buzzerBitOff, DDRB);
 	TEST_ASSERT_BITS(buzzerBit, buzzerBitOff, PORTB);
 }
 
 void test_buzzer_on(void)
 {
-	writeBuzz(ON);
+	buzzer_write(BUZZER_ON);
 	TEST_ASSERT_BITS(buzzerBit, buzzerBitOn, PORTB);
 }
 
 void test_buzzer_off(void)
 {
-	writeBuzz(ON);
-	writeBuzz(OFF);
+	buzzer_write(BUZZER_ON);
+	buzzer_write(BUZZER_OFF);
 	TEST_ASSERT_BITS(buzzerBit, buzzerBitOff, PORTB);
 
-}
-
-void test_read_buzzer(void)
-{
-	TEST_ASSERT_EQUAL(OFF, readBuzz());
-	PINB = 0xff;
-	TEST_ASSERT_EQUAL(ON, readBuzz());
-}
-
-void test_toggle_buzzer(void)
-{
-	toggle();
-	TEST_ASSERT_BITS(buzzerBit, buzzerBitOn, PINB);
-	toggle();
-	TEST_ASSERT_BITS(buzzerBit, buzzerBitOn, PINB);
 }
 
 void test_buzzer_number_of_ticks(void)
@@ -72,7 +55,7 @@ void test_buzzer_number_of_ticks(void)
 		delay_Expect(delay_time_ms);
 		delay_Expect(delay_time_ms);
 	}
-	buzzer(ticks_number, delay_time_ms);
+	buzzer_a(ticks_number, delay_time_ms);
 }
 
 void test_buzzer_diferent_delays(void)
@@ -83,7 +66,7 @@ void test_buzzer_diferent_delays(void)
 	delay_Expect(delay_time_ms);
 	delay_Expect(delay_time_ms);
 
-	buzzer(ticks_number, delay_time_ms);
+	buzzer_a(ticks_number, delay_time_ms);
 }
 
 void test_max_ticks_equal_10(void)
@@ -97,7 +80,7 @@ void test_max_ticks_equal_10(void)
 		delay_Expect(delay_time_ms);
 	}
 
-	buzzer(ticks_number, delay_time_ms);
+	buzzer_a(ticks_number, delay_time_ms);
 }
 
 void test_max_time_equal_1000ms(void)
@@ -111,7 +94,7 @@ void test_max_time_equal_1000ms(void)
 		delay_Expect(max_time_ms);
 	}
 
-	buzzer(ticks_number, delay_time_ms);
+	buzzer_a(ticks_number, delay_time_ms);
 }
 
 void test_minimun_values_greather_than_0(void)
@@ -119,5 +102,5 @@ void test_minimun_values_greather_than_0(void)
 	int delay_time_ms = -1;
 	int ticks_number = -1;
 
-	buzzer(ticks_number, delay_time_ms);
+	buzzer_a(ticks_number, delay_time_ms);
 }

@@ -1,9 +1,10 @@
 #include "unity.h"
-#include "pomodoro_sessions.h"
+#include "../src/pomodoro_sessions.h"
+
 
 void setUp(void)
 {
-	initSessions();
+	sessions_init();
 }
 
 void tearDown(void)
@@ -12,7 +13,7 @@ void tearDown(void)
 
 void test_no_set_sessions_set_NAN(void)
 {
-	TEST_ASSERT(isnan(getSessionTime()));
+	TEST_ASSERT(isnan(sessions_getSessionTime()));
 }
 
 void setOneSessionInMinutes(double minutes);
@@ -25,12 +26,12 @@ void test_sesion_1_minuto(void)
 void setOneSessionInMinutes(double minutes)
 {
 
-	setSessions(minutes);
+	setSession((double []){minutes});
 }
 void assertSesionMinutes(double minutes)
 {
 	setOneSessionInMinutes(minutes);
-	TEST_ASSERT_EQUAL(minutes, getSessionTime());
+	TEST_ASSERT_EQUAL(minutes, sessions_getSessionTime());
 }
 
 void test_session_20_minutes(void)
@@ -43,47 +44,45 @@ void test_two_sessions_one_minute(void)
 {
 	short time_session_one = 1,
 	      time_session_two = 2;
-	setSessions(time_session_one, time_session_two);
+	setSession((double[]){time_session_one, time_session_two});
 
-	TEST_ASSERT_EQUAL(time_session_one, getSessionTime());
-	advanceSession();
-	TEST_ASSERT_EQUAL(time_session_two, getSessionTime());
+	TEST_ASSERT_EQUAL(time_session_one, sessions_getSessionTime());
+	sessions_advanceSession();
+	TEST_ASSERT_EQUAL(time_session_two, sessions_getSessionTime());
 }
 
 void test_add_NAN_after_last_session(void)
 {
 	short time_session_one = 1,
 	      time_session_two = 2;
-	setSessions(time_session_one, time_session_two);
-	advanceSession();
-	advanceSession();
-	TEST_ASSERT(isnan(getSessionTime()));
+	sessions_set(time_session_one, time_session_two);
+	sessions_advanceSession();
+	sessions_advanceSession();
+	TEST_ASSERT(isnan(sessions_getSessionTime()));
 }
-
 void test_nan_session_eleven(void)
 {
-	setSessions(1);
+	setSession((double[]){1});
 	for(short i = 0; i<10; i++)
-		advanceSession();
-	TEST_ASSERT(isnan(getSessionTime()));
+		sessions_advanceSession();
+	TEST_ASSERT(isnan(sessions_getSessionTime()));
 }
-
 void test_max_sessions_ten(void)
 {
 	short session_ten_in_minutes = 7;
-	setSessions(1,1,1,1,0,2,3,4,5, session_ten_in_minutes,8,3,1,1,2,3,4,5,6,7,8,9);
+	setSession((double []){1,1,1,1,0,2,3,4,5, session_ten_in_minutes,8,3,1,1,2,3,4,5,6,7,8,9});
 	for(short i = 0; i<9; i++)
-		advanceSession();
-	TEST_ASSERT_EQUAL(session_ten_in_minutes, getSessionTime());
-	advanceSession();
-	TEST_ASSERT(isnan(getSessionTime()));
+		sessions_advanceSession();
+	TEST_ASSERT_EQUAL(session_ten_in_minutes, sessions_getSessionTime());
+	sessions_advanceSession();
+	TEST_ASSERT(isnan(sessions_getSessionTime()));
 }
-
 void test_reinit_sessions(void)
 {
-	advanceSession();
-	advanceSession();
-	advanceSession();
-	reinitSessions();
-	TEST_ASSERT_EQUAL(1, getSessionNumber());
+	sessions_advanceSession();
+	sessions_advanceSession();
+	sessions_advanceSession();
+	sessions_reinitIndex();
+	TEST_ASSERT_EQUAL(1, sessions_getSessionNumber());
 }
+

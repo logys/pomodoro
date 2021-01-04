@@ -1,15 +1,25 @@
 #include "handleLed.h"
-static struct HandleLed{
-	bool timer_seted;
-	short counter_toggles;
-}handleLed;
-static TIMER led_timer;
-void initHandleLed(void)
+#include "stdbool.h"
+#include "stdint.h"
+#include "stdlib.h"
+
+static TIMER led_timer = NULL;
+typedef enum{STATE_INIT, STATE_HALF, STATE_SECOND_HALF}STATE_HANDLE;
+static STATE_HANDLE current_state;
+
+void handleLed_create(void)
 {
-	openLed();
+	led_open();
+	timer_init();
 	led_timer = timer_createNew();
-	handleLed.timer_seted = false;
-	handleLed.counter_toggles = 0;
+	current_state = STATE_INIT;
+}
+void handleLed_destroy(void)
+{
+	led_close();
+	free(led_timer);
+	led_timer = NULL;
+	timer_destroy();
 }
 
 #define SLOPE -492
@@ -22,48 +32,33 @@ static double calculateHalfPeriod(double work_cicle)
 		work_cicle = 100;
 	return SLOPE*work_cicle/100.0 + ABSICE;
 }
-static bool isTimeReached(double half_period_time, double actual_time)
+static double time_period = 0;
+void init_ms(double work_cicle)
 {
-	return half_period_time <= actual_time;
-}
-static void toggleAndReinit(void)
-{
-	timer_reinit(led_timer);
-	toggleLed();
-}
-static bool isTimerNoSeted(void)
-{
-	return !handleLed.timer_seted;
-}
-static void setTimer(void)
-{
+	time_period = 2*calculateHalfPeriod(work_cicle);
 	timer_start(led_timer);
-	handleLed.timer_seted = true;
+	led_on();
+	current_state = STATE_HALF;
 }
-static LED_STATE state;
-LED_STATE updateLed(double work_cicle)
+void half_period(double wc)
 {
-	static double half_period_time = 0;
-	if(isTimerNoSeted()){
-		setTimer();
-		half_period_time = calculateHalfPeriod(work_cicle);
-		state = TOGGLING;
+	if(timer_getMilliseconds(led_timer) >= time_period/2.0){
+		led_off();
+		current_state = STATE_SECOND_HALF;
 	}
-	double actual_time = timer_getMilliseconds(led_timer);
-	if(isTimeReached(half_period_time, actual_time)){
-		toggleAndReinit();
-		handleLed.counter_toggles ++;
-		if(handleLed.counter_toggles > 1){
-			handleLed.counter_toggles = 0;
-			state = READY;
-			handleLed.timer_seted = false;
-		}
-	}
-	return state;
-}
 
-void destroyHandleLed(void)
+}
+void second_half(double wc)
 {
-	closeLed();
-	timer_destroy();
+	if(timer_getMilliseconds(led_timer) >= time_period){
+		current_state = STATE_INIT;
+	}
+}
+void (*state_handleLed[])(double) = {init_ms, half_period, second_half};
+void handleLed_update(double work_cicle)
+{
+	state_handleLed[current_state](work_cicle);
+}
+void handleLed_off(void)
+{
 }

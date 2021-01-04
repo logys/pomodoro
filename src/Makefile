@@ -1,4 +1,8 @@
-objects=led.o millis.o log.o buzzer.o pomodoro.o push_driver.o timer.o event_input.o handleLed.o pomodoro_sessions.o action.o pomodoro_run.o pomodoro_pause.o pomodoro_poweroff.o
+#BOARD_TAG = uno
+#BOARDS_TXT = $(ARDUINO_DIR)/boards.txt
+#include $(ARDMK_DIR)/Arduino.mk
+#CFLAGS=-DATTINY
+objects=led.o millis.o buzzer.o pomodoro.o push_driver.o timer.o event_input.o handleLed.o pomodoro_sessions.o 
 mmcu=attiny85
 CFLAGS=-Wall -O2 -mmcu=${mmcu} --std=gnu11 -lm -DATTINY
 programer=arduino

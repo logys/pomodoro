@@ -232,7 +232,7 @@ L Device:R_US R3
 U 1 1 5C9B6E91
 P 3650 3150
 F 0 "R3" H 3718 3196 50  0000 L CNN
-F 1 "R_US" H 3718 3105 50  0000 L CNN
+F 1 "10k" H 3718 3105 50  0000 L CNN
 F 2 "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal" V 3690 3140 50  0001 C CNN
 F 3 "~" H 3650 3150 50  0001 C CNN
 	1    3650 3150
@@ -241,12 +241,12 @@ $EndComp
 $Comp
 L Device:Battery_Cell BT1
 U 1 1 5C9B90B6
-P 5900 3750
-F 0 "BT1" H 6018 3846 50  0000 L CNN
-F 1 "Battery_Cell" H 6018 3755 50  0000 L CNN
-F 2 "Battery:BatteryHolder_Keystone_105_1x2430" V 5900 3810 50  0001 C CNN
-F 3 "~" V 5900 3810 50  0001 C CNN
-	1    5900 3750
+P 5100 3750
+F 0 "BT1" H 5218 3846 50  0000 L CNN
+F 1 "Battery_Cell" H 5218 3755 50  0000 L CNN
+F 2 "Battery:BatteryHolder_Keystone_105_1x2430" V 5100 3810 50  0001 C CNN
+F 3 "~" V 5100 3810 50  0001 C CNN
+	1    5100 3750
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
@@ -263,17 +263,6 @@ F 3 " ~" H 1525 3750 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:VCC #PWR0103
-U 1 1 5DD8514F
-P 2700 3700
-F 0 "#PWR0103" H 2700 3550 50  0001 C CNN
-F 1 "VCC" H 2717 3873 50  0000 C CNN
-F 2 "" H 2700 3700 50  0001 C CNN
-F 3 "" H 2700 3700 50  0001 C CNN
-	1    2700 3700
-	1    0    0    -1  
-$EndComp
-$Comp
 L power:GND #PWR0109
 U 1 1 5DD85794
 P 2700 4900
@@ -285,14 +274,14 @@ F 3 "" H 2700 4900 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	2700 3800 2700 3700
+	2700 3800 2700 3750
 Wire Wire Line
 	2700 4700 2700 4900
 Wire Wire Line
 	3200 4100 3400 4100
-Text GLabel 3400 4100 2    50   Input ~ 0
-PB0
 Text GLabel 3400 4200 2    50   Input ~ 0
+PB0
+Text GLabel 3400 4100 2    50   Input ~ 0
 PB1
 Text GLabel 3400 4300 2    50   Input ~ 0
 PB2
@@ -338,11 +327,11 @@ Wire Wire Line
 Wire Wire Line
 	3650 2700 3750 2700
 Text GLabel 3750 2800 2    50   Input ~ 0
-Button
+Button1
 Wire Wire Line
 	3750 2800 3650 2800
 Text GLabel 9150 1250 0    50   Input ~ 0
-Button
+Button1
 Wire Wire Line
 	9300 1250 9150 1250
 Wire Wire Line
@@ -353,7 +342,7 @@ L Jumper:Jumper_3_Bridged12 JP1
 U 1 1 5DDCB870
 P 5600 3250
 F 0 "JP1" H 5600 3454 50  0000 C CNN
-F 1 "Jumper_3_Bridged12" H 5600 3363 50  0000 C CNN
+F 1 "Vcc select" H 5600 3363 50  0000 C CNN
 F 2 "Connector_PinSocket_2.54mm:PinSocket_1x03_P2.54mm_Vertical" H 5600 3250 50  0001 C CNN
 F 3 "~" H 5600 3250 50  0001 C CNN
 	1    5600 3250
@@ -363,9 +352,93 @@ Wire Wire Line
 	5400 3550 5600 3550
 Wire Wire Line
 	5600 3550 5600 3400
-Wire Wire Line
-	5900 3550 5900 3250
-Wire Wire Line
-	5900 3250 5850 3250
 Connection ~ 5400 3550
+Text GLabel 3750 2900 2    50   Input ~ 0
+Button2
+Wire Wire Line
+	3750 2900 3650 2900
+$Comp
+L Switch:SW_Push SW2
+U 1 1 5F005701
+P 9500 1750
+F 0 "SW2" H 9500 2035 50  0000 C CNN
+F 1 "SW_Push" H 9500 1944 50  0000 C CNN
+F 2 "Button_Switch_THT:SW_PUSH_6mm" H 9500 1950 50  0001 C CNN
+F 3 "" H 9500 1950 50  0001 C CNN
+	1    9500 1750
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR02
+U 1 1 5F005707
+P 9900 1750
+F 0 "#PWR02" H 9900 1500 50  0001 C CNN
+F 1 "GND" H 9905 1577 50  0000 C CNN
+F 2 "" H 9900 1750 50  0001 C CNN
+F 3 "" H 9900 1750 50  0001 C CNN
+	1    9900 1750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9900 1750 9700 1750
+Text GLabel 9150 1750 0    50   Input ~ 0
+Button2
+Wire Wire Line
+	9300 1750 9150 1750
+$Comp
+L Device:R_US R4
+U 1 1 5F007E48
+P 4900 1850
+F 0 "R4" V 4695 1850 50  0000 C CNN
+F 1 "1k" V 4786 1850 50  0000 C CNN
+F 2 "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal" V 4940 1840 50  0001 C CNN
+F 3 "~" H 4900 1850 50  0001 C CNN
+	1    4900 1850
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:LED D3
+U 1 1 5F007E4E
+P 5400 1850
+F 0 "D3" H 5392 1595 50  0000 C CNN
+F 1 "LED" H 5392 1686 50  0000 C CNN
+F 2 "LED_THT:LED_D5.0mm" H 5400 1850 50  0001 C CNN
+F 3 "~" H 5400 1850 50  0001 C CNN
+	1    5400 1850
+	-1   0    0    1   
+$EndComp
+$Comp
+L power:GND #PWR01
+U 1 1 5F007E54
+P 5550 1950
+F 0 "#PWR01" H 5550 1700 50  0001 C CNN
+F 1 "GND" H 5555 1777 50  0000 C CNN
+F 2 "" H 5550 1950 50  0001 C CNN
+F 3 "" H 5550 1950 50  0001 C CNN
+	1    5550 1950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5050 1850 5250 1850
+Wire Wire Line
+	5550 1850 5550 1950
+Text GLabel 4550 1850 0    50   Input ~ 0
+PB2
+Wire Wire Line
+	4750 1850 4550 1850
+Text GLabel 2550 3750 0    50   Input ~ 0
+Vcc_prog
+Text GLabel 6000 3250 2    50   Input ~ 0
+Vcc_prog
+Wire Wire Line
+	2550 3750 2700 3750
+Wire Wire Line
+	5850 3250 6000 3250
+Wire Wire Line
+	5100 3550 5100 3250
+Wire Wire Line
+	5100 3250 5350 3250
+Wire Wire Line
+	5100 3850 5400 3850
+Connection ~ 5400 3850
 $EndSCHEMATC

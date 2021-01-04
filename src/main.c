@@ -14,22 +14,24 @@
  * */
 
 #include"main.h"
+#include "pomodoro.h"
+#include <stdlib.h>
 #ifdef TEST
 	#define LOOP
 #else
 	#define LOOP while(1)
-int main(void)
-{
-	return appMain();	
-}
+	int main(void)
+	{
+		return appMain();	
+	}
 #endif
 
 int appMain(void)
 {
-	initPomodoro();
-	setSesiones(28,8,28,8,28);
+	pomodoro_init(NULL, NULL, NULL);
+	pomodoro_setSessions(25,1,28,8,28);
 	LOOP{
-		updatePomodoro();
+		pomodoro_update();
 	}
 	return 0;
 }

@@ -1,19 +1,28 @@
 #ifndef POMODORO_H
 #define POMODORO_H
 
-#include<stdint.h>
-#include<stdbool.h>
-#include<math.h>
-#include "event_input.h"
 #include "pomodoro_sessions.h"
-#include "action.h"
+#include "led.h"
+#include "buzzer.h"
+#include "button.h"
 
-#define setSesiones(...) setSessions(__VA_ARGS__)
+/*
+ * Dispositivo que mide el tiempo indicado, registra y reproduce las sesiones indicadas,
+ * indica el final de las sesiones con un pitido determinado, indica el progreso de las 
+ * sesiones con un parpadeo de un led, lento cuando inicia y rápido cuando termina, el progreso
+ * puede ser interrumpido para pausarse o apagarse presionando el botón , una vez apagado 
+ * puede reiniciarse pulsando el botón nuevamente.
+ * Cada vez que se inicia desde el apagado el pomodoro se reinicia.
+ */
+
+typedef enum pin_type {PIN_BUZZER=0, PIN_LED, PIN_BUTTON}PIN_TYPE;
+void pomodoro_init(Led *, Buzzer*, Button *);
+void pomodoro_destroy(void);
+#define pomodoro_setSessions(...) sessions_set(__VA_ARGS__)
 /** \brief actualiza la cuenta y estado del pomodoro
  * \param objeto dirección de pomodoro*/
-typedef enum {POMODORO_RUNNING, POMODORO_PAUSED, POMODORO_REACHED, 
-	POMODORO_DISABLED}POMODORO_STATE;
-POMODORO_STATE updatePomodoro(void);
-void initPomodoro(void);
-void destroyPomodoro(void);
+void pomodoro_update(void);
+void pomodoro_draw(void);
+double pomodoro_getProgress(void);
+bool pomodoro_setPin(PIN_TYPE, short pin);
 #endif

@@ -1,42 +1,98 @@
 #include"pomodoro.h"
+#include"handleLed.h"
+#include"millis.h"
+#include"buzzer.h"
+#include"poweroff.h"
+#include<stdbool.h>
 
-typedef struct{
-	short state;
-	bool first_call;
+static double pomodoro_progress_time = 0;
+static double pomodoro_cummulated_time = 0;
+static uint32_t last_millis = 0;
+static short session_progress_time = 0;
+enum time_type{PLAYING, REST};
+static short actual_action = PLAYING;
+struct {
+	Led *led;
 }Pomodoro;
-
-static Pomodoro pomodoro;
-
-void initPomodoro(void)
+void pomodoro_init(Led * led, Buzzer *buzzer, Button *button)
 {
-	eventInput_create();
-	initSessions();
-	initAction();
-	pomodoro.state = POMODORO_DISABLED;
-	pomodoro.first_call = true;
+	Pomodoro.led = led;
+	sessions_reinitIndex();
+	buzzer_open();
+	handleLed_create();
+	last_millis = millis();
+	pomodoro_cummulated_time = 0;
+	actual_action = PLAYING;
+	poweroff();
 }
-void destroyPomodoro(void)
+static void computeSessionProgress(void)
 {
-	eventInput_destroy();
+	uint32_t current_millis = millis();
+	pomodoro_cummulated_time += (current_millis - last_millis)/(60*1000.0);
+	session_progress_time = pomodoro_cummulated_time*100/sessions_getSessionTime();
+	last_millis = current_millis;
 }
-POMODORO_STATE updatePomodoro(void)
+static bool sessionFinished(void)
 {
-	static short event;
-	static RUN_STATE last_action;
-	event = eventInput_read();
-	if(event == POWEROFF || pomodoro.first_call || last_action == ACTION_REACHED){
-		last_action = ACTION_RUNNING;
-		setActionPowerOff(); 
-		pomodoro.first_call = false;
-		pomodoro.state = POMODORO_REACHED;
-	}else if(last_action == ACTION_POWEROFF){
-		setActionPlay();
-	}else if(event == NONE){
-		pomodoro.state = POMODORO_RUNNING;
-	}else if(event == PLAY_PAUSE){
-		setActionTogglePlayPause();
-		pomodoro.state = POMODORO_RUNNING;
+	return session_progress_time >= 100;
+}
+static void reinitInternalTimes(void)
+{
+	session_progress_time = 0;
+	pomodoro_cummulated_time = 0;
+}
+void pomodoro_update(void)
+{
+	computeSessionProgress();
+	if(actual_action == PLAYING){
+		handleLed_update(session_progress_time);
+		if(sessionFinished()){
+			buzzer_a(2, 400);
+			reinitInternalTimes();
+			actual_action = REST;
+			//sessions_advanceSession();
+		}
+	}else if(actual_action == REST){
+		handleLed_update(50);
+		if(pomodoro_cummulated_time > 5){
+			reinitInternalTimes();
+			actual_action = PLAYING;
+		}
 	}
-	last_action = action();
-	return pomodoro.state;
+}
+void pomodoro_destroy(void)
+{
+}
+double pomodoro_getProgress(void)
+{
+	return pomodoro_progress_time;
+}
+#define USED_PINS 3
+short pines[USED_PINS] = {0};
+static bool isPinRegistred(short pin)
+{
+	for(short i = 0; i<USED_PINS; i++){
+		if(pines[i] == pin)
+			return true;
+	}
+	return false;
+}
+static bool isValidPin(short pin)
+{
+	if(pin < 2 || pin > 7 || pin == 4)
+		return true;
+	else
+		return false;
+}
+bool pomodoro_setPin(PIN_TYPE pin_type, short pin)
+{
+	if(isPinRegistred(pin) || isValidPin(pin)){
+		return false;
+	}
+	pines[pin_type] = pin;
+	return true;
+}
+void pomodoro_draw(void)
+{
+	led_blink_rate(Pomodoro.led, 100);
 }

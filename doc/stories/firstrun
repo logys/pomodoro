@@ -1,0 +1,29 @@
+Registro de sesiones.
+Registra las "n" sesiones a medir, cada sesión es registrada en minutos, cada
+sesión es seguida por un descanso de cinco minutos.
+Registrar int session_time
+El máximo número de sesiones es diez, si se registran más se ignoran. 
+
+Reproduce las sesiones.
+Dada la sesión calcula el tiempo desde el inicio y determina la proporción del
+tiempo cumplido, pasa la proporción al led. 
+Si la sesión termina, indícalo al buzzer.
+Calcula proporción del tiempo int time_elapsed
+finished bool finished
+
+Buzzer al finalizar sesión.
+Cuando una sesión termina el buzzer suena dos veces lento, si termina un descanso suena
+cuatro veces lento, si se terminan todas las sesiones, suena diez veces rápido.
+
+Parpadeo del Led.
+Con base al tiempo transcurrido de la sesión en por ciento, parpadea desde 1000ms hasta 
+16ms. 
+
+Control por botón
+Cuando el botón se presiona, se detecta el flanco de bajada y controla la acción del pomodoro
+Botón presionado intercambia entre play y pause y enciende si está apagado.
+Botón mantenido presionado apaga
+
+Control de apagado
+Cuando el pomodoro se apaga entra en modo power down y cuando se inicia, reinicia el pomodoro.
+

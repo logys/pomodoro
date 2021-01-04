@@ -4,6 +4,7 @@
 #include"pomodoro_run.h"
 #include"pomodoro_pause.h"
 #include"pomodoro_poweroff.h"
+#include<stdbool.h>
 void initAction(void);
 void destroyAction(void);
 extern RUN_STATE (*action)(void);

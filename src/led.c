@@ -1,4 +1,23 @@
 #include"led.h"
+#include<stdlib.h>
+#include<avr/io.h>
+void led_create(Led * led, short pin)
+{
+	led->pin = pin ;
+	DDRB |= 1<<pin;
+	PORTB &= ~(1<<pin);
+}
+void led_blink_rate(Led * led, short rate)
+{
+	led_toggle(led);
+}
+void led_toggle(Led *led)
+{
+	if(PORTB & 1<<led->pin)
+		PORTB &= ~(1<<led->pin);
+	else
+		PORTB |= 1<<led->pin;
+}
 #ifdef TEST
 	#include "stub_io.h"
 #elif ATTINY
@@ -12,33 +31,33 @@
 
 //Drivers attiny
 #ifdef ATTINY
-void openLed()
+void led_open()
 {
 	/*Inicia el driver Led*/
 	DDRB |= (1<<PB0);
 	PORTB &= ~(1<<PB0);
 }
-void closeLed()
+void led_close()
 {
 	/*Inicia el driver Led*/
 	DDRB &= ~(1<<PB0);
 	PORTB &= ~(1<<PB0);
 }
 
-void toggleLed()
+void toggleLed(Led * led)
 {
-	if(PORTB & 1)
-		PORTB &= ~(1<<PB0);
+	if(PORTB & 1<<led->pin)
+		PORTB &= ~(1<<led->pin);
 	else
-		PORTB |= 1<<PB0;
+		PORTB |= 1<<led->pin;
 }
-void sleepLed(void)
+void led_on(void)
 {
-	closeLed();
+	PORTB |= 1<<PB0;
 }
-void wakeUpLed(void)
+void led_off(void)
 {
-	openLed();
+	PORTB &=~(1<<PB0);
 }
 //End drivers ATTINY
 #else

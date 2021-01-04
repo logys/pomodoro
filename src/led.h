@@ -1,19 +1,23 @@
-#ifndef DRIVERS_H
-#define DRIVERS_H
-#define ON 1	/**< Encendido */
-#define OFF 0	/**< Apagado*/
+#ifndef LED_H
+#define LED_H
+
+typedef struct Led{
+	short pin;
+}Led;
+void led_create(Led *, short pin);
+void led_blink_rate(Led *, short rate);
+void led_toggle(Led *);
 
 /** \file drivers.h 
  * \brief 
  * Drivers, para buzzer, led y pushbuttons*/
 /** \brief Inicia el LED*/
-void openLed(void);
+void led_open(void);
 /** Detiene LED*/
-void closeLed(void);
-
+void led_close(void);
+void led_on(void);
+void led_off(void);
 /** \brief Toggle */
-void toggleLed(void);
-void sleepLed(void);
-void wakeUpLed(void);
+void toggleLed(Led *);
 
-#endif
+#endif //LED_H

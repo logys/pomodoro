@@ -1,105 +1,58 @@
 #include "unity.h"
 #include "handleLed.h"
-#include "mock_timer.h"
-#include "mock_led.h"
+#include "timer.h"
+#include "led.h"
 #include <stdbool.h>
+#include "stub_io.h"
+#include "stub_interrupt.h"
+#include "millis.h"
 
 void setUp(void)
 {
-	openLed_Expect();
-	timer_createNew_ExpectAndReturn(NULL);
-	initHandleLed();
+	handleLed_create();
 }
 
 void tearDown(void)
 {
-	closeLed_Ignore();
-	timer_destroy_Ignore();
-	destroyHandleLed();
-}
-
-static void getTimeFromInit(double time)
-{
-	timer_start_Expect(NULL);
-	timer_getMilliseconds_ExpectAndReturn(NULL, time);
-}
-static void assertToggleReached(void)
-{
-	timer_reinit_Expect(NULL);
-	toggleLed_Expect();
-}
-void test_toggle_reached_500ms_on_zero_work_cicle(void)
-{
-	getTimeFromInit(500);
-	assertToggleReached();
-	TEST_ASSERT_EQUAL(TOGGLING, updateLed(0));
+	handleLed_destroy();
 }
 
 void test_unreached_toggle_500ms(void)
 {
-	getTimeFromInit(100);
-	TEST_ASSERT_EQUAL(TOGGLING, updateLed(0));
+	handleLed_update(0);
+	addMillis(300);
+	handleLed_update(0);
+	TEST_ASSERT_BITS(1<<PB0, 1<<PB0, PORTB);
 }
-
-void test_toggle_8ms_on_100_work_cicle(void)
+void test_toggle_reached_500ms_on_zero_work_cicle(void)
 {
-	getTimeFromInit(8);
-	assertToggleReached();
-	TEST_ASSERT_EQUAL(TOGGLING, updateLed(100));
+	handleLed_update(0);
+	addMillis(500);
+	handleLed_update(0);
+	TEST_ASSERT_BITS(1<<PB0, 0<<PB0, PORTB);
 }
-
-void test_reinitTimer_on_toggling(void)
+void test_unnreached_toggle_16ms_on_100_work_cicle(void)
 {
-	getTimeFromInit(500);
-	assertToggleReached();
-	TEST_ASSERT_EQUAL(TOGGLING, updateLed(0));
+	handleLed_update(100);
+	addMillis(7);
+	handleLed_update(100);
+	TEST_ASSERT_BITS(1<<PB0, 1<<PB0, PORTB);
 }
-
-void test_first_toggle_reached_second_no_reached(void)
+void test_reached_toggle_16ms_on_100_work_cicle(void)
 {
-	getTimeFromInit(500);
-	assertToggleReached();
-	TEST_ASSERT_EQUAL(TOGGLING, updateLed(0));
-
-	timer_getMilliseconds_ExpectAndReturn(NULL, 400);
-	TEST_ASSERT_EQUAL(TOGGLING, updateLed(0));
+	handleLed_update(100);
+	addMillis(9);
+	handleLed_update(100);
+	TEST_ASSERT_BITS(1<<PB0, 0<<PB0, PORTB);
 }
-
-void test_boundes_low_work_cycle(void)
+void test_reched_two_toggles(void)
 {
-	getTimeFromInit(500);
-	assertToggleReached();
-	TEST_ASSERT_EQUAL(TOGGLING, updateLed(-10));
-}
-
-void test_boundes_high_work_cycle(void)
-{
-	getTimeFromInit(8);
-	assertToggleReached();
-	TEST_ASSERT_EQUAL(TOGGLING, updateLed(200));
-}
-
-void test_only_one_write_on_cycle(void)
-{
-	getTimeFromInit(500);
-	assertToggleReached();
-	TEST_ASSERT_EQUAL(TOGGLING, updateLed(0));
-
-	timer_getMilliseconds_ExpectAndReturn(NULL, 400);
-	TEST_ASSERT_EQUAL(TOGGLING, updateLed(100));
-}
-
-void test_enable_write_after_two_toggles(void)
-{
-	getTimeFromInit(500);
-	assertToggleReached();
-	TEST_ASSERT_EQUAL(TOGGLING, updateLed(0));
-
-	timer_getMilliseconds_ExpectAndReturn(NULL, 500);
-	assertToggleReached();
-	TEST_ASSERT_EQUAL(READY, updateLed(0));
-
-	getTimeFromInit(8);
-	assertToggleReached();
-	TEST_ASSERT_EQUAL(TOGGLING, updateLed(100));
+	handleLed_update(0);
+	addMillis(500);
+	handleLed_update(0);
+	addMillis(500);
+	handleLed_update(0);
+	addMillis(50);
+	handleLed_update(0);
+	TEST_ASSERT_BITS(1<<PB0, 1<<PB0, PORTB);
 }
