@@ -1,12 +1,14 @@
 #ifdef TEST
 	#include "stub_io.h"
-#else 
-	#include<avr/io.h>
 #endif
 #include"buzzer.h"
 #include"timer.h"
+#include<avr/io.h>
 void buzzer_create(Buzzer * buzzer, short pin)
 {
+	buzzer->pin = pin;
+	DDRB |= 1 << pin;
+	PORTB &=~ (1 << pin);
 }
 void buzzer_a(int8_t ticks, int32_t  tiempoms)
 {

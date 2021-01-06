@@ -12,11 +12,9 @@ static short session_progress_time = 0;
 enum time_type{PLAYING, REST};
 static short actual_action = PLAYING;
 struct {
-	Led *led;
 }Pomodoro;
-void pomodoro_init(Led * led, Buzzer *buzzer, Button *button)
+void pomodoro_init(void)
 {
-	Pomodoro.led = led;
 	sessions_reinitIndex();
 	buzzer_open();
 	handleLed_create();
@@ -91,8 +89,4 @@ bool pomodoro_setPin(PIN_TYPE pin_type, short pin)
 	}
 	pines[pin_type] = pin;
 	return true;
-}
-void pomodoro_draw(void)
-{
-	led_blink_rate(Pomodoro.led, 100);
 }

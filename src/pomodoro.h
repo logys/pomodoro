@@ -2,9 +2,6 @@
 #define POMODORO_H
 
 #include "pomodoro_sessions.h"
-#include "led.h"
-#include "buzzer.h"
-#include "button.h"
 
 /*
  * Dispositivo que mide el tiempo indicado, registra y reproduce las sesiones indicadas,
@@ -16,7 +13,7 @@
  */
 
 typedef enum pin_type {PIN_BUZZER=0, PIN_LED, PIN_BUTTON}PIN_TYPE;
-void pomodoro_init(Led *, Buzzer*, Button *);
+void pomodoro_init(void);
 void pomodoro_destroy(void);
 #define pomodoro_setSessions(...) sessions_set(__VA_ARGS__)
 /** \brief actualiza la cuenta y estado del pomodoro
