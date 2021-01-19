@@ -6,10 +6,11 @@ static Pomodoro *pomodoro;
 void addTime(uint32_t actual, uint32_t *last, double *output_minutes);
 static void compute_progress(Session session, int *progress);
 
-void pomodoro_init(Pomodoro *pomodoro_input)
+void pomodoro_init(Pomodoro *pomodoro_object)
 {
-	pomodoro = pomodoro_input;
+	pomodoro = pomodoro_object;
 	pomodoro->session.current_time = 0;
+	pomodoro->time.last = 0;
 }
 void pomodoro_update(void)
 {
@@ -20,6 +21,7 @@ void addTime(uint32_t actual, uint32_t *last, double *output_minutes)
 {
 	uint32_t time_from_past = actual-*last;
 	*output_minutes += time_from_past/60000.0;
+	*last = actual;
 }
 static void compute_progress(Session session, int *progress)
 {
