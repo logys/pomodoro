@@ -2,6 +2,8 @@
 #define POMODORO_H
 
 #include "pomodoro_sessions.h"
+#include "pomodoro_data.h"
+#include <stdint.h>
 
 /*
  * Dispositivo que mide el tiempo indicado, registra y reproduce las sesiones indicadas,
@@ -11,14 +13,14 @@
  * puede reiniciarse pulsando el botón nuevamente.
  * Cada vez que se inicia desde el apagado el pomodoro se reinicia.
  */
-
 typedef enum pin_type {PIN_BUZZER=0, PIN_LED, PIN_BUTTON}PIN_TYPE;
-void pomodoro_init(void);
+void pomodoro_init(Pomodoro *);
 void pomodoro_destroy(void);
 #define pomodoro_setSessions(...) sessions_set(__VA_ARGS__)
 /** \brief actualiza la cuenta y estado del pomodoro
  * \param objeto dirección de pomodoro*/
 void pomodoro_update(void);
+void addTime(uint32_t actual, uint32_t *last, double *output_minutes);
 void pomodoro_draw(void);
 double pomodoro_getProgress(void);
 bool pomodoro_setPin(PIN_TYPE, short pin);

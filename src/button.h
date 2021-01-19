@@ -5,5 +5,6 @@ typedef struct Button{
 }Button;
 
 void button_create(Button *, short pin);
+short button_read(void);
 
 #endif// BUTTON_H

@@ -28,7 +28,8 @@
 
 int appMain(void)
 {
-	pomodoro_init(NULL, NULL, NULL);
+	Pomodoro pomodoro;
+	pomodoro_init(&pomodoro);
 	pomodoro_setSessions(25,1,28,8,28);
 	LOOP{
 		pomodoro_update();

@@ -19,6 +19,7 @@
 Led led;
 Button button;
 Buzzer buzz;
+Pomodoro pomodoro;
 void setUp(void)
 {
 	DDRB = 0;
@@ -26,7 +27,8 @@ void setUp(void)
 	led_create(&led, LED_PIN);
 	button_create(&button, BUTTON_PIN);
 	buzzer_create(&buzz, BUZZER_PIN);
-	pomodoro_init();
+	input_init(&button, &pomodoro);
+	pomodoro_init(&pomodoro);
 	draw_init(&led, &buzz);
 }
 void tearDown(void)
