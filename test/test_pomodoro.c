@@ -24,17 +24,19 @@ void test_time_at_init(void)
 	pomodoro_update();
 	TEST_ASSERT_EQUAL_FLOAT(0, session_getCurrentTime(&pomodoro.session));
 }
+#define HALF_TIME_SESSION_MS 2.5*60*1000
 void test_time_at_half(void)
 {
-	time_setCurrent(&pomodoro.time, 2.5*60*1000);
+	time_setCurrent(&pomodoro.time, HALF_TIME_SESSION_MS);
 	pomodoro_update();
 	TEST_ASSERT_EQUAL_FLOAT(2.5, session_getCurrentTime(&pomodoro.session));
 }
+#define ONE_MINUTE_MS 60*1000
 void test_add_one_minute(void)
 {
-	time_setCurrent(&pomodoro.time, 1*60*1000);
+	time_setCurrent(&pomodoro.time, ONE_MINUTE_MS);
 	pomodoro_update();
-	time_setCurrent(&pomodoro.time, 1*60*1000);
+	time_setCurrent(&pomodoro.time, 2*ONE_MINUTE_MS);
 	pomodoro_update();
 	TEST_ASSERT_EQUAL_FLOAT(2, session_getCurrentTime(&pomodoro.session));
 }
