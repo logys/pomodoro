@@ -21,7 +21,7 @@ void pomodoro_destroy(void);
  * \param objeto dirección de pomodoro*/
 void pomodoro_update(void);
 void addTime(uint32_t actual, uint32_t *last, double *output_minutes);
+double pomodoro_getProgress(Pomodoro *);
 void pomodoro_draw(void);
-double pomodoro_getProgress(void);
 bool pomodoro_setPin(PIN_TYPE, short pin);
 #endif

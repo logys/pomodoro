@@ -46,17 +46,17 @@ void test_compute_progress_at_init(void)
 {
 	time_setCurrent(&pomodoro.time, 0);
 	pomodoro_update();
-	TEST_ASSERT_EQUAL(0, pomodoro.progress);
+	TEST_ASSERT_EQUAL(0, pomodoro_getProgress(&pomodoro));
 }
 void test_compute_progress_at_half(void)
 {
-	time_setCurrent(&pomodoro.time, 2.5*60*1000);
+	time_setCurrent(&pomodoro.time, HALF_TIME_SESSION_MS);
 	pomodoro_update();
-	TEST_ASSERT_EQUAL(50, pomodoro.progress);
+	TEST_ASSERT_EQUAL(50, pomodoro_getProgress(&pomodoro));
 }
 void test_compute_progress_at_finish(void)
 {
-	time_setCurrent(&pomodoro.time, 5*60*1000);
+	time_setCurrent(&pomodoro.time, 2*HALF_TIME_SESSION_MS);
 	pomodoro_update();
-	TEST_ASSERT_EQUAL(100, pomodoro.progress);
+	TEST_ASSERT_EQUAL(100, pomodoro_getProgress(&pomodoro));
 }
