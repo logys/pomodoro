@@ -2,8 +2,9 @@
 #define POMODORO_H
 
 #include "pomodoro_sessions.h"
-#include "pomodoro_data.h"
 #include <stdint.h>
+#include "session.h"
+#include "time.h"
 
 /*
  * Dispositivo que mide el tiempo indicado, registra y reproduce las sesiones indicadas,
@@ -14,6 +15,11 @@
  * Cada vez que se inicia desde el apagado el pomodoro se reinicia.
  */
 typedef enum pin_type {PIN_BUZZER=0, PIN_LED, PIN_BUTTON}PIN_TYPE;
+typedef struct Pomodoro{
+	int progress;
+	Session session;
+	Time time;
+}Pomodoro;
 void pomodoro_init(Pomodoro *);
 void pomodoro_destroy(void);
 #define pomodoro_setSessions(...) sessions_set(__VA_ARGS__)

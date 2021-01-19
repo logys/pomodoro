@@ -28,6 +28,8 @@ static void compute_progress(Session session, int *progress)
 	*progress =100*(1-(session.session_time - session.current_time)/
 		session.session_time);
 }
+
+//get's and set's
 double pomodoro_getProgress(Pomodoro * pomodoro)
 {
 	return pomodoro->progress ;

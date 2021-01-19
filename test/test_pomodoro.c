@@ -1,7 +1,5 @@
 #include "/home/antonio/.gem/ruby/gems/ceedling-0.30.0/vendor/unity/src/unity.h"
 #include "../src/pomodoro.h"
-#include "../src/pomodoro_data.h"
-#include "../src/pomodoro_sessions.h"
 #include "avr/io.h"
 #include "../src/session.h"
 #include "../src/time.h"
@@ -9,7 +7,6 @@
 static Pomodoro pomodoro;
 void setUp(void)
 {	
-	pomodoro.session_time = 5;
 	pomodoro_init(&pomodoro);
 	session_setSessionTime(&pomodoro.session, 5);
 }
