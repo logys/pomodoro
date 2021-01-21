@@ -14,7 +14,8 @@ void pomodoro_init(Pomodoro *pomodoro_object)
 }
 void pomodoro_update(void)
 {
-	addTime(pomodoro->time.current, &pomodoro->time.last, &pomodoro->session.current_time);
+	//addTime(pomodoro->time.current, &pomodoro->time.last, &pomodoro->session.current_time);
+	addTime(millis(), &pomodoro->time.last, &pomodoro->session.current_time);
 	compute_progress(pomodoro->session, &pomodoro->progress);
 }
 void addTime(uint32_t actual, uint32_t *last, double *output_minutes)
