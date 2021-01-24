@@ -2,6 +2,8 @@
  * \brief  Funciones para calcular el tiempo*/
 #include"millis.h"
 #include<stdbool.h>
+#include<avr/io.h>
+#include<avr/stub_interrupt.h>
 
 volatile uint32_t tiempo = 0;
 bool alreadyInit = false;

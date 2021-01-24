@@ -16,7 +16,10 @@
  */
 typedef enum pin_type {PIN_BUZZER=0, PIN_LED, PIN_BUTTON}PIN_TYPE;
 typedef struct Pomodoro{
+	int input;
 	int progress;
+	int session_time_minutes;
+	double session_time_acumulated_minutes;
 	Session session;
 	Time time;
 }Pomodoro;
@@ -26,7 +29,6 @@ void pomodoro_destroy(void);
 /** \brief actualiza la cuenta y estado del pomodoro
  * \param objeto dirección de pomodoro*/
 void pomodoro_update(void);
-void addTime(uint32_t actual, uint32_t *last, double *output_minutes);
 double pomodoro_getProgress(Pomodoro *);
 void pomodoro_draw(void);
 bool pomodoro_setPin(PIN_TYPE, short pin);
