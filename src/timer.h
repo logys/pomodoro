@@ -3,7 +3,16 @@
 #include<stdint.h>
 typedef struct Timer * TIMER;
 
+typedef struct Clock{
+}CLOCK;
+
+typedef enum TIME_TYPE {MILLISECONDS, SECONDS}TIME_TYPE;
+
 void timer_init(void);
+void timer_enable(CLOCK *);
+double timer_getTime(CLOCK *, TIME_TYPE);
+void timer_reset(CLOCK *);
+
 void timer_destroy(void);
 TIMER timer_createNew(void);
 uint32_t timer_getMilliseconds(TIMER);

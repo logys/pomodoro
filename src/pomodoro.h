@@ -29,7 +29,6 @@ void pomodoro_destroy(void);
 /** \brief actualiza la cuenta y estado del pomodoro
  * \param objeto dirección de pomodoro*/
 void pomodoro_update(void);
-double pomodoro_getProgress(Pomodoro *);
 void pomodoro_draw(void);
 bool pomodoro_setPin(PIN_TYPE, short pin);
 #endif
