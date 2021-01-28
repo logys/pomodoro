@@ -44,8 +44,7 @@ static bool buttonPressed(short button)
 
 static bool wasEdge(short button)
 {
-	bool edge = last_button == 0;
-	last_button = button;
+	bool edge = (last_button == 0);
 	return edge;
 }
 static void toggleAction(void)
