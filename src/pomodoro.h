@@ -18,11 +18,9 @@ typedef enum pin_type {PIN_BUZZER=0, PIN_LED, PIN_BUTTON}PIN_TYPE;
 typedef struct Pomodoro{
 	int input;
 	int progress;
-	int session_time_minutes;
-	double session_time_acumulated_minutes;
-	Session session;
-	Time time;
+	Session play;
 }Pomodoro;
+
 void pomodoro_init(Pomodoro *);
 void pomodoro_destroy(void);
 #define pomodoro_setSessions(...) sessions_set(__VA_ARGS__)
