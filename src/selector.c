@@ -1,56 +1,40 @@
 #include "selector.h"
 #include <stdlib.h>
-#include <stdbool.h>
+
+#define SECONDS_TO_POWEROFF 5
 
 static CLOCK * timer = NULL;
-static ACTION current_action = 0;
-static short last_button = 0;
+static bool * button = NULL;
+static bool last_button = false;
+static ACTION current_action = POWEROFF;
+static ACTION last_action = POWEROFF;
+static bool firstQuery = true;
 
-static bool buttonPressedManyTime(short button);
-static bool buttonPressed(short button);
-static void toggleAction(void);
-static bool wasEdge(short button);
-
-void selector_init(CLOCK * timer_injected)
+void selector_init(bool *butn, CLOCK * timer_injected)
 {
+	button = butn;
+	firstQuery = true;
+	last_action = POWEROFF;
 	timer = timer_injected;
-	timer_enable(timer);
-	current_action = PLAY;
-	last_button = 0;
+	last_button = false;
 }
 
-int selector_selectActionFromInput(int button)
+ACTION selector_select(void)
 {
-	if(buttonPressedManyTime(button))
+	if(firstQuery || timer_getTime(timer, SECONDS) >= SECONDS_TO_POWEROFF){
+		firstQuery = false;
 		current_action = POWEROFF;
-	else if(buttonPressed(button) && wasEdge(button)){
-		timer_reset(timer);
-		toggleAction();
 	}
-	last_button = button;
-	return current_action;
-}
-
-static bool buttonPressedManyTime(short button)
-{
-	double current_time = timer_getTime(timer, SECONDS);
-	return button == 1 && current_time >= 5;
-}
-
-static bool buttonPressed(short button)
-{
-	return button == 1;
-}
-
-static bool wasEdge(short button)
-{
-	bool edge = (last_button == 0);
-	return edge;
-}
-static void toggleAction(void)
-{
-	if(current_action == PLAY){
-		current_action = PAUSE;
-	}else
+	else if(last_action == POWEROFF || 
+			(last_action == PAUSE && *button == true)){
 		current_action = PLAY;
+	}
+	else if(last_action == PLAY && *button == true)
+		current_action = PAUSE;
+
+	if(!last_button)
+		timer_reset(timer);
+	last_button = *button;
+	last_action = current_action;
+	return current_action;
 }

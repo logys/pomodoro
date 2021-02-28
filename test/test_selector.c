@@ -1,84 +1,128 @@
 #include "unity.h"
+#include <stdbool.h>
+#include <assert.h>
+
 #include "spys/timer_spy.h"
 
 #include "../src/selector.h"
 
 int input;
+bool button;
 CLOCK timer_selector;
+
+static void omitPoweroffOfAtInit(void);
+static void lastReturnWasPLAY(void);
+static void lastReturnWasPAUSE(void);
 
 void setUp(void)
 {
-	selector_init(&timer_selector);
-	timer_setTime_spy(0, SECONDS);
+	selector_init(&button, &timer_selector);
+	timer_reset(&timer_selector);
 }
 
 void tearDown(void)
 {
 }
 
-void test_select_action_cero_input_get_play(void)
+void test_poweroff_on_create(void)
 {
-	input = 0;
-	TEST_ASSERT_EQUAL(PLAY, selector_selectActionFromInput(input));
+	button = false;
+
+	ACTION action = selector_select();
+
+	TEST_ASSERT_EQUAL(POWEROFF, action);
 }
 
-void test_select_action_one_input_get_pause(void)
+
+void test_play_after_poweroff(void)
 {
-	input = 1;
-	TEST_ASSERT_EQUAL(PAUSE, selector_selectActionFromInput(input));
+	button = false;
+	omitPoweroffOfAtInit();
+
+	ACTION action = selector_select();
+
+	TEST_ASSERT_EQUAL(PLAY, action);
 }
 
-void test_after_pause_cero_input_get_pause(void)
+static void omitPoweroffOfAtInit(void)
 {
-	input = 1;
-	selector_selectActionFromInput(input);
-	input = 0;
-	TEST_ASSERT_EQUAL(PAUSE, selector_selectActionFromInput(input));
+	selector_select();
 }
 
-void test_after_pause_one_input_get_play(void)
+void test_play_whitout_pushed_from_play(void)
 {
-	input = 1;
-	selector_selectActionFromInput(input);
-	input = 0;
-	selector_selectActionFromInput(input);
-	input = 1;
-	TEST_ASSERT_EQUAL(PLAY, selector_selectActionFromInput(input));
+	lastReturnWasPLAY();
+	button = false;
+
+	ACTION action = selector_select();
+
+	TEST_ASSERT_EQUAL(PLAY, action);
 }
 
-void test_toggle_only_on_edge(void)
+static void lastReturnWasPLAY(void)
 {
-	input = 1;
-	timer_addTime_spy(1, SECONDS);
-	selector_selectActionFromInput(input);
-	timer_addTime_spy(1, SECONDS);
-	TEST_ASSERT_EQUAL(PAUSE, selector_selectActionFromInput(input));
+	button = true;
+	omitPoweroffOfAtInit();
+	ACTION action = selector_select();
+	assert(PLAY == action);
 }
 
-void test_select_action_after_five_seconds_get_poweroff(void)
+void test_pause_when_pushed_from_play(void)
 {
-	timer_setTime_spy(0, SECONDS);
-	input = 1;
-	selector_selectActionFromInput(input);
+	lastReturnWasPLAY();
+	button = true;
+
+	ACTION action = selector_select();
+
+	TEST_ASSERT_EQUAL(PAUSE, action);
+}
+
+void test_play_when_pushed_from_pause(void)
+{
+	lastReturnWasPAUSE();
+	button = true;
+
+	ACTION action = selector_select();
+
+	TEST_ASSERT_EQUAL(PLAY, action);
+}
+
+static void lastReturnWasPAUSE(void)
+{
+	lastReturnWasPLAY();
+	button = true;
+	assert(PAUSE == selector_select());
+}
+
+void test_poweroff_after_five_seconds_pushing(void)
+{
+	lastReturnWasPLAY();
+	button = true;
 	timer_setTime_spy(5, SECONDS);
-	TEST_ASSERT_EQUAL(POWEROFF, selector_selectActionFromInput(input));
+
+	ACTION action = selector_select();
+
+	TEST_ASSERT_EQUAL(POWEROFF, action);
 }
 
-void test_no_poweroff_before_5_seconds(void)
+void test_before_5_seconds_no_poweroff(void)
 {
-	input = 1;
-	timer_setTime_spy(2.5, SECONDS);
-	TEST_ASSERT_EQUAL(PAUSE, selector_selectActionFromInput(input));
+	lastReturnWasPLAY();
+	button = false;
+	timer_setTime_spy(4, SECONDS);
+
+	ACTION action = selector_select();
+
+	TEST_ASSERT_EQUAL(PLAY, action);
 }
 
-void test_five_seconds_no_reached_reset_time(void)
+void test_poweroff_after_five_seconds_pushing_on_pause(void)
 {
-	input = 1;
-	timer_addTime_spy(2.5, SECONDS);
-	selector_selectActionFromInput(input);
-	input = 0;
-	selector_selectActionFromInput(input);
-	input = 1;
-	timer_addTime_spy(4, SECONDS);
-	TEST_ASSERT_EQUAL(PLAY, selector_selectActionFromInput(input));
+	lastReturnWasPAUSE();
+	button = true;
+	timer_setTime_spy(5, SECONDS);
+
+	ACTION action = selector_select();
+
+	TEST_ASSERT_EQUAL(POWEROFF, action);
 }

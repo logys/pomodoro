@@ -8,6 +8,8 @@ void timer_enable(CLOCK * timer)
 
 double timer_getTime(CLOCK * timer, TIME_TYPE type)
 {
+	if(type == SECONDS)
+		return time /1000.0;
 	return time;
 }
 
@@ -18,6 +20,8 @@ void timer_reset(CLOCK * timer)
 
 void timer_setTime_spy(double time_input, TIME_TYPE type)
 {
+	if(type == SECONDS)
+		time_input *= 1000;
 	time = time_input;
 }
 
