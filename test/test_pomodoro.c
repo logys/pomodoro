@@ -1,12 +1,12 @@
 #include "unity.h"
-#include "../src/pomodoro.h"
-
-static Pomodoro pomodoro;
+#include"../src/pomodoro.h"
+#include"spys/controller_spy.h"
+#include"spys/presenter_spy.h"
 
 void setUp(void)
 {	
-	pomodoro_init(&pomodoro);
 }
+
 void tearDown(void)
 {
 }

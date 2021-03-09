@@ -27,4 +27,6 @@ void buzzer_write(BUZZER_STATE);
 /** \brief obtiene el estado del buzzer
  * \return unsigned short*/
 void toggle(void);
+
+void buzzer_init(const short pin);
 #endif

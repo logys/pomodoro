@@ -3,10 +3,9 @@
 
 #include "timer.h"
 #include <stdbool.h>
+#include "action.h"
 
-typedef enum ACTION{PLAY, PAUSE, POWEROFF}ACTION;
-
-void selector_init(bool *button, CLOCK *);
+void selector_init(bool const * const button, CLOCK *);
 ACTION selector_select(void);
 
 #endif // SELECTOR_H

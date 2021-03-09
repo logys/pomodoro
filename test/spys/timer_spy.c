@@ -29,3 +29,8 @@ void timer_addTime_spy(double time_input, TIME_TYPE type)
 {
 	time += time_input;
 }
+
+CLOCK timer_create(void)
+{
+	return (CLOCK){};
+}

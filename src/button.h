@@ -1,13 +1,9 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 
-typedef enum {OFF, ON}BUTTON_STATE;
+#include<stdbool.h>
 
-typedef struct Button{
-	short pin;
-}Button;
-
-Button button_create(short pin);
-BUTTON_STATE button_read(Button *);
+void button_init(const short pin);
+bool button_read();
 
 #endif// BUTTON_H

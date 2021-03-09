@@ -12,6 +12,7 @@ void timer_init(void);
 void timer_enable(CLOCK *);
 double timer_getTime(CLOCK *, TIME_TYPE);
 void timer_reset(CLOCK *);
+CLOCK timer_create(void);
 
 void timer_destroy(void);
 TIMER timer_createNew(void);

@@ -28,11 +28,7 @@
 
 int appMain(void)
 {
-	Pomodoro pomodoro;
-	pomodoro_init(&pomodoro);
-	pomodoro_setSessions(25,1,28,8,28);
 	LOOP{
-		pomodoro_update();
 	}
 	return 0;
 }

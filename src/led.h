@@ -20,4 +20,5 @@ void led_off(void);
 /** \brief Toggle */
 void toggleLed(Led *);
 
+void led_init(const short led);
 #endif //LED_H

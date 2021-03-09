@@ -10,7 +10,7 @@ static ACTION current_action = POWEROFF;
 static ACTION last_action = POWEROFF;
 static bool firstQuery = true;
 
-void selector_init(bool *butn, CLOCK * timer_injected)
+void selector_init(bool * butn, CLOCK * timer_injected)
 {
 	button = butn;
 	firstQuery = true;

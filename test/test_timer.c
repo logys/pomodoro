@@ -107,28 +107,3 @@ void test_resume_no_started(void)
 	addMillis(213);
 	TEST_ASSERT_EQUAL(0, timer_getMilliseconds(tim));
 }
-void test_reference_counting_for_destroy_timer(void)
-{
-
-}
-#include <unistd.h>
-#include <pthread.h>
-void *backgroundMillis(void * arg)
-{
-	sleep(1);
-	addMillis(50);
-	return NULL;
-}
-void *backgroundDelay(void* arg)
-{
-	delay(50);
-	return NULL;
-}
-void test_delay(void)
-{
-	pthread_t delay, millis;
-	pthread_create(&delay, NULL, backgroundDelay, NULL);
-	pthread_create(&millis, NULL, backgroundMillis, NULL);
-	pthread_join(millis, NULL);
-	pthread_join(delay, NULL);
-}
