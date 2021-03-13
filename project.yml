@@ -93,7 +93,6 @@
     :executable: gcc
     :arguments:
       - ${1} #list of object files to link (Ruby method call param list sub)
-      - -lpthread
       - -o ${2} #executable file output (Ruby method call param list sub)
 
 # LIBRARIES

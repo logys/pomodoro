@@ -1,51 +1,52 @@
-#include "/home/antonio/.gem/ruby/gems/ceedling-0.30.0/vendor/unity/src/unity.h"
+#include "unity.h"
 #include "../src/led.h"
 #include "avr/io.h"
-#define PIN_LED 1
-Led led;
+
+short led_pin;
+
 void setUp(void)
 {
-	led_create(&led, PIN_LED);
-	DDRB = 0xff;
-	PORTB = 0xff;
-	led_create(&led, PIN_LED);
-	led_open();
+	led_pin = 2;
+	led_open(led_pin);
 }
 
 void tearDown(void)
 {
-	led_close();
 }
-void test_led_poweroff_at_init(void)
+
+void test_led_as_output(void)
 {
-	TEST_ASSERT_BITS(1<<PIN_LED, 1<<PIN_LED, DDRB);
-	TEST_ASSERT_BITS(1<<PIN_LED, 0, PORTB);
+	led_pin = 2;
+
+	led_open(led_pin);
+
+	TEST_ASSERT_BITS(1<<PB3, 1<<PB3, DDRB);
 }
-void test_close_led(void)
+
+void test_init_poweroff(void)
 {
 	DDRB = 0xff;
 	PORTB = 0xff;
-	led_close();
-	TEST_ASSERT_BITS(1, 0, DDRB);
-	TEST_ASSERT_BITS(1, 0, PORTB);
+	led_pin = 3;
+
+	led_open(led_pin);
+
+	TEST_ASSERT_BITS(1<<PB4, 0<<PB4, PORTB);
 }
-void test_toggle(void)
-{
-	PORTB = 0xff;
-	toggleLed(&led);
-	TEST_ASSERT_BITS(1<<PIN_LED, 0, PORTB);
-	toggleLed(&led);
-	TEST_ASSERT_BITS(1<<PIN_LED, 1<<PIN_LED, PORTB);
-}
-void test_on(void)
+
+void test_led_on(void)
 {
 	PORTB = 0x00;
+
 	led_on();
-	TEST_ASSERT_BITS(1, 1, PORTB);
+
+	TEST_ASSERT_BITS(1<<PB3, 1<<PB3, PORTB);
 }
-void test_off(void)
+void test_led_off(void)
 {
-	PORTB = 255;
+	PORTB = 0xFF;
+
 	led_off();
-	TEST_ASSERT_BITS(1, 0, PORTB);
+
+	TEST_ASSERT_BITS(1<<PB3, 0, PORTB);
 }

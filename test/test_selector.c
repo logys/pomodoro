@@ -16,7 +16,7 @@ static void lastReturnWasPAUSE(void);
 
 void setUp(void)
 {
-	selector_init(&button, &timer_selector);
+	selector_init(&button);
 	timer_reset(&timer_selector);
 }
 

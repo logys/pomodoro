@@ -4,29 +4,24 @@
 
 #define DELTA_TIME 200
 
-static CLOCK *timer = NULL;
-static int session_time = -1;
+static CLOCK timer;
+static uint32_t session_time = -1;
 static uint32_t last_time = 0;
-static double progress = 0;
+static short * progress;
 
-void play_init(CLOCK *timer_injected)
+void play_init(const short session_time_injected, short * const progress_injected)
 {
-	timer = timer_injected;
+	timer = timer_create();
 	last_time = 0;
-	progress = 0;
+	progress = progress_injected;
+	session_time = session_time_injected*60*1000;
 }
 
-void play_setSessionTime(const int minutes)
+void play_do(void)
 {
-	session_time = minutes*60*1000;
-}
-
-double play_do(void)
-{
-	int current_time = timer_getTime(timer, MILLISECONDS);
+	int current_time = timer_getTime(&timer, MILLISECONDS);
 	if((current_time - last_time) < DELTA_TIME){
-		progress = 100*(1 - ((double)(session_time - current_time)/session_time));
+		*progress = 100*(1 - ((double)(session_time - current_time)/session_time));
 	}
 	last_time = current_time;
-	return progress;
 }

@@ -5,7 +5,7 @@
 
 ACTION action;
 
-void selector_init(bool const * const button, CLOCK *timer)
+void selector_init(bool const * const button)
 {
 	action = -1;
 }

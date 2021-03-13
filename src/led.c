@@ -1,114 +1,33 @@
 #include"led.h"
 #include<stdlib.h>
 #include<avr/io.h>
-void led_create(Led * led, short pin)
-{
-	led->pin = pin ;
-	DDRB |= 1<<pin;
-	PORTB &= ~(1<<pin);
-}
-void led_blink_rate(Led * led, short rate)
-{
-	led_toggle(led);
-}
-void led_toggle(Led *led)
-{
-	if(PORTB & 1<<led->pin)
-		PORTB &= ~(1<<led->pin);
-	else
-		PORTB |= 1<<led->pin;
-}
-#ifdef TEST
-	#include "stub_io.h"
-#elif ATTINY
-	#include<avr/io.h>
-#elif STM32
-	#include<libopencm3/stm32/gpio.h>
-	#include<libopencm3/stm32/rcc.h>
-	#include<libopencm3/stm32/timer.h>
-#endif
 
+short pines[8] ={
+	-1,
+	PB3,
+	PB4,
+	-1,
+	PB0,
+	PB1,
+	PB2,
+	-1
+};
 
-//Drivers attiny
-#ifdef ATTINY
-void led_open()
+short gpio_pin;
+
+void led_open(short const led_pin)
 {
-	/*Inicia el driver Led*/
-	DDRB |= (1<<PB0);
-	PORTB &= ~(1<<PB0);
-}
-void led_close()
-{
-	/*Inicia el driver Led*/
-	DDRB &= ~(1<<PB0);
-	PORTB &= ~(1<<PB0);
+	gpio_pin = pines[led_pin - 1];
+	DDRB |= 1<<gpio_pin;
+	PORTB &= ~(1<<gpio_pin);
 }
 
-void toggleLed(Led * led)
-{
-	if(PORTB & 1<<led->pin)
-		PORTB &= ~(1<<led->pin);
-	else
-		PORTB |= 1<<led->pin;
-}
-void led_on(void)
-{
-	PORTB |= 1<<PB0;
-}
 void led_off(void)
 {
-	PORTB &=~(1<<PB0);
-}
-//End drivers ATTINY
-#else
-//Drivers STM32
-void openLed()
-{
-	/*Inicia el driver Led*/
-	rcc_periph_clock_enable(RCC_GPIOA);
-	rcc_periph_clock_enable(RCC_TIM14);
-	gpio_mode_setup(GPIOA,
-			GPIO_MODE_AF,
-			GPIO_PUPD_NONE,
-			GPIO4);
-	timer_set_mode(	TIM14,
-			TIM_CR1_CKD_CK_INT,
-			TIM_CR1_CMS_EDGE,
-			TIM_CR1_DIR_UP);
-	timer_set_oc_mode(	TIM14,
-				TIM_OC1,
-				TIM_OCM_PWM1);
-	gpio_set_af(GPIOA, GPIO_AF4, GPIO4);
-	timer_enable_oc_output(TIM14, TIM_OC1);
-	timer_set_prescaler(TIM14, 47);
-	timer_set_period(TIM14, 16000);
-	timer_set_oc_value(TIM14, TIM_OC1, 16000);
-	timer_enable_counter(TIM14);
-}
-void closeLed()
-{
-	/*Inicia el driver Led*/
-	rcc_periph_clock_disable(RCC_TIM14);
-	timer_disable_counter(TIM14);
+	PORTB &= ~(1<<gpio_pin);
 }
 
-void writeLed(double intensidad)
+void led_on(void)
 {
-	/*Intensidad del LED PWM 0-100*/
-	if(intensidad > 100)
-		intensidad = 100;
-	else if(intensidad < 0)
-		intensidad = 0;
-	/*set PWM*/
-	timer_set_oc_value(TIM14, TIM_OC1, (intensidad/100.0)*16000);
+	PORTB |= 1<<gpio_pin;
 }
-
-void toggleLed()
-{
-	timer_set_oc_value(TIM14, TIM_OC1, (100/100.0)*16000);
-	delay(40);
-	timer_set_oc_value(TIM14, TIM_OC1, (0/100.0)*16000);
-	delay(40);
-}
-//End drivers stm32
-#endif
