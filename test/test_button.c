@@ -1,57 +1,56 @@
 #include "unity.h"
 
 #include "../src/button.h"
+#include "../src//gpioHandler.h"
 #include <avr/io.h>
-#include<stdbool.h>
+#include <stdbool.h>
 
-bool button = false;
+short button_pin;
+short gpio_pin;
+
 void setUp(void)
 {
-	button = false;
+	button_pin = 2;
+	gpio_pin = gpio_pinToGpio(button_pin);
+	button_init(button_pin);
 }
 
 void tearDown(void)
 {
 }
-/*
-void test_createButtonInputPin(void)
+
+void test_button_as_input(void)
 {
 	DDRB = 0xFF;
-	short pin = 2;
 
-	button_init(pin, &button);
+	button_init(button_pin);
 
-	//PB3 correspond to pin 1 in data sheet
-	TEST_ASSERT_BITS(1<<PB3, 0<<PB3, DDRB);
+	TEST_ASSERT_BITS(1<<gpio_pin, 0, DDRB);
 }
 
-void test_createButtonPullUp(void)
+void test_button_whit_pull_up(void)
 {
 	PORTB = 0x00;
-	short pin = 2;
 
-	button_init(pin, &button);
+	button_init(button_pin);
 
-	TEST_ASSERT_BITS(1<<3, 1<<3, PORTB);
+	TEST_ASSERT_BITS(1<<gpio_pin, 1<<gpio_pin, PORTB);
 }
 
-void test_readPinFromButton_noPushed(void)
+void test_button_read_pushed(void)
 {
-	PINB = 1<<PB3;
-	short pin = 2;
+	PINB = 0x00;
 
-	button_init(pin, &button);
+	bool pushed = button_read();
 
-	TEST_ASSERT_EQUAL(OFF, button_read(&button));
+	TEST_ASSERT(pushed);
 }
 
-void test_readPinFromButton_Pushed(void)
+void test_button_read_unpushed(void)
 {
-	PINB = 0;
-	short pin = 2;
+	PINB = 0xFF;
 
-	button_init(pin, &button);
+	bool pushed = button_read();
 
-	TEST_ASSERT_EQUAL(ON, button_read(&button));
+	TEST_ASSERT_FALSE(pushed);
 }
-*/
