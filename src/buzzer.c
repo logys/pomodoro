@@ -1,57 +1,31 @@
-#ifdef TEST
-	#include "stub_io.h"
-#endif
 #include"buzzer.h"
-#include"timer.h"
 #include<avr/io.h>
-void buzzer_create(Buzzer * buzzer, short pin)
+
+short gpio_pin[] ={
+	-1,
+	PB3,
+	PB4,
+	-1,
+	PB0,
+	PB1,
+	PB2,
+	-1
+};
+static short pin;
+
+void buzzer_open(short const pin_injected)
 {
-	buzzer->pin = pin;
+	pin = gpio_pin[pin_injected-1];
 	DDRB |= 1 << pin;
 	PORTB &=~ (1 << pin);
 }
-void buzzer_a(int8_t ticks, int32_t  tiempoms)
+
+void buzzer_off(void)
 {
-	if(ticks <= 0 || tiempoms <= 0)
-		return;
-	if(ticks > 10)
-		ticks = 10;
-	if(tiempoms > 1000)
-		tiempoms = 1000;
-	for(uint8_t i = 0; i < ticks*2; i++){
-	//	delay(tiempoms);
-		toggle();
-	}
+	PORTB &= ~(1<<pin);
 }
 
-//Drivers ATTINY
-void buzzer_open(void)
+void buzzer_on(void)
 {
-	/* Inicia el driver buzzer*/
-	DDRB |= (1<<PB1);
-	PORTB &= ~(1<<PB1);
-}
-void buzzer_close(void)
-{
-        /*Inicia el driver buzzer*/
-        DDRB &= ~(1<<PB1);
-        PORTB &= ~(1<<PB1);
-}
-/*Buzzer encendido y apagado*/
-void buzzer_write(BUZZER_STATE estado)
-{
-        if(estado == BUZZER_ON)
-                PORTB |= (1<<PB1);
-        else if(estado == BUZZER_OFF)
-                PORTB &= ~(1<<PB1);
-}
-unsigned short readBuzz(void)
-{
-        /*Regresa el estado del buzzer*/
-        return PINB&(1<<PB1)?BUZZER_ON:BUZZER_OFF;
-}
-
-void toggle(void)
-{
-	PINB |= 1<<PB1;
+	PORTB |= 1<<pin;
 }
