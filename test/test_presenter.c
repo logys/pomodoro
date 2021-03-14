@@ -6,10 +6,10 @@
 DEFINE_FFF_GLOBALS;
 FAKE_VOID_FUNC(ledController_init);
 FAKE_VOID_FUNC(buzzerController_init);
-FAKE_VOID_FUNC(buttonController_init);
+FAKE_VOID_FUNC(reboundHandler_init);
 FAKE_VOID_FUNC(ledController_do);
 FAKE_VOID_FUNC(buzzerController_do);
-FAKE_VOID_FUNC(buttonController_do);
+FAKE_VOID_FUNC(reboundHandler_do);
 
 bool button;
 short progress;

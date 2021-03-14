@@ -1,7 +1,7 @@
 #include "presenter.h"
 #include "ledController.h"
 #include "buzzerController.h"
-#include "buttonController.h"
+#include "reboundHandler.h"
 
 void presenter_init(short const led_pin, short const buzzer_pin, 
 		short const button_pin, bool * const button_state,
@@ -9,12 +9,12 @@ void presenter_init(short const led_pin, short const buzzer_pin,
 {
 	ledController_init(led_pin, finisehd_injected, progress_injected);
 	buzzerController_init(buzzer_pin, finisehd_injected);
-	buttonController_init(button_pin, button_state);
+	reboundHandler_init(button_pin, button_state);
 }
 
 void presenter_do(void)
 {
 	ledController_do();
 	buzzerController_do();
-	buttonController_do();
+	reboundHandler_do();
 }
