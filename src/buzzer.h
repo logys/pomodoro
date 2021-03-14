@@ -7,6 +7,10 @@
 #include<stdint.h>
 #include"timer.h"
 
+void buzzer_on(void);
+void buzzer_off(void);
+void buzzer_open(short const pin);
+
 typedef struct Buzzer{
 	short pin;
 }Buzzer;
@@ -18,7 +22,6 @@ typedef enum{BUZZER_OFF, BUZZER_ON} BUZZER_STATE;
  * \param tiempoms tiempo de duración de pitidos y silencio*/
 void buzzer_a(int8_t  ticks, int32_t  tiempoms);
 /* * \brief Inicia el buzzer*/
-void buzzer_open(void);
 /* * Detiene buzzer*/
 void buzzer_close(void);
 /** \brief Enciende y apaga el buzzer
@@ -29,4 +32,6 @@ void buzzer_write(BUZZER_STATE);
 void toggle(void);
 
 void buzzer_init(const short pin);
+
+
 #endif
