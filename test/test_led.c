@@ -1,13 +1,16 @@
 #include "unity.h"
 #include "../src/led.h"
 #include "avr/io.h"
+#include "../src/gpioHandler.h"
 
 short led_pin;
+short gpio_pin;
 
 void setUp(void)
 {
 	led_pin = 2;
 	led_open(led_pin);
+	gpio_pin = gpio_pinToGpio(led_pin);
 }
 
 void tearDown(void)
@@ -20,7 +23,7 @@ void test_led_as_output(void)
 
 	led_open(led_pin);
 
-	TEST_ASSERT_BITS(1<<PB3, 1<<PB3, DDRB);
+	TEST_ASSERT_BITS(1<<gpio_pin, 1<<gpio_pin, DDRB);
 }
 
 void test_init_poweroff(void)
@@ -28,10 +31,11 @@ void test_init_poweroff(void)
 	DDRB = 0xff;
 	PORTB = 0xff;
 	led_pin = 3;
+	gpio_pin = gpio_pinToGpio(led_pin);
 
 	led_open(led_pin);
 
-	TEST_ASSERT_BITS(1<<PB4, 0<<PB4, PORTB);
+	TEST_ASSERT_BITS(1<<gpio_pin, 0<<gpio_pin, PORTB);
 }
 
 void test_led_on(void)
@@ -40,7 +44,7 @@ void test_led_on(void)
 
 	led_on();
 
-	TEST_ASSERT_BITS(1<<PB3, 1<<PB3, PORTB);
+	TEST_ASSERT_BITS(1<<gpio_pin, 1<<gpio_pin, PORTB);
 }
 void test_led_off(void)
 {
@@ -48,5 +52,5 @@ void test_led_off(void)
 
 	led_off();
 
-	TEST_ASSERT_BITS(1<<PB3, 0, PORTB);
+	TEST_ASSERT_BITS(1<<gpio_pin, 0, PORTB);
 }
