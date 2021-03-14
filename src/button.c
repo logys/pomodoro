@@ -4,7 +4,7 @@
 
 static short gpio_pin;
 
-void button_init(const short pin_injected)
+void button_open(const short pin_injected)
 {
 	gpio_pin = gpio_pinToGpio(pin_injected);
 

@@ -2,10 +2,10 @@
 #include "led.h"
 #include "timer.h"
 
-static short * progress;
+static short const * progress;
 static CLOCK timer;
 
-void blinker_init(short * const progress_injected)
+void blinker_init(short const pin, short const * const progress_injected)
 {
 	progress = progress_injected;
 	timer = timer_create();

@@ -3,7 +3,7 @@
 
 #include<stdbool.h>
 
-void button_init(const short pin);
+void button_open(const short pin);
 bool button_read();
 
 #endif// BUTTON_H

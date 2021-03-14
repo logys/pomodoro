@@ -12,7 +12,7 @@ void ledController_init(short const led_pin,
 	progress = progress_injected;
 	finished = finished_injected;
 	led_open(led_pin);
-	blinker_init(progress);
+	blinker_init(led_pin, progress_injected);
 }
 
 void ledController_do(void)

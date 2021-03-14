@@ -12,7 +12,7 @@ void setUp(void)
 {
 	button_pin = 2;
 	gpio_pin = gpio_pinToGpio(button_pin);
-	button_init(button_pin);
+	button_open(button_pin);
 }
 
 void tearDown(void)
@@ -23,7 +23,7 @@ void test_button_as_input(void)
 {
 	DDRB = 0xFF;
 
-	button_init(button_pin);
+	button_open(button_pin);
 
 	TEST_ASSERT_BITS(1<<gpio_pin, 0, DDRB);
 }
@@ -32,7 +32,7 @@ void test_button_whit_pull_up(void)
 {
 	PORTB = 0x00;
 
-	button_init(button_pin);
+	button_open(button_pin);
 
 	TEST_ASSERT_BITS(1<<gpio_pin, 1<<gpio_pin, PORTB);
 }

@@ -21,10 +21,12 @@ static void (*state_table[])(void) = {
 };
 
 
-void reboundHandler_init(short const buzzer_pin, bool * const button_state)
+void reboundHandler_init(short const button_pin, bool * const button_state)
 {
 	button = button_state;
 	current_state = WAITING_FLANC;
+
+	button_open(button_pin);
 }
 
 void reboundHandler_do(void)

@@ -18,7 +18,7 @@ short progress;
 void setUp(void)
 {
 	progress = 0;
-	blinker_init(&progress);
+	blinker_init(1, &progress);
 	RESET_FAKE(led_toggle);
 }
 

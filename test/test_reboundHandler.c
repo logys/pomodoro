@@ -11,6 +11,7 @@ static void toReboundZone(void);
 static void toDirectRead(void);
 
 DEFINE_FFF_GLOBALS;
+FAKE_VOID_FUNC(button_open);
 FAKE_VALUE_FUNC(bool, button_read);
 FAKE_VALUE_FUNC(double, timer_getTime);
 FAKE_VOID_FUNC(timer_reset);
