@@ -1,7 +1,6 @@
 #include "unity.h"
 #include "millis.h"
-#include "stub_io.h"
-#include "stub_interrupt.h"
+#include <avr/io.h>
 
 void setUp(void)
 {

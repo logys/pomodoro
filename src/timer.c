@@ -10,10 +10,15 @@ struct Timer{
 	uint32_t time_on_pause;
 };
 unsigned int countRef = 0;
+
 void timer_init(void)
 {
-	millis_init();
 	countRef++;
+}
+
+CLOCK timer_create(void)
+{
+	return (CLOCK){};
 }
 
 TIMER timer_createNew(void)
@@ -72,7 +77,6 @@ void timer_start(TIMER timer)
 void timer_destroy(void)
 {
 	if(countRef == 0){
-		millis_destroy();
 	}
 }
 
