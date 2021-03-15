@@ -1,64 +1,114 @@
 #include "unity.h"
-#include "millis.h"
+#include "../src/millis.h"
 #include <avr/io.h>
+#include <avr/interrupt.h>
 
 void setUp(void)
 {
-	TCCR1 = 0x7;
-	OCR1A = 0;
-	TIMSK = 0;
 	millis_init();
 }
 
 void tearDown(void)
 {
-	millis_destroy();
 }
 
-void test_init_millis_timer1(void)
+void test_select_internal_clock_1Mhz(void)
 {
-	int preescaler = 0b011;
-	int ticks_for_1ms = 240;
-	int bitInterruptTimer1Compare = (1<<OCIE1A);
+	CLKPR = 0x00;
 
 	millis_init();
-	TEST_ASSERT_BITS(0x7, preescaler, TCCR1);
-	TEST_ASSERT_EQUAL(ticks_for_1ms, OCR1A);
-	TEST_ASSERT_BITS(bitInterruptTimer1Compare, bitInterruptTimer1Compare , TIMSK);
+
+	TEST_ASSERT_BITS(0x0F, 0x3, CLKPR);
 }
-void test_millis_destroy_no_more_interrupt(void)
+
+void test_select_clock_whitout_pll(void)
 {
-	int bitInterruptTimer1Compare = (1<<OCIE1A);
-	millis_destroy();
-	TEST_ASSERT_BITS(bitInterruptTimer1Compare, 0, TIMSK);
+	PLLCSR = 0xFF;
+
+	millis_init();
+
+	TEST_ASSERT_BITS(0x04, 0x00, PLLCSR);
 }
-static void setMillis(uint32_t time)
+
+void test_select_preescaler_4(void)
 {
-	for(int i = 0; i < time; i++)
+	TCCR1 = 0x0C;
+
+	millis_init();
+
+	TEST_ASSERT_BITS(0x0F, 0x03, TCCR1);
+}
+
+void test_compare_register_to_250(void)
+{
+	OCR1A = 0;
+
+	millis_init();
+
+	TEST_ASSERT_EQUAL(250, OCR1A);
+}
+
+void test_enable_global_interrupts(void)
+{
+	SREG = 0x00;
+
+	millis_init();
+
+	TEST_ASSERT_BITS(0x80, 0x80, SREG);
+}
+
+void test_enable_OCA1_interrupts(void)
+{
+	TIMSK = 0x00;
+
+	millis_init();
+
+	TEST_ASSERT_BITS(0x40, 0x40, TIMSK);
+}
+
+void test_time_at_init(void)
+{
+	TIM1_COMPA_vect();
+
+	uint32_t current_time = millis();
+	
+	TEST_ASSERT_EQUAL(1, current_time);
+}
+
+void test_after_250_interrupts(void)
+{
+	for(int i = 0; i<250; i++)
 		TIM1_COMPA_vect();
-}
-void test_getValue(void)
-{
-	int millis_at_start = 0;
-	setMillis(millis_at_start);
-	TEST_ASSERT_EQUAL(millis_at_start, millis());
 
-	int millis_after_some_time = 60;
-	setMillis(millis_after_some_time);
-	TEST_ASSERT_EQUAL(millis_after_some_time, millis());
-}
-void test_millis_init_only_one_time(void)
-{
-	int millis_after_some_time = 100;
-	setMillis(millis_after_some_time);
-	TEST_ASSERT_EQUAL(millis_after_some_time, millis());
-	millis_init();
-	TEST_ASSERT_EQUAL(millis_after_some_time, millis());
+	uint32_t current_time = millis();
+	
+	TEST_ASSERT_EQUAL(250, current_time);
 }
 
-void test_millis_whitout_init_return_cero(void)
+void test_reinit_millis(void)
 {
-	millis_destroy();
-	setMillis(10);
-	TEST_ASSERT_EQUAL(0, millis());
+	TIM1_COMPA_vect();
+	millis_reinit();
+
+	uint32_t current_time = millis();
+	
+	TEST_ASSERT_EQUAL(0, current_time);
+}
+
+void test_unmodified_status_register_on_reinit(void)
+{
+	SREG = 0xFF;
+
+	millis_reinit();
+
+	TEST_ASSERT_BITS(0XFF, 0xFF, SREG);
+}
+
+void test_unmodified_status_register_on_read(void)
+{
+	SREG = 0x00;
+
+	millis();
+
+	TEST_ASSERT_BITS(0XFF, 0x00, SREG);
 }

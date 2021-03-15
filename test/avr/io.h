@@ -55,12 +55,14 @@ extern uint8_t TCCR2B;
 #define WGM22 3
 
 extern uint8_t SREG;
+#define I 	7
 
 extern uint8_t TCNT1;
 extern uint8_t TCCR1;
 #define CS10 0
 #define CS11 1
 #define CS12 2
+#define CS13 3
 
 extern uint8_t OCR1A;
 
@@ -74,5 +76,12 @@ extern uint8_t PCIE;
 #define PCINT0 0
 #define PCINT3 3
 
-void push_set(short);
+extern uint8_t CLKPR;
+#define CLKPS0 0
+#define CLKPS1 1
+
+extern uint8_t PLLCSR;
+#define PCKE 2
+
+
 #endif // _AVR_IOM328P_H_
