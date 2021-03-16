@@ -1,4 +1,0 @@
-led.c:8:6:led_open	6	static
-led.c:16:6:led_off	4	static
-led.c:21:6:led_on	4	static
-led.c:26:6:led_toggle	4	static

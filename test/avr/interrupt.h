@@ -23,7 +23,6 @@
 #define ISR(interrupt) void interrupt(void)
 
 ISR(TIM1_COMPA_vect);
-
-void addMillis(uint32_t time);
+ISR(INT0_vect);
 
 #endif

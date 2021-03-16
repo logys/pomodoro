@@ -70,6 +70,8 @@ extern uint8_t TIMSK;
 #define OCIE1A 6
 
 extern uint8_t GIMSK;
+#define INT0 6
+
 extern uint8_t PCMSK;
 extern uint8_t PCIE;
 
@@ -82,6 +84,10 @@ extern uint8_t CLKPR;
 
 extern uint8_t PLLCSR;
 #define PCKE 2
+
+extern uint8_t MCUCR;
+#define ISC00 0
+#define ISC01 1
 
 
 #endif // _AVR_IOM328P_H_

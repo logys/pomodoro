@@ -12,5 +12,6 @@
 
 void pomodoro_init(short, short, short, int);
 void pomodoro_update(void);
+void pomodoro_reinit(void);
 
 #endif
