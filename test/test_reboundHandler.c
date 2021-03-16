@@ -6,6 +6,7 @@
 #include <stdbool.h>
 #include <assert.h>
 #include "fff.h"
+#include <stdint.h>
 
 static void toReboundZone(void);
 static void toDirectRead(void);
@@ -13,8 +14,8 @@ static void toDirectRead(void);
 DEFINE_FFF_GLOBALS;
 FAKE_VOID_FUNC(button_open);
 FAKE_VALUE_FUNC(bool, button_read);
-FAKE_VALUE_FUNC(double, timer_getTime);
-FAKE_VOID_FUNC(timer_reset);
+FAKE_VALUE_FUNC(uint32_t, timer_getTime);
+FAKE_VOID_FUNC(timer_restart);
 
 bool pushed;
 

@@ -4,14 +4,15 @@
 
 #include "../src/blinker.h"
 #include "fff.h"
+#include <stdint.h>
 
 
 DEFINE_FFF_GLOBALS;
 FAKE_VOID_FUNC(led_on);
 FAKE_VOID_FUNC(led_toggle);
-FAKE_VALUE_FUNC(double, timer_getTime);
+FAKE_VALUE_FUNC(uint32_t, timer_getTime);
 FAKE_VOID_FUNC(timer_create);
-FAKE_VOID_FUNC(timer_reset);
+FAKE_VOID_FUNC(timer_restart);
 
 short progress;
 

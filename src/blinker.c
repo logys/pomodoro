@@ -17,6 +17,6 @@ void blinker_do(void)
 	int toggle_time = -(*progress)*484/100 + 500;
 	if(current_time >= toggle_time){
 		led_toggle();
-		timer_reset(&timer);
+		timer_restart(&timer);
 	}
 }

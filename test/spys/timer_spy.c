@@ -6,14 +6,14 @@ void timer_enable(CLOCK * timer)
 {
 }
 
-double timer_getTime(CLOCK * timer, TIME_TYPE type)
+uint32_t timer_getTime(CLOCK * timer, TIME_TYPE type)
 {
 	if(type == SECONDS)
 		return time /1000.0;
 	return time;
 }
 
-void timer_reset(CLOCK * timer)
+void timer_restart(CLOCK * timer)
 {
 	time = 0;
 }

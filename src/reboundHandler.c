@@ -40,7 +40,7 @@ static void waitingFlanc(void)
 	if(button_read()){
 		*button = true;
 		current_state = REBOUND_ZONE;
-		timer_reset(&timer);
+		timer_restart(&timer);
 	}else{
 		*button = false;
 	}

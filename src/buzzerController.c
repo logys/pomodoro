@@ -1,5 +1,6 @@
 #include "buzzerController.h"
 #include "buzzer.h"
+#include "delay.h"
 
 static bool const * finished;
 

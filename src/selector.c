@@ -34,7 +34,7 @@ ACTION selector_select(void)
 		current_action = PAUSE;
 
 	if(!last_button)
-		timer_reset(&timer);
+		timer_restart(&timer);
 	last_button = *button;
 	last_action = current_action;
 	return current_action;
