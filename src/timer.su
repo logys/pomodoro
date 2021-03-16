@@ -1,0 +1,4 @@
+timer.c:8:6:timer_init	4	static
+timer.c:12:7:timer_create	8	static
+timer.c:17:10:timer_getTime	16	static
+timer.c:22:6:timer_restart	10	static

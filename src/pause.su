@@ -1,0 +1,2 @@
+pause.c:3:6:pause_init	6	static
+pause.c:7:6:pause_do	4	static

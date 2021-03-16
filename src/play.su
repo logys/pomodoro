@@ -1,0 +1,2 @@
+play.c:12:6:play_init	12	static
+play.c:20:6:play_do	52	static

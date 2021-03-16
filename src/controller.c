@@ -14,7 +14,7 @@ void controller_init(const short session_time, short * const progress_injected,
 
 	selector_init(button);
 	play_init(session_time, progress);
-	pause_init(progress);
+	pause_init(progress, finished);
 }
 
 void controller_do(void)

@@ -14,7 +14,7 @@ void pause_do(void)
 	*progress = 80;
 }
 
-void pause_init(short *const progress_injected)
+void pause_init(short *const progress_injected, bool * const finished_injected)
 {
 	progress = progress_injected;
 }

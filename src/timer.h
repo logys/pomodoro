@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-typedef enum TIME_TYPE {MILLISECONDS, SECONDS}TIME_TYPE;
+typedef enum TIME_TYPE {MILLISECONDS, SECONDS, MINUTES}TIME_TYPE;
 
 typedef struct Clock{
 	uint32_t time_at_start;

@@ -1,0 +1,4 @@
+millis.c:22:10:millis	13	static
+millis.c:33:6:millis_init	4	static
+millis.c:52:6:millis_reinit	5	static
+millis.c:61:1:__vector_3	11	static

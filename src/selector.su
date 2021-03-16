@@ -1,0 +1,2 @@
+selector.c:14:6:selector_init	10	static
+selector.c:23:8:selector_select	8	static
