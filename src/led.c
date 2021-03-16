@@ -22,3 +22,11 @@ void led_on(void)
 {
 	PORTB |= 1<<gpio_pin;
 }
+
+void led_toggle(void)
+{
+	if(PORTB&(1<<gpio_pin))
+		led_off();
+	else
+		led_on();
+}

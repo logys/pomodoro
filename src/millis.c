@@ -24,7 +24,7 @@ uint32_t millis(void)
 	uint32_t tmp = 0;
 	uint8_t oldSREG = 0;
 	oldSREG = SREG;
-	SREG &= ~(1<<I);
+	SREG &= ~(1<<7);
 	tmp = tiempo;
 	SREG = oldSREG;
 	return tmp;
@@ -42,7 +42,7 @@ void millis_init(void)
 	/* 4us times 250 equal to 1ms */
 	OCR1A = 250;
 	/* Enable global Interrupt */
-	SREG |= (1<<I);
+	SREG |= (1<<7);
 	/* Enable compare interrupt channel A */
 	TIMSK |= (1<<OCIE1A);
 
@@ -53,7 +53,7 @@ void millis_reinit(void)
 {
 	uint8_t oldSREG = 0;
 	oldSREG = SREG;
-	SREG &= ~(1<<I);
+	SREG &= ~(1<<7);
 	tiempo = 0;
 	SREG = oldSREG;
 }

@@ -46,6 +46,7 @@ void test_led_on(void)
 
 	TEST_ASSERT_BITS(1<<gpio_pin, 1<<gpio_pin, PORTB);
 }
+
 void test_led_off(void)
 {
 	PORTB = 0xFF;
@@ -53,4 +54,22 @@ void test_led_off(void)
 	led_off();
 
 	TEST_ASSERT_BITS(1<<gpio_pin, 0, PORTB);
+}
+
+void test_toggle_from_off(void)
+{
+	PORTB = 0x00;
+
+	led_toggle();
+
+	TEST_ASSERT_BITS(1<<gpio_pin, 1<<gpio_pin, PORTB);
+}
+
+void test_toggle_from_on(void)
+{
+	PORTB = 0xFF;
+
+	led_toggle();
+
+	TEST_ASSERT_BITS(1<<gpio_pin, 0<<gpio_pin, PORTB);
 }
