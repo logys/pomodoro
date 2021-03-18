@@ -2,19 +2,17 @@
 #include "selector.h"
 #include "play.h"
 #include "pause.h"
+#include "pomodoro.h"
 
 static bool * finished;
 static short * progress;
-
-void controller_init(const short session_time, short * const progress_injected,
-		bool const * const button, bool * finished_injected)
+static ACTION last_action;
+void controller_init(short * const progress_injected,
+		bool * finished_injected)
 {
 	finished = finished_injected;
 	progress = progress_injected;
-
-	selector_init(button);
-	play_init(session_time, progress);
-	pause_init(progress, finished);
+	last_action = -1;
 }
 
 void controller_do(void)
@@ -29,4 +27,7 @@ void controller_do(void)
 		*finished = true;
 	else
 		*finished = false;
+	if(action == POWEROFF && last_action == POWEROFF)
+		pomodoro_reinit();
+	last_action = action;
 }

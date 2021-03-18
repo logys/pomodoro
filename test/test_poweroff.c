@@ -15,7 +15,6 @@ FAKE_VOID_FUNC(sleep_mode);
 FAKE_VOID_FUNC(led_off);
 FAKE_VOID_FUNC(buzzer_off);
 FAKE_VOID_FUNC(sei);
-FAKE_VOID_FUNC(pomodoro_reinit);
 
 bool finished;
 
@@ -103,16 +102,6 @@ void test_disable_int0_interrupt(void)
 	PCINT0_vect();
 
 	TEST_ASSERT_BITS(0x40, 0x00, GIMSK);
-}
-
-void test_reset_pomodoro(void)
-{
-	finished = true;
-
-	poweroff();
-	PCINT0_vect();
-
-	TEST_ASSERT(pomodoro_reinit_fake.call_count);
 }
 
 void test_finished_false(void)

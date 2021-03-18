@@ -1,24 +1,33 @@
 #include "unity.h"
 #include "../src/controller.h"
+#include "../src/selector.h"
 #include "fff.h"
 #include "../src/action.h"
+#include <stdint.h>
 
 DEFINE_FFF_GLOBALS;
-FAKE_VALUE_FUNC(ACTION, selector_select);
 FAKE_VOID_FUNC(play_do);
 FAKE_VOID_FUNC(pause_do);
+FAKE_VOID_FUNC(timer_create);
+FAKE_VOID_FUNC(timer_restart);
+FAKE_VALUE_FUNC(uint32_t, timer_getTime);
 FAKE_VOID_FUNC(pomodoro_reinit);
-
 
 bool finished;
 short progress;
+bool button;
 
 void setUp(void)
 {
+	RESET_FAKE(play_do);
+	RESET_FAKE(pause_do);
+
 	finished = false;
 	progress = 0;
+	button = false;
 
 	controller_init(&progress, &finished);
+	selector_init(&button);
 }
 void tearDown(void)
 {
@@ -27,8 +36,8 @@ void tearDown(void)
 void test_finished_on_progress_fullfiled(void)
 {
 	finished = false;
-	selector_select_fake.return_val = PLAY;
 	progress = 100;
+	button = true;
 
 	controller_do();
 
@@ -37,15 +46,17 @@ void test_finished_on_progress_fullfiled(void)
 
 void test_when_progress_less_one_hundred_no_finished(void)
 {
+	selector_select();
 	finished = false;
-	progress = 50;
-	selector_select_fake.return_val = PLAY;
+	button = false;
 
 	controller_do();
 
 	TEST_ASSERT_FALSE(finished);
+	TEST_ASSERT(play_do_fake.call_count);
 }
 
+/*
 void test_on_action_poweroff_finished_true(void)
 {
 	finished = false;
@@ -76,3 +87,4 @@ void test_on_pause_progress_always_eigty_percent(void)
 
 	TEST_ASSERT(pause_do_fake.call_count);
 }
+*/

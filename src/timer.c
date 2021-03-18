@@ -12,7 +12,11 @@ CLOCK timer_create(void)
 
 uint32_t timer_getTime(CLOCK * timer, TIME_TYPE type)
 {
-	return millis() - timer->time_at_start;
+	uint32_t time = millis() - timer->time_at_start;
+	if(type == MILLISECONDS)
+		return time;
+	else
+		return time/1000.0;
 }
 
 void timer_restart(CLOCK * timer)

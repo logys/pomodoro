@@ -11,6 +11,7 @@ static CLOCK timer;
 
 void setUp(void)
 {
+	RESET_FAKE(millis);
 	timer = timer_create();
 }
 
@@ -44,4 +45,13 @@ void test_restart_timer(void)
 	uint32_t current_time = timer_getTime(&timer, MILLISECONDS);
 
 	TEST_ASSERT_EQUAL_UINT32(0, current_time);
+}
+
+void test_get_seconds(void)
+{
+	millis_fake.return_val = 1000;
+
+	uint32_t current_time = timer_getTime(&timer, SECONDS);
+
+	TEST_ASSERT_EQUAL(1, current_time);
 }
