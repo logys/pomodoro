@@ -4,14 +4,10 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-
-void timer_init(void)
-{
-}
-
 CLOCK timer_create(void)
 {
-	return (CLOCK){0};
+	millis_init();
+	return (CLOCK){.time_at_start=millis()};
 }
 
 uint32_t timer_getTime(CLOCK * timer, TIME_TYPE type)

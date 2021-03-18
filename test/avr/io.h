@@ -70,13 +70,14 @@ extern uint8_t TIMSK;
 #define OCIE1A 6
 
 extern uint8_t GIMSK;
+#define PCIE 5
 #define INT0 6
 
-extern uint8_t PCMSK;
-extern uint8_t PCIE;
 
+extern uint8_t PCMSK;
 #define PCINT0 0
 #define PCINT3 3
+#define PCINT4 4
 
 extern uint8_t CLKPR;
 #define CLKPS0 0

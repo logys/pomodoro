@@ -3,6 +3,10 @@
 #include "unity.h"
 
 #include "../src/blinker.h"
+#include "../src/timer.h"
+#include "../src/millis.h"
+#include <avr/io.h>
+#include <avr/interrupt.h>
 #include "fff.h"
 #include <stdint.h>
 
@@ -10,17 +14,15 @@
 DEFINE_FFF_GLOBALS;
 FAKE_VOID_FUNC(led_on);
 FAKE_VOID_FUNC(led_toggle);
-FAKE_VALUE_FUNC(uint32_t, timer_getTime);
-FAKE_VOID_FUNC(timer_create);
-FAKE_VOID_FUNC(timer_restart);
 
 short progress;
 
 void setUp(void)
 {
+	RESET_FAKE(led_toggle);
+
 	progress = 0;
 	blinker_init(&progress);
-	RESET_FAKE(led_toggle);
 }
 
 void tearDown(void)
@@ -30,36 +32,33 @@ void tearDown(void)
 void test_progress_cero_blink_500ms(void)
 {
 	progress = 0;
-	int number_of_toggles = 10;
-	timer_getTime_fake.return_val = 500;
 
-	for(int i = 0; i < number_of_toggles; i++){
+	for(int i = 0; i < 1000; i++){
+		TIM1_COMPA_vect();
 		blinker_do();
 	}
 
-	TEST_ASSERT_EQUAL(number_of_toggles, led_toggle_fake.call_count);
+	TEST_ASSERT_EQUAL(2, led_toggle_fake.call_count);
 }
-
 void test_progress_oneHundred_blink_16ms(void)
 {
 	progress = 100;
-	int number_of_toggles = 10;
-	timer_getTime_fake.return_val = 16;
+	int number_of_ticks = 1000;
 
-	for(int i = 0; i < number_of_toggles; i++){
+	for(int i = 0; i < number_of_ticks; i++){
+		TIM1_COMPA_vect();
 		blinker_do();
 	}
-
-	TEST_ASSERT_EQUAL(number_of_toggles, led_toggle_fake.call_count);
+	// 1000 / 16  = 62 
+	TEST_ASSERT_EQUAL(125, led_toggle_fake.call_count);
 }
 
 void test_no_toggle_when_no_reached(void)
 {
 	progress = 0;
-	int number_of_toggles = 5;
-	timer_getTime_fake.return_val = 16;
 
-	for(int i = 0; i < number_of_toggles; i++){
+	for(int i = 0; i < 400; i++){
+		TIM1_COMPA_vect();
 		blinker_do();
 	}
 

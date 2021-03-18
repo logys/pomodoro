@@ -3,9 +3,9 @@
 
 #include<stdbool.h>
 
-void presenter_init(const short led_pin, const short buzzer_pin, 
+void presenter_init(const short buzzer_pin, 
 		const short button_pin,
-	       bool * const button_state, short * const progress, 
+	       bool * const button_state,  
 	       bool * const finished);
 void presenter_do(void);
 

@@ -19,17 +19,18 @@ void poweroff(void)
 		return ;
 	buzzer_off();
 	led_off();
-	set_sleep_mode(SLEEP_MODE_PWR_DOWN);
 	sei();
-	/* configure low level interrupt */
-	MCUCR &= ~(1<<ISC01 | 1<<ISC00);
-	/* Enable low level interrupt */
-	GIMSK |= 1<<INT0;
+	/* Enable PCINT interrupt */
+	GIMSK |= 1<<PCIE;
+	/* Enable interrupt pin 3 */
+	PCMSK |= 1<<PCINT4;
+	set_sleep_mode(SLEEP_MODE_PWR_DOWN);
 	sleep_mode();
 }
 
-ISR(INT0_vect)
+ISR(PCINT0_vect)
 {
-	GIMSK &= ~(1<<INT0);
+	GIMSK &= ~(1<<PCIE);
+	PCMSK &= ~(1<<PCINT4);
 	pomodoro_reinit();
 }

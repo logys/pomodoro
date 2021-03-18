@@ -23,6 +23,6 @@
 #define ISR(interrupt) void interrupt(void)
 
 ISR(TIM1_COMPA_vect);
-ISR(INT0_vect);
+ISR(PCINT0_vect);
 
 #endif

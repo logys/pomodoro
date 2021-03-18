@@ -82,7 +82,7 @@ void test_after_250_interrupts(void)
 
 	uint32_t current_time = millis();
 	
-	TEST_ASSERT_EQUAL(250, current_time);
+	TEST_ASSERT_EQUAL(251, current_time);
 }
 
 void test_reinit_millis(void)

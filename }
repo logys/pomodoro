@@ -66,14 +66,14 @@ void test_enable_global_interrupt(void)
 	TEST_ASSERT(sei_fake.call_count);
 }
 
-void test_enable_pcint4(void)
+void test_configure_int0_to_low_level(void)
 {
 	finished = true;
-	PCMSK = 0x00;
+	MCUCR = 0xFF;
 
 	poweroff();
 
-	TEST_ASSERT_BITS(1<<PCINT4, 1<<PCINT4, PCMSK);
+	TEST_ASSERT_BITS(0x03, 0x00, MCUCR);
 }
 
 void test_enable_PCINT(void)

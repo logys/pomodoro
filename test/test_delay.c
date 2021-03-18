@@ -21,7 +21,7 @@ void test_return_when_reached_time(void)
 {
 	millis_fake.return_val = 50;
 
-	delay(50);
+	//delay(50);
 
 	TEST_ASSERT(millis_fake.call_count);
 }

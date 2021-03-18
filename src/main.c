@@ -15,7 +15,6 @@
 
 #include"main.h"
 #include "pomodoro.h"
-#include <stdlib.h>
 #ifdef TEST
 	#define LOOP
 #else
@@ -28,7 +27,9 @@
 
 int appMain(void)
 {
+	pomodoro_init(5, 6, 3, 1);
 	LOOP{
+		pomodoro_update();
 	}
 	return 0;
 }
