@@ -7,21 +7,22 @@
 static bool * finished;
 static short * progress;
 static ACTION last_action;
-void controller_init(short * const progress_injected,
-		bool * finished_injected)
+void controller_init(short * const progress_injected, bool * finished_injected)
 {
 	finished = finished_injected;
 	progress = progress_injected;
 	last_action = -1;
+
+	pause_init();
 }
 
 void controller_do(void)
 {
 	ACTION action = selector_select();
 	if(action == PLAY)
-		play_do();
+		*progress = play_do();
 	else if(action == PAUSE)
-	       	pause_do();
+	       	*progress = pause_do();
 
 	if(*progress >= 100 || action == POWEROFF)
 		*finished = true;

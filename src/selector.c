@@ -27,7 +27,8 @@ ACTION selector_select(void)
 		current_action = POWEROFF;
 	}
 	else if(last_action == POWEROFF || 
-			(last_action == PAUSE && *button == true)){
+			(last_action == PAUSE && *button == true) ||
+		       	last_button == *button){
 		current_action = PLAY;
 	}
 	else if(last_action == PLAY && *button == true)

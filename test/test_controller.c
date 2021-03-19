@@ -8,6 +8,7 @@ FAKE_VALUE_FUNC(ACTION, selector_select);
 FAKE_VOID_FUNC(play_do);
 FAKE_VOID_FUNC(pause_do);
 FAKE_VOID_FUNC(pomodoro_reinit);
+FAKE_VOID_FUNC(pause_init);
 
 
 bool finished;

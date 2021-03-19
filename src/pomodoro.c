@@ -10,7 +10,6 @@
 #include "poweroff.h"
 #include "selector.h"
 #include "play.h"
-#include "pause.h"
 
 static bool button_state;
 static short progress;
@@ -34,8 +33,7 @@ void pomodoro_init(short led_pin, short buzzer_pin,
 
 	controller_init(&progress, &finished);
 	selector_init(&button_state);
-	play_init(session_minutes, &progress);
-	pause_init(&progress, &finished);
+	play_init(session_minutes);
 }
 
 void pomodoro_update(void)
