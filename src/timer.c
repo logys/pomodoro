@@ -15,8 +15,10 @@ uint32_t timer_getTime(CLOCK * timer, TIME_TYPE type)
 	uint32_t time = millis() - timer->time_at_start;
 	if(type == MILLISECONDS)
 		return time;
-	else
+	else if(type == SECONDS)
 		return time/1000.0;
+	else
+		return time/60000.0;
 }
 
 void timer_restart(CLOCK * timer)

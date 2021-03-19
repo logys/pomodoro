@@ -55,3 +55,13 @@ void test_get_seconds(void)
 
 	TEST_ASSERT_EQUAL(1, current_time);
 }
+
+void test_get_minutes(void)
+{
+	millis_fake.return_val = 1*1000*60;
+
+	uint32_t current_time = timer_getTime(&timer, MINUTES);
+
+	TEST_ASSERT_EQUAL(1, current_time);
+
+}

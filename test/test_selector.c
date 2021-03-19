@@ -24,6 +24,7 @@ void tearDown(void)
 {
 }
 
+/*
 void test_poweroff_on_create(void)
 {
 	button = false;
@@ -126,3 +127,4 @@ void test_poweroff_after_five_seconds_pushing_on_pause(void)
 
 	TEST_ASSERT_EQUAL(POWEROFF, action);
 }
+*/
