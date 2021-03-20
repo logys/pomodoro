@@ -5,8 +5,8 @@
 #define DELTA_TIME 200
 
 static CLOCK timer;
-static uint32_t session_time = -1;
-static uint32_t last_time = 0;
+static uint32_t session_time;
+static uint32_t last_time;
 static short progress;
 
 void play_init(const short session_time_injected)
@@ -21,7 +21,8 @@ short play_do(void)
 	int current_time = timer_getTime(&timer, MILLISECONDS);
 	if((current_time - last_time) < DELTA_TIME){
 		progress = 100*(1 - ((double)(session_time - current_time)/session_time));
-	}
+	}else
+		timer_restart(&timer);
 	last_time = current_time;
 	return progress;
 }
