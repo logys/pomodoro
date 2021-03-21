@@ -5,5 +5,6 @@
 
 void pause_init(void);
 short pause_do(void);
+void pause_reinit(void);
 
 #endif // PAUSE_H

@@ -28,3 +28,10 @@ short play_do(void)
 	last_time = current_time;
 	return progress;
 }
+
+void play_reinit(void)
+{
+	progress = 0;
+	timer_restart(&timer);
+	last_time = 0;
+}

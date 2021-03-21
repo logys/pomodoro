@@ -25,3 +25,9 @@ short pause_do(void)
 	last_time = current_time;
 	return progress;
 }
+
+void pause_reinit(void)
+{
+	progress = 0;
+	timer_restart(&timer);
+}

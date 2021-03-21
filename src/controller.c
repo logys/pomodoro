@@ -19,7 +19,10 @@ void controller_do(void)
 {
 	if(*finished){
 		poweroff();
-		pomodoro_reinit();
+		*finished = false;
+		*progress = 0;
+		play_reinit();
+		pause_reinit();
 	}
 	ACTION action = selector_select();
 	if(action == PLAY)
