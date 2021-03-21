@@ -35,7 +35,7 @@ void test_progress_ten_percent(void)
 {
 	int steps_to_reach_six_seconds = 31;
 	for(int i = 0; i < steps_to_reach_six_seconds; i++){
-		timer_getTime_fake.return_val += 200;
+		timer_getTime_fake.return_val = 200;
 		play_do();
 	}
 

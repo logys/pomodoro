@@ -43,7 +43,6 @@ void pomodoro_update(void)
 	blinker_do();
 	buzzerController_do();
 	reboundHandler_do();
-	poweroff();
 }
 
 void pomodoro_reinit(void)

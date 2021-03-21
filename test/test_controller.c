@@ -1,12 +1,12 @@
 #include "unity.h"
 #include "../src/controller.h"
-#include "fff.h"
 #include "../src/action.h"
+#include "fff.h"
 
 DEFINE_FFF_GLOBALS;
 FAKE_VALUE_FUNC(ACTION, selector_select);
-FAKE_VOID_FUNC(play_do);
-FAKE_VOID_FUNC(pause_do);
+FAKE_VALUE_FUNC(short, play_do);
+FAKE_VALUE_FUNC(short, pause_do);
 FAKE_VOID_FUNC(pomodoro_reinit);
 FAKE_VOID_FUNC(pause_init);
 
@@ -16,6 +16,9 @@ short progress;
 
 void setUp(void)
 {
+	RESET_FAKE(selector_select);
+	RESET_FAKE(play_do);
+	RESET_FAKE(pomodoro_reinit);
 	finished = false;
 	progress = 0;
 
@@ -25,11 +28,20 @@ void tearDown(void)
 {
 }
 
+void test_first_do_reinitr(void)
+{
+	finished = true;
+
+	controller_do();
+
+	TEST_ASSERT(pomodoro_reinit_fake.call_count);
+
+}
 void test_finished_on_progress_fullfiled(void)
 {
 	finished = false;
 	selector_select_fake.return_val = PLAY;
-	progress = 100;
+	play_do_fake.return_val = 100;
 
 	controller_do();
 
@@ -39,7 +51,7 @@ void test_finished_on_progress_fullfiled(void)
 void test_when_progress_less_one_hundred_no_finished(void)
 {
 	finished = false;
-	progress = 50;
+	play_do_fake.return_val = 50;
 	selector_select_fake.return_val = PLAY;
 
 	controller_do();
@@ -47,10 +59,10 @@ void test_when_progress_less_one_hundred_no_finished(void)
 	TEST_ASSERT_FALSE(finished);
 }
 
-void test_on_action_poweroff_finished_true(void)
+void test_action_poweroff_finished_true(void)
 {
 	finished = false;
-	progress = 50;
+	play_do_fake.return_val = 50;
 	selector_select_fake.return_val = POWEROFF;
 
 	controller_do();
@@ -62,7 +74,7 @@ void test_on_play_progres_acumulates(void)
 {
 	int progress_init = progress;
 	selector_select_fake.return_val = PLAY;
-	progress = 10;
+	play_do_fake.return_val = 10;
 
 	controller_do();
 
@@ -71,9 +83,10 @@ void test_on_play_progres_acumulates(void)
 
 void test_on_pause_progress_always_eigty_percent(void)
 {
+	pause_do_fake.return_val = 80;
 	selector_select_fake.return_val = PAUSE;
 
 	controller_do();
 
-	TEST_ASSERT(pause_do_fake.call_count);
+	TEST_ASSERT_EQUAL(80, progress);
 }
