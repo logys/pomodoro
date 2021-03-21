@@ -13,14 +13,16 @@ FAKE_VOID_FUNC(timer_restart);
 int input;
 bool button;
 
-static void omitFirstCall(void);
-static void toTrap(void);
-static void lastReturnWasPAUSE(void);
-static void toSecondTogglerLastPlay(void);
+static void toTogglerLastPause(void);
+static void toTogglerLastPlay(void);
+static void toTogglerLastPoweroff(void);
+static void toTrapLastPause(void);
+static void toTrapLastPlay(void);
 
 void setUp(void)
 {
 	RESET_FAKE(timer_getTime);
+	RESET_FAKE(timer_restart);
 	selector_init(&button);
 }
 
@@ -28,69 +30,100 @@ void tearDown(void)
 {
 }
 
-void test_poweroff_on_create(void)
+void test_first_inToggler_unpushed(void)
+{
+	button = false;
+
+	ACTION action = selector_select();
+
+	TEST_ASSERT_EQUAL(PLAY, action);
+}
+
+void test_first_inToggler_pushed(void)
 {
 	button = true;
 
+	ACTION action = selector_select();
+
+	TEST_ASSERT_EQUAL(PAUSE, action);
+}
+
+void test_first_trap_pushed(void)
+{
+	toTrapLastPause();
+	button = true;
+
+	ACTION action = selector_select();
+
+	TEST_ASSERT_EQUAL(PAUSE, action);
+}
+void test_fisrt_trap_toggle_pushed_maintained_5seconds(void)
+{
+	toTrapLastPause();
+	timer_getTime_fake.return_val = 5;
+	button = true;
+	
 	ACTION action = selector_select();
 
 	TEST_ASSERT_EQUAL(POWEROFF, action);
 }
 
-void test_toggle_first_time_push_play(void)
+void test_first_trap_unpush_get_same(void)
 {
-	omitFirstCall();
-	button = true;
-
-	ACTION action = selector_select();
-
-	TEST_ASSERT_EQUAL(PLAY, action);
-}
-
-static void omitFirstCall(void)
-{
-	selector_select();
-}
-
-void test_toggle_first_unpushed_time(void)
-{
-	omitFirstCall();
-	button = false;
-
-	ACTION action = selector_select();
-
-	TEST_ASSERT_EQUAL(POWEROFF, action);
-}
-void test_trap_toggle_pushed_maintained(void)
-{
-	toTrap();
-	button = true;
-	
-	ACTION action = selector_select();
-
-	TEST_ASSERT_EQUAL(PLAY, action);
-}
-
-static void toTrap(void)
-{
-	omitFirstCall();
-	button = true;
-	selector_select();
-}
-
-void test_trap_unpush_get_same(void)
-{
-	toTrap();
+	toTrapLastPause();
 	button = false;
 	
 	ACTION action = selector_select();
 
+	TEST_ASSERT_EQUAL(PAUSE, action);
+}
+
+static void toTrapLastPause(void)
+{
+	button = true;
+	assert(PAUSE == selector_select());
+}
+
+void test_toggler_unpushed_last_pause(void)
+{
+	toTogglerLastPause();
+	button = false;
+
+	ACTION action = selector_select();
+
+	TEST_ASSERT_EQUAL(PAUSE, action);
+}
+
+void test_toggler_pushed_last_pause(void)
+{
+	toTogglerLastPause();
+	button = true;
+
+	ACTION action = selector_select();
+
 	TEST_ASSERT_EQUAL(PLAY, action);
 }
 
-void test_trap_5_seconds_return_poweroff(void)
+static void toTogglerLastPause(void)
 {
-	toTrap();
+	toTrapLastPause();
+	button = false;
+	assert(PAUSE == selector_select());
+}
+
+void test_trap_pushed_last_play(void)
+{
+	toTrapLastPlay();
+	button = true;
+
+	ACTION action = selector_select();
+
+	TEST_ASSERT_EQUAL(PLAY, action);
+}
+
+void test_trap_pushed_5_seconds_last_play(void)
+{
+	toTrapLastPlay();
 	button = true;
 	timer_getTime_fake.return_val = 5;
 
@@ -99,9 +132,16 @@ void test_trap_5_seconds_return_poweroff(void)
 	TEST_ASSERT_EQUAL(POWEROFF, action);
 }
 
-void test_second_toggler_unpushed_get_play(void)
+static void toTrapLastPlay(void)
 {
-	toSecondTogglerLastPlay();
+	toTogglerLastPause();
+	button = true;
+	assert(PLAY == selector_select());
+}
+
+void test_trap_unpushed_last_play(void)
+{
+	toTrapLastPlay();
 	button = false;
 
 	ACTION action = selector_select();
@@ -109,21 +149,36 @@ void test_second_toggler_unpushed_get_play(void)
 	TEST_ASSERT_EQUAL(PLAY, action);
 }
 
-void toSecondTogglerLastPlay(void)
+void test_toggler_unpushed_last_play(void)
 {
-	toTrap();
+	toTogglerLastPlay();
 	button = false;
+
 	ACTION action = selector_select();
-	assert(action == PLAY);
+
+	TEST_ASSERT_EQUAL(PLAY, action);
 }
 
-void test_second_toggler_unpushed_get_poweroff(void)
+void test_toggler_pushed_last_play(void)
 {
-	toTrap();
+	toTogglerLastPlay();
 	button = true;
-	timer_getTime_fake.return_val = 5;
-	ACTION action1 = selector_select();
-	assert(action1 == POWEROFF);
+
+	ACTION action = selector_select();
+
+	TEST_ASSERT_EQUAL(PAUSE, action);
+}
+
+void static toTogglerLastPlay(void)
+{
+	toTrapLastPlay();
+	button = false;
+	assert(PLAY == selector_select());
+}
+
+void test_toggler_unpushed_last_poweroff(void)
+{
+	toTogglerLastPoweroff();
 	button = false;
 
 	ACTION action = selector_select();
@@ -131,36 +186,30 @@ void test_second_toggler_unpushed_get_poweroff(void)
 	TEST_ASSERT_EQUAL(POWEROFF, action);
 }
 
-void test_second_toggler_pushed_get_pause(void)
+void test_toggler_pushed_last_poweroff(void)
 {
-	toSecondTogglerLastPlay();
+	toTogglerLastPoweroff();
 	button = true;
 
 	ACTION action = selector_select();
 
-	TEST_ASSERT_EQUAL(PAUSE, action);
+	TEST_ASSERT_EQUAL(PLAY, action);
 }
 
-void test_second_trap_unpushed_last_pause(void)
+static void toTogglerLastPoweroff(void)
 {
-	toSecondTogglerLastPlay();
+	toTrapLastPlay();
 	button = true;
-	assert(PAUSE == selector_select());
+	timer_getTime_fake.return_val = 5;
+	assert(POWEROFF == selector_select());
+}
+
+void test_reset_timer_unpushed(void)
+{
+	toTogglerLastPlay();
 	button = false;
 
-	ACTION action = selector_select();
+	selector_select();
 
-	TEST_ASSERT_EQUAL(PAUSE, action);
-}
-
-void test_second_trap_pushed_last_pause(void)
-{
-	toSecondTogglerLastPlay();
-	button = true;
-	assert(PAUSE == selector_select());
-	button = true;
-
-	ACTION action = selector_select();
-
-	TEST_ASSERT_EQUAL(PAUSE, action);
+	TEST_ASSERT(timer_restart_fake.call_count);
 }

@@ -13,6 +13,7 @@ FAKE_VOID_FUNC(timer_restart);
 FAKE_VALUE_FUNC(uint32_t, timer_getTime);
 FAKE_VOID_FUNC(pomodoro_reinit);
 FAKE_VOID_FUNC(pause_init);
+FAKE_VOID_FUNC(poweroff);
 
 bool finished;
 short progress;

@@ -9,6 +9,7 @@ FAKE_VALUE_FUNC(short, play_do);
 FAKE_VALUE_FUNC(short, pause_do);
 FAKE_VOID_FUNC(pomodoro_reinit);
 FAKE_VOID_FUNC(pause_init);
+FAKE_VOID_FUNC(poweroff);
 
 
 bool finished;

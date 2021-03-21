@@ -18,6 +18,7 @@ void controller_init(short * const progress_injected, bool * finished_injected)
 void controller_do(void)
 {
 	if(*finished){
+		poweroff();
 		pomodoro_reinit();
 	}
 	ACTION action = selector_select();
