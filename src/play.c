@@ -1,4 +1,3 @@
-#include "progress.h"
 #include "timer.h"
 #include <stdlib.h>
 
