@@ -7,6 +7,7 @@
 
 static bool * finished;
 static short * progress;
+
 void controller_init(short * const progress_injected, bool * finished_injected)
 {
 	finished = finished_injected;
@@ -21,7 +22,6 @@ void controller_do(void)
 		poweroff();
 		*finished = false;
 		*progress = 0;
-		play_reinit();
 		pause_reinit();
 	}
 	ACTION action = selector_select();

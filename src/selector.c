@@ -26,6 +26,8 @@ void selector_init(bool const * const butn)
 
 ACTION selector_select(void)
 {
+	if(current_action == POWEROFF)
+		current_action = PAUSE;
 	state_table[state]();
 	return current_action;
 }
@@ -47,6 +49,7 @@ static void trap(void)
 	if(timer_getTime(&timer, SECONDS) >= 5){
 		current_action = POWEROFF;
 		state = TOGGLER_STATE;
+		timer_restart(&timer);
 	}else if(*button){
 	}else{
 		state = TOGGLER_STATE;

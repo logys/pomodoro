@@ -1,5 +1,6 @@
 #include "millis.h"
 #include <stdlib.h>
+#include "play.h"
 
 #define DELTA_TIME 250
 
@@ -19,7 +20,7 @@ void play_init(const short session_time_injected)
 short play_do(void)
 {
 	if(progress >= 100)
-		progress = 0;
+		play_reinit();
 	int current_time = millis();
 	int delta = current_time - last_time;
 	if(delta < DELTA_TIME){

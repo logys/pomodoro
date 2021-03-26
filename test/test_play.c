@@ -43,3 +43,16 @@ void test_progress_ten_percent(void)
 
 	TEST_ASSERT_EQUAL(10, progress);
 }
+
+void test_at_finished_progress_reset(void)
+{
+	for(int i = 0; i<60*1000; i++){
+		millis_fake.return_val += 1;
+		play_do();
+	}
+
+	short progress = play_do();
+	progress = play_do();
+
+	TEST_ASSERT_EQUAL(0, progress);
+}

@@ -26,7 +26,7 @@ void pomodoro_init(short const led_pin, short const buzzer_pin,
 	buzzer_open(buzzer_pin);
 	button_open(button_pin);
 
-	blinker_init(&progress);
+	blinker_init(&progress, &finished);
 	buzzerController_init(buzzer_pin, &finished);
 	reboundHandler_init(button_pin, &button_state);
 	poweroff_init(&finished);
