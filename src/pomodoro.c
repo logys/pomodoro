@@ -15,8 +15,8 @@ static bool button_state;
 static short progress;
 static bool finished;
 
-void pomodoro_init(short led_pin, short buzzer_pin,
-	       	short button_pin, int session_minutes)
+void pomodoro_init(short const led_pin, short const buzzer_pin,
+	       	short const button_pin, short const session_minutes)
 {
 	button_state = false;
 	progress = 0;

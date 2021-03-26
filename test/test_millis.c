@@ -45,7 +45,7 @@ void test_compare_register_to_250(void)
 
 	millis_init();
 
-	TEST_ASSERT_EQUAL(250, OCR1A);
+	TEST_ASSERT_EQUAL(249, OCR1A);
 }
 
 void test_enable_global_interrupts(void)
@@ -82,7 +82,7 @@ void test_after_250_interrupts(void)
 
 	uint32_t current_time = millis();
 	
-	TEST_ASSERT_EQUAL(251, current_time);
+	TEST_ASSERT_EQUAL(250, current_time);
 }
 
 void test_reinit_millis(void)

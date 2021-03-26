@@ -7,7 +7,7 @@
 CLOCK timer_create(void)
 {
 	millis_init();
-	return (CLOCK){.time_at_start=millis()};
+	return (CLOCK){.time_at_start = millis()};
 }
 
 uint32_t timer_getTime(CLOCK * timer, TIME_TYPE type)

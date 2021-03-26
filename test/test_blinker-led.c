@@ -54,7 +54,7 @@ void test_no_blink(void)
 
 void test_progress_oneHundred_blink_16ms(void)
 {
-	progress = 100;
+	progress = 99;
 	int number_of_toggles = 99;
 	short pin = gpio_pinToGpio(led_pin);
 	timer_getTime_fake.return_val = 16;

@@ -13,6 +13,10 @@ void blinker_init(short const * const progress_injected)
 
 void blinker_do(void)
 {
+	if(*progress >= 100){
+		led_off();
+		return ;
+	}
 	int current_time = timer_getTime(&timer, MILLISECONDS);
 	int cp = *progress;
 	int toggle_time = -492/100.0*cp + 500;

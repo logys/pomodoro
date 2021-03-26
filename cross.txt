@@ -1,0 +1,26 @@
+[binaries]
+c = 'avr-gcc'
+strip = 'avr-strip'
+ar = 'avr-ar'
+
+[properties]
+needs_exe_wrapper = false
+
+[built-in options]
+c_args = [
+  '-mmcu=attiny85',
+  '-I/usr/avr/include',
+  '-ffunction-sections',
+  '-fdata-sections',
+  '-DF_CPU=1000000'
+  ]
+c_link_args = [
+	'-Wl,--gc-sections',
+	'-mmcu=attiny85']
+
+
+[host_machine]
+system = 'linux'
+cpu_family = 'avr'
+cpu = 'attiny85'
+endian = 'little'

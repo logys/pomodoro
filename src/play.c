@@ -1,29 +1,31 @@
-#include "timer.h"
+#include "millis.h"
 #include <stdlib.h>
 
-#define DELTA_TIME 10
+#define DELTA_TIME 250
 
-static CLOCK timer;
-static uint32_t session_time;
-static uint32_t last_time;
+static double session_time;
+static double last_time;
 static double progress;
+static double acumulated;
 
 void play_init(const short session_time_injected)
 {
-	timer = timer_create();
 	last_time = 0;
-	session_time = session_time_injected*60*1000;
+	session_time = session_time_injected*60*1000UL;
+	acumulated = 0;
+	progress = 0;
 }
 
 short play_do(void)
 {
 	if(progress >= 100)
 		progress = 0;
-	int current_time = timer_getTime(&timer, MILLISECONDS);
-	if((current_time - last_time) < DELTA_TIME){
-		progress += 100*(1 - ((double)(session_time - current_time)/session_time));
-	}else
-		timer_restart(&timer);
+	int current_time = millis();
+	int delta = current_time - last_time;
+	if(delta < DELTA_TIME){
+		acumulated += delta;
+		progress = acumulated / session_time*100;
+	}
 	last_time = current_time;
 	return progress;
 }
@@ -31,6 +33,6 @@ short play_do(void)
 void play_reinit(void)
 {
 	progress = 0;
-	timer_restart(&timer);
 	last_time = 0;
+	acumulated = 0;
 }

@@ -27,7 +27,7 @@
 
 int appMain(void)
 {
-	pomodoro_init(5, 6, 3, 1);
+	pomodoro_init(5, 6, 3, 25);
 	LOOP{
 		pomodoro_update();
 	}

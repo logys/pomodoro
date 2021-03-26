@@ -10,7 +10,7 @@
  * Cada vez que se inicia desde el apagado el pomodoro se reinicia.
  */
 
-void pomodoro_init(short, short, short, int);
+void pomodoro_init(short const, short const, short const, short const);
 void pomodoro_update(void);
 void pomodoro_reinit(void);
 

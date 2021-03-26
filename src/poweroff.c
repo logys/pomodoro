@@ -1,8 +1,6 @@
 #include "poweroff.h"
 #include <avr/sleep.h>
 #include <avr/io.h>
-#include "led.h"
-#include "buzzer.h"
 #include <avr/interrupt.h>
 
 static bool const * finished;
@@ -15,8 +13,6 @@ void poweroff_init(bool const * const finished_injected)
 void poweroff(void)
 {
 	if(*finished){
-		buzzer_off();
-		led_off();
 		sei();
 		/* Enable PCINT interrupt */
 		GIMSK |= 1<<PCIE;

@@ -38,24 +38,6 @@ void test_set_sleep_to_powerdown(void)
 	TEST_ASSERT_EQUAL(SLEEP_MODE_PWR_DOWN, set_sleep_mode_fake.arg0_val);
 }
 
-void test_led_off(void)
-{
-	finished = true;
-
-	poweroff();
-
-	TEST_ASSERT(led_off_fake.call_count);
-}
-
-void test_buzzer_off(void)
-{
-	finished = true;
-
-	poweroff();
-
-	TEST_ASSERT(buzzer_off_fake.call_count);
-}
-
 void test_enable_global_interrupt(void)
 {
 	finished = true;

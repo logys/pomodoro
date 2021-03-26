@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/antonio/Documentos/PCBs/Pomodoro/Attiny/src/millis.h
+stdint.h
+-
+
+/home/antonio/Documentos/PCBs/Pomodoro/Attiny/src/timer.c
+timer.h
+/home/antonio/Documentos/PCBs/Pomodoro/Attiny/src/timer.h
+millis.h
+/home/antonio/Documentos/PCBs/Pomodoro/Attiny/src/millis.h
+stdbool.h
+-
+stdint.h
+-
+stdlib.h
+-
+
+/home/antonio/Documentos/PCBs/Pomodoro/Attiny/src/timer.h
+stdint.h
+-
+

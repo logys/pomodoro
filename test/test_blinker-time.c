@@ -13,6 +13,7 @@
 
 DEFINE_FFF_GLOBALS;
 FAKE_VOID_FUNC(led_on);
+FAKE_VOID_FUNC(led_off);
 FAKE_VOID_FUNC(led_toggle);
 
 short progress;
@@ -42,7 +43,7 @@ void test_progress_cero_blink_500ms(void)
 }
 void test_progress_oneHundred_blink_16ms(void)
 {
-	progress = 100;
+	progress = 99;
 	int number_of_ticks = 1000;
 
 	for(int i = 0; i < number_of_ticks; i++){
@@ -50,7 +51,7 @@ void test_progress_oneHundred_blink_16ms(void)
 		blinker_do();
 	}
 	// 1000 / 16  = 62 
-	TEST_ASSERT_EQUAL(125, led_toggle_fake.call_count);
+	TEST_ASSERT_EQUAL(83, led_toggle_fake.call_count);
 }
 
 void test_no_toggle_when_no_reached(void)

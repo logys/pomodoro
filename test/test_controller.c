@@ -10,6 +10,8 @@ FAKE_VALUE_FUNC(short, pause_do);
 FAKE_VOID_FUNC(pomodoro_reinit);
 FAKE_VOID_FUNC(pause_init);
 FAKE_VOID_FUNC(poweroff);
+FAKE_VOID_FUNC(play_reinit);
+FAKE_VOID_FUNC(pause_reinit);
 
 
 bool finished;
@@ -32,10 +34,12 @@ void tearDown(void)
 void test_first_do_reinitr(void)
 {
 	finished = true;
+	progress = 100;
 
 	controller_do();
 
-	TEST_ASSERT(pomodoro_reinit_fake.call_count);
+	TEST_ASSERT_FALSE(finished);
+	TEST_ASSERT_EQUAL(0, progress);
 
 }
 void test_finished_on_progress_fullfiled(void)

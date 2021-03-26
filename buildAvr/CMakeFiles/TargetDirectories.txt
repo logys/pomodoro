@@ -1,0 +1,9 @@
+/home/antonio/Documentos/PCBs/Pomodoro/Attiny/buildAvr/CMakeFiles/rebuild_cache.dir
+/home/antonio/Documentos/PCBs/Pomodoro/Attiny/buildAvr/CMakeFiles/edit_cache.dir
+/home/antonio/Documentos/PCBs/Pomodoro/Attiny/buildAvr/CMakeFiles/fuses.dir
+/home/antonio/Documentos/PCBs/Pomodoro/Attiny/buildAvr/CMakeFiles/upload_eeprom.dir
+/home/antonio/Documentos/PCBs/Pomodoro/Attiny/buildAvr/CMakeFiles/flash.dir
+/home/antonio/Documentos/PCBs/Pomodoro/Attiny/buildAvr/CMakeFiles/eeprom.dir
+/home/antonio/Documentos/PCBs/Pomodoro/Attiny/buildAvr/CMakeFiles/hex.dir
+/home/antonio/Documentos/PCBs/Pomodoro/Attiny/buildAvr/CMakeFiles/strip.dir
+/home/antonio/Documentos/PCBs/Pomodoro/Attiny/buildAvr/CMakeFiles/Pomodoro.dir

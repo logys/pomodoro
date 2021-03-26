@@ -15,6 +15,8 @@ void pause_init(void)
 
 short pause_do(void)
 {
+	if(progress >= 100)
+		timer_restart(&timer);
 	int current_time = timer_getTime(&timer, MINUTES);
 	if(current_time - last_time > DELTA)
 		timer_restart(&timer);

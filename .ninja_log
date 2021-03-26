@@ -1,0 +1,8 @@
+# ninja log v5
+0	80	1616455135234891014	CMakeFiles/main.dir/src/main.c.o	5d2c5c3f4a41593b
+25	112	1616455135268224345	CMakeFiles/firmware.dir/src/millis.c.o	3cba765e678530cc
+1	76	1616455135231557681	CMakeFiles/firmware.dir/src/poweroff.c.o	3243d05cc2513891
+15	77	1616455135231557681	CMakeFiles/firmware.dir/src/buzzer.c.o	5c4f77a40e321de9
+3	89	1616455135244891013	CMakeFiles/firmware.dir/src/button.c.o	ded7402e7c89ce0f
+1	84	1616455135241557680	CMakeFiles/firmware.dir/src/led.c.o	dff6a5692a3828e5
+112	408	1616455135558224324	libfirmware.a	9abaada323d5c11

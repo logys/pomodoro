@@ -62,6 +62,6 @@ void millis_reinit(void)
 
 ISR(TIM1_COMPA_vect)
 {
-	tiempo++;
 	TCNT1=0;
+	tiempo++;
 }

@@ -13,6 +13,7 @@ FAKE_VOID_FUNC(led_toggle);
 FAKE_VALUE_FUNC(uint32_t, timer_getTime);
 FAKE_VOID_FUNC(timer_create);
 FAKE_VOID_FUNC(timer_restart);
+FAKE_VOID_FUNC(led_off);
 
 short progress;
 
@@ -42,7 +43,7 @@ void test_progress_cero_blink_500ms(void)
 
 void test_progress_oneHundred_blink_16ms(void)
 {
-	progress = 100;
+	progress = 99;
 	int number_of_toggles = 10;
 	timer_getTime_fake.return_val = 16;
 
