@@ -51,6 +51,7 @@ CMakeFiles/Pomodoro.dir/home/antonio/Documentos/PCBs/Pomodoro/Attiny/src/pause.c
 
 CMakeFiles/Pomodoro.dir/home/antonio/Documentos/PCBs/Pomodoro/Attiny/src/play.c.o: /home/antonio/Documentos/PCBs/Pomodoro/Attiny/src/millis.h
 CMakeFiles/Pomodoro.dir/home/antonio/Documentos/PCBs/Pomodoro/Attiny/src/play.c.o: /home/antonio/Documentos/PCBs/Pomodoro/Attiny/src/play.c
+CMakeFiles/Pomodoro.dir/home/antonio/Documentos/PCBs/Pomodoro/Attiny/src/play.c.o: /home/antonio/Documentos/PCBs/Pomodoro/Attiny/src/play.h
 
 CMakeFiles/Pomodoro.dir/home/antonio/Documentos/PCBs/Pomodoro/Attiny/src/pomodoro.c.o: /home/antonio/Documentos/PCBs/Pomodoro/Attiny/src/action.h
 CMakeFiles/Pomodoro.dir/home/antonio/Documentos/PCBs/Pomodoro/Attiny/src/pomodoro.c.o: /home/antonio/Documentos/PCBs/Pomodoro/Attiny/src/blinker.h
