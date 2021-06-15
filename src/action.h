@@ -10,5 +10,6 @@ enum ActionType{
 void action_set_play(void);
 void action_set_pause(void);
 void action_set_poweroff(void);
+void action_do(void);
 
 #endif // ACTION_H

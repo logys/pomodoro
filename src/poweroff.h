@@ -4,6 +4,6 @@
 #include <stdbool.h>
 
 void poweroff_init(bool const * const finished);
-void poweroff(void);
+void poweroff_do(void);
 
 #endif // POWEROFF_H
