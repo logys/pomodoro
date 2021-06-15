@@ -17,13 +17,15 @@ FAKE_VOID_FUNC(led_off);
 FAKE_VOID_FUNC(led_toggle);
 
 short progress;
+bool finished;
 
 void setUp(void)
 {
 	RESET_FAKE(led_toggle);
 
 	progress = 0;
-	blinker_init(&progress);
+	finished = false;
+	blinker_init(&progress, &finished);
 }
 
 void tearDown(void)

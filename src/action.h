@@ -1,9 +1,14 @@
 #ifndef ACTION_H
 #define ACTION_H
-typedef enum {PLAY, PAUSE, POWEROFF}ACTION;
 
-typedef struct Action{
-	double (*action_do)(struct Action *);
-}Action;
+enum ActionType{
+	POWEROFF,
+	TOGGLE,
+	PLAY
+};
+
+void action_set_play(void);
+void action_set_pause(void);
+void action_set_poweroff(void);
 
 #endif // ACTION_H

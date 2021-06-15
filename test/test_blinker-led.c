@@ -16,12 +16,14 @@ FAKE_VOID_FUNC(timer_create);
 FAKE_VOID_FUNC(timer_restart);
 
 short progress;
+bool finished;
 short led_pin;
 
 void setUp(void)
 {
 	progress = 0;
-	blinker_init(&progress);
+	finished = false;
+	blinker_init(&progress, &finished);
 	led_pin = 5;
 	led_open(led_pin);
 }

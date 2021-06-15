@@ -10,7 +10,9 @@ typedef struct Clock{
 }CLOCK;
 
 CLOCK timer_create(void);
+void timer_start(CLOCK * timer);
 uint32_t timer_getTime(CLOCK *, TIME_TYPE);
+
 void timer_restart(CLOCK *);
 
 #endif // _TIMER_H

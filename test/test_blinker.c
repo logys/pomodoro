@@ -16,11 +16,13 @@ FAKE_VOID_FUNC(timer_restart);
 FAKE_VOID_FUNC(led_off);
 
 short progress;
+bool finished;
 
 void setUp(void)
 {
 	progress = 0;
-	blinker_init(&progress);
+	finished = false;
+	blinker_init(&progress, &finished);
 	RESET_FAKE(led_toggle);
 }
 
