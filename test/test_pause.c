@@ -1,5 +1,4 @@
 #include "unity.h"
-
 #include "../src/pause.h"
 #include "fff.h"
 #include "stdint.h"
