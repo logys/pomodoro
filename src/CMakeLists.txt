@@ -1,24 +1,10 @@
-add_avr_library(
-	firmware
-	led.c
-	led.h
-	button.c
-	button.h
-	buzzer.c
-	buzzer.h
-	poweroff.c
-	poweroff.h
-	millis.c
-	millis.h
-)
+include_directories(./)
 
-add_avr_executable(
-	main
-	main.c
-	main.h
-)
+set(Sources
+	)
 
-find_library(C_LIB c)
-message(STATUS "avr-libc: ${C_LIB}")
-
-avr_target_link_libraries(main firmware ${C_LIB})
+add_library(pomodoro 
+	pomodoro.cpp
+	tickOneSecond.cpp
+	button.cpp
+	)
