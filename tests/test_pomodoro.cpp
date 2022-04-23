@@ -2,16 +2,27 @@
 #include "button.hpp"
 #include "pomodoro.hpp"
 #include "tickOneSecond.hpp"
+#include "buzzer.hpp"
+
+class BuzzerStub : public Buzzer{
+	public:
+		bool called(){return caled_;}
+		void doit() override {caled_ = true;}
+	private:
+		bool caled_ = false;
+};
 
 class PomodoroTest : public ::testing::Test {
 	protected:
 		Pomodoro * pomodoro;
 		Button * button;
 		TickOneSecond * tickOneSecond;
+		BuzzerStub * buzzer;
 
 		virtual void SetUp() override
 		{
-			pomodoro = new Pomodoro();
+			buzzer = new BuzzerStub();
+			pomodoro = new Pomodoro(buzzer, 1);
 			button = new Button(pomodoro);
 			tickOneSecond = new TickOneSecond(pomodoro);
 		}
@@ -19,6 +30,7 @@ class PomodoroTest : public ::testing::Test {
 			delete tickOneSecond;
 			delete button;
 			delete pomodoro;
+			delete buzzer;
 		}
 };
 

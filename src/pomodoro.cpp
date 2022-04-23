@@ -1,13 +1,15 @@
 #include "pomodoro.hpp"
+#include <cstdint>
 
-Pomodoro::Pomodoro()
+Pomodoro::Pomodoro(Buzzer * buzzer, std::uint8_t time_minutes) : buzzer_{buzzer}
 {
 	enabled_ = false;
-	session_time_ = 0;
+	current_time_ = 0;
+	session_time_ = time_minutes * 60;
 }
 int Pomodoro::sessionTime()
 {
-	return session_time_;
+	return current_time_;
 }
 
 void Pomodoro::enable()
@@ -18,10 +20,12 @@ void Pomodoro::enable()
 void Pomodoro::add1Second(void)
 {
 	if(enabled_)
-		session_time_ += 1;
+		current_time_ += 1;
+	if(current_time_ == session_time_)
+		buzzer_->doit();
 }
 
 void Pomodoro::setTime(std::uint16_t sec)
 {
-	session_time_ = sec;
+	current_time_ = sec;
 }

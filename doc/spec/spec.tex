@@ -1,4 +1,7 @@
 \documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{wasysym}
 \title{Especificación del pomodoro}
 \author{Luis Antonio Sánchez Monterde}
 \begin{document}
@@ -36,19 +39,24 @@
 		estudio. Como un estudiante. Yo quiero presionar el botón una
 		vez.
 
-		Ejemplo: Dado que el pomodoro esta apagado, cuando presiono el
+		\CheckedBox Ejemplo: Dado que el pomodoro esta apagado, cuando 
+		presiono el
 		botón, el pomodoro comienza a contar.
 	
 	\item [Indicar la finalización de la sesión] Con el objetivo de Conocer
 		si la sesión ha finalizado. Como un estudiante. Yo quiero 
 		escuchar una alerta.
 
-		Ejemplo: Dado que el pomodoro esta contando, cuando el contador
+		\CheckedBox Ejemplo: Dado que el pomodoro esta contando, cuando 
+		el contador
 		llega a la meta, el pomodoro indica una alerta(buzzer).
 
 	\item [Apagado eficiente] Con el objetivo de ser eficiente. 
 		Como usuario. Quiero que el dispositivo entre en modo ahorro
 		al finalizar la sesión.
+
+		\Square Ejemplo: Dado que el buzzer esta zumbando, cuando 
+		termina, entonces el pomodoro entra en modo ahorro.
 \end{description}
 \subsubsection{Descripción de controlar con un solo botón}
 \begin{description}
