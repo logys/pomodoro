@@ -1,10 +1,10 @@
 #include "button.hpp"
 
-Button::Button(Pomodoro * pomodoro) : pomodoro_{pomodoro}
+Button::Button(IPomodoro * pomodoro) : pomodoro_{pomodoro}
 {
 }
 
-void Button::pressed()
+void Button::press()
 {
 	pomodoro_->enable();
 }

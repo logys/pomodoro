@@ -7,7 +7,6 @@
 class TickOneSecond {
 	public:
 		TickOneSecond(IPomodoro * pomodoro);
-		void doit();
 		void callTick();
 	private:
 		IPomodoro * pomodoro_;

@@ -3,5 +3,6 @@
 class IPomodoro {
 	public:
 		virtual void add1Second() = 0;
+		virtual void enable() = 0;
 };
 #endif// IPOMODORO_HPP

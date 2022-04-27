@@ -9,6 +9,7 @@ class PomodoroStub : public IPomodoro{
 	public:
 		void add1Second(){called_second_ = true;}
 		bool calledAddSecond(){return called_second_;}
+		void enable() override {}
 	private:
 		bool called_second_ = false;
 };

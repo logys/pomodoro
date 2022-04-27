@@ -12,3 +12,7 @@ add_test(NAME buzzer COMMAND test_buzzer)
 add_executable(test_OneSecond test_tickOneSecond.cpp)
 target_link_libraries(test_OneSecond gtest_main tickOneSecond)
 add_test(NAME OneSecond COMMAND test_OneSecond)
+
+add_executable(test_button test_button.cpp)
+target_link_libraries(test_button gtest_main button)
+add_test(NAME button COMMAND test_button)

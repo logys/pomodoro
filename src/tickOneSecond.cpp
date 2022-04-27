@@ -4,11 +4,6 @@ TickOneSecond::TickOneSecond(IPomodoro * pomodoro) : pomodoro_{pomodoro}
 {
 }
 
-void TickOneSecond::doit()
-{
-	pomodoro_->add1Second();
-}
-
 void TickOneSecond::callTick()
 {
 	if(tick_counter_ < 9){
