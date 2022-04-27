@@ -8,3 +8,5 @@ add_library(pomodoro
 	tickOneSecond.cpp
 	button.cpp
 	)
+add_library(buzzer buzzer.cpp)
+add_library(tickOneSecond tickOneSecond.cpp)

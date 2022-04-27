@@ -2,9 +2,9 @@
 #include "button.hpp"
 #include "pomodoro.hpp"
 #include "tickOneSecond.hpp"
-#include "buzzer.hpp"
+#include "indicator.hpp"
 
-class BuzzerStub : public Buzzer{
+class BuzzerStub : public Indicator{
 	public:
 		bool called(){return caled_;}
 		void doit() override {caled_ = true;}
@@ -26,7 +26,8 @@ class PomodoroTest : public ::testing::Test {
 			button = new Button(pomodoro);
 			tickOneSecond = new TickOneSecond(pomodoro);
 		}
-		virtual void TearDown() override {
+		virtual void TearDown() override 
+		{
 			delete tickOneSecond;
 			delete button;
 			delete pomodoro;

@@ -1,7 +1,7 @@
 #include "pomodoro.hpp"
 #include <cstdint>
 
-Pomodoro::Pomodoro(Buzzer * buzzer, std::uint8_t time_minutes) : buzzer_{buzzer}
+Pomodoro::Pomodoro(Indicator * buzzer, std::uint8_t time_minutes) : buzzer_{buzzer}
 {
 	enabled_ = false;
 	current_time_ = 0;
