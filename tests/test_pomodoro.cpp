@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include "pomodoro.hpp"
 #include "indicator.hpp"
+#include "tickOneSecond.hpp"
 
 class BuzzerStub : public Indicator{
 	public:
@@ -14,14 +15,17 @@ class PomodoroTest : public ::testing::Test {
 	protected:
 		Pomodoro * pomodoro;
 		BuzzerStub * buzzer;
+		TickOneSecond * tickOneSecond;
 
 		virtual void SetUp() override
 		{
 			buzzer = new BuzzerStub();
 			pomodoro = new Pomodoro(buzzer, 1);
+			tickOneSecond = new TickOneSecond(pomodoro);
 		}
 		virtual void TearDown() override 
 		{
+			delete tickOneSecond;
 			delete pomodoro;
 			delete buzzer;
 		}
@@ -54,4 +58,15 @@ TEST_F(PomodoroTest, should_notify_end_of_session)
 	pomodoro->add1Second();
 
 	ASSERT_TRUE(buzzer->called());
+}
+
+TEST_F(PomodoroTest, should_be_one_second_for_100_calls_of_10ms)
+{
+	pomodoro->enable();
+
+	for(int i = 0; i<100; i++){
+		tickOneSecond->callTick();
+	}
+
+	ASSERT_EQ(pomodoro->sessionTime(), 1);
 }
