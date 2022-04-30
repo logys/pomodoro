@@ -2,20 +2,20 @@
 #define POMODORO_HPP
 
 #include <cstdint>
-#include "indicator.hpp"
-#include "ipomodoro.hpp"
+#include "hal.hpp"
 
-class Pomodoro : public IPomodoro {
+class Pomodoro {
 	public:
-		Pomodoro(Indicator * buzzer, std::uint8_t time_minutes);
+		Pomodoro(Hal * bsp, std::uint8_t time_minutes) :
+			bsp_{bsp}, session_time_{(std::uint16_t)(time_minutes*60)}{}
 		int sessionTime();
 		void enable();
-		virtual void add1Second() override;
+		void add1Second();
 		void setTime(std::uint16_t sec);
 	private:
-		std::uint16_t session_time_;
-		std::uint16_t current_time_;
-		bool enabled_;
-		Indicator * buzzer_;
+		std::uint16_t session_time_ = 0;
+		std::uint16_t current_time_ = 0;
+		bool enabled_ = false;
+		Hal * bsp_;
 };
 #endif// POMODORO_HPP

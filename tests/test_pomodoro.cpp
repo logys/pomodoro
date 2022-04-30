@@ -1,33 +1,35 @@
 #include <gtest/gtest.h>
 #include "pomodoro.hpp"
-#include "indicator.hpp"
 #include "tickOneSecond.hpp"
 
-class BuzzerStub : public Indicator{
+class BspStub : public Hal{
 	public:
-		bool called(){return caled_;}
-		void doit() override {caled_ = true;}
+		bool standByCalled(){return caled_;}
+		void standBy() override {caled_ = true;}
+		bool buzzingCalled(){return buzzing_;}
+		void buzzing() override { buzzing_ = true; }
 	private:
 		bool caled_ = false;
+		bool buzzing_ = false;
 };
 
 class PomodoroTest : public ::testing::Test {
 	protected:
 		Pomodoro * pomodoro;
-		BuzzerStub * buzzer;
 		TickOneSecond * tickOneSecond;
+		BspStub * bsp;
 
 		virtual void SetUp() override
 		{
-			buzzer = new BuzzerStub();
-			pomodoro = new Pomodoro(buzzer, 1);
+			bsp = new BspStub();
+			pomodoro = new Pomodoro(bsp, 1);
 			tickOneSecond = new TickOneSecond(pomodoro);
 		}
 		virtual void TearDown() override 
 		{
 			delete tickOneSecond;
 			delete pomodoro;
-			delete buzzer;
+			delete bsp;
 		}
 };
 
@@ -57,7 +59,7 @@ TEST_F(PomodoroTest, should_notify_end_of_session)
 
 	pomodoro->add1Second();
 
-	ASSERT_TRUE(buzzer->called());
+	ASSERT_TRUE(bsp->buzzingCalled());
 }
 
 TEST_F(PomodoroTest, should_be_one_second_for_100_calls_of_10ms)
@@ -69,4 +71,15 @@ TEST_F(PomodoroTest, should_be_one_second_for_100_calls_of_10ms)
 	}
 
 	ASSERT_EQ(pomodoro->sessionTime(), 1);
+}
+
+TEST_F(PomodoroTest, should_call_standby)
+{
+	pomodoro->enable();
+	pomodoro->setTime(59);
+
+	pomodoro->add1Second();
+	pomodoro->add1Second();
+
+	ASSERT_TRUE(bsp->standByCalled());
 }

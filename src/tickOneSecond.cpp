@@ -1,9 +1,5 @@
 #include "tickOneSecond.hpp"
 
-TickOneSecond::TickOneSecond(IPomodoro * pomodoro) : pomodoro_{pomodoro}
-{
-}
-
 void TickOneSecond::callTick()
 {
 	if(tick_counter_ < 99){

@@ -2,9 +2,12 @@
 #define BSP_HPP
 
 #include "tickOneSecond.hpp"
+#include "hal.hpp"
 
-class Bsp {
+class Bsp : public Hal{
 	public:
 		Bsp(TickOneSecond * tick){}
+		void standBy(){}
+		void buzzing(){}
 };
 #endif// BSP_HPP
