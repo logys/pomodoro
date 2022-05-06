@@ -2,14 +2,17 @@
 #include "tickOneSecond.hpp"
 #include "pomodoro.hpp"
 
+#define VERSION 0.1.0
+
 int main()
 {
-	Bsp * bspiny = nullptr;
-	Pomodoro pomodoro(bspiny, 1);
+	Bsp bsp;	
+	Pomodoro pomodoro(&bsp, 1);
 	TickOneSecond tickOneSecond(&pomodoro);
-	Bsp bsp(&tickOneSecond);	
-	bspiny = &bsp;
+	bsp_input(&tickOneSecond, &pomodoro);
 
-	while(1);
+	while(1){
+		asm("nop");
+	}
 	return 0;
 }

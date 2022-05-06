@@ -1,0 +1,88 @@
+#include "bsp.hpp"
+#include "avr/io.h"
+#include <cstdint>
+#define F_CPU 16000000UL
+#include <util/delay.h>
+#include <avr/interrupt.h>
+
+constexpr std::uint8_t BUZZER_PIN = PD4;
+constexpr std::uint8_t BUTTON_PIN = PD2;
+
+Bsp::Bsp() 
+{
+	//buzzer
+	DDRD |= 1<<BUZZER_PIN;
+	buzzer_off();
+	sei();
+	pcintConfig();
+	timer2Config();
+}
+
+void Bsp::buzzer_off()
+{
+	PORTD &= ~(1<<BUZZER_PIN);
+}
+
+void Bsp::pcintConfig()
+{
+	DDRD &= ~(1<<BUTTON_PIN);
+	PORTD |= 1<<BUTTON_PIN;
+	EICRA |= 1<<ISC01;
+	EICRA &= ~(1<<ISC00);
+	EIMSK |= 1<<INT0;
+}
+
+void Bsp::timer2Config()
+{
+	//CTC mode timer2
+	TCCR2A |= 1<<WGM21 | 1<<WGM20;
+	//1024 preescaler
+	TCCR2B |= 1<<CS22 | 1<<CS21 | 1<<CS20;
+	TIMSK2 |= 1<<OCIE2A;;
+	//10ms
+	OCR2A = 155;
+}
+
+void Bsp::buzzing()
+{
+	for(int i = 0; i<6; i++){
+		buzzer_toggle();
+		_delay_ms(500);
+	}
+	buzzer_off();
+}
+
+void Bsp::buzzer_toggle()
+{
+	PIND |= 1<<BUZZER_PIN;
+}
+
+#include <avr/sleep.h>
+
+void Bsp::standBy()
+{
+	sei();
+	set_sleep_mode(SLEEP_MODE_PWR_DOWN);
+	sleep_mode();
+}
+
+Pomodoro * pom_ = nullptr;
+TickOneSecond * tick_ = nullptr;
+
+void bsp_input(TickOneSecond * tick, Pomodoro * pomodoro)
+{
+	pom_ = pomodoro;
+	tick_ = tick;
+}
+
+ISR(INT0_vect)
+{
+	pom_->enable();
+	DDRD |= 1<<PD3;
+	PORTD |= 1<<PD3;
+}
+
+ISR(TIMER2_COMPA_vect)
+{
+	tick_->callTick();
+}

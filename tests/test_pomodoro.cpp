@@ -79,7 +79,6 @@ TEST_F(PomodoroTest, should_call_standby)
 	pomodoro->setTime(59);
 
 	pomodoro->add1Second();
-	pomodoro->add1Second();
 
 	ASSERT_TRUE(bsp->standByCalled());
 }
