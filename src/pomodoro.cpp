@@ -39,6 +39,8 @@ void Pomodoro::add1Second(void)
 	}
 	if(current_time_ == session_time_){
 		bsp_->buzzing();
+		enabled_ = false;
+		current_time_ = 0;
 		bsp_->standBy();
 	}
 }

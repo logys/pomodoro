@@ -45,7 +45,7 @@ TEST_F(PomodoroTest, should_count_because_button_was_pressed)
 {
 	pomodoro->enable();
 
-	constexpr int ticks = 1000;
+	constexpr int ticks = 10;
 	for(int i = 0; i <ticks; i++)
 		pomodoro->add1Second();
 
@@ -81,4 +81,15 @@ TEST_F(PomodoroTest, should_call_standby)
 	pomodoro->add1Second();
 
 	ASSERT_TRUE(bsp->standByCalled());
+}
+
+TEST_F(PomodoroTest, should_reinit_pomodoro_at_finish)
+{
+	pomodoro->enable();
+
+	for(int i = 0; i<100; i++){
+		pomodoro->add1Second();
+	}
+
+	ASSERT_EQ(pomodoro->sessionTime(), 0);
 }
