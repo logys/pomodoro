@@ -2,12 +2,12 @@
 #include "tickOneSecond.hpp"
 #include "pomodoro.hpp"
 
-#define VERSION 0.1.0
+#define VERSION 0.1.1
 
 int main()
 {
 	Bsp bsp;	
-	Pomodoro pomodoro(&bsp, 1);
+	Pomodoro pomodoro(&bsp, 25);
 	TickOneSecond tickOneSecond(&pomodoro);
 	bsp_input(&tickOneSecond, &pomodoro);
 

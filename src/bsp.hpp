@@ -13,9 +13,9 @@ class Bsp : public Hal{
 	private:
 		void buzzer_off();
 		void buzzer_toggle();
-		void pcintConfig();
-		void timer2Config();
 };
 
 void bsp_input(TickOneSecond * tick, Pomodoro * pomodoro);
+void led_toggle();
+
 #endif// BSP_HPP

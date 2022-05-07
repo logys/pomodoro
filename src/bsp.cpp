@@ -14,33 +14,11 @@ Bsp::Bsp()
 	DDRD |= 1<<BUZZER_PIN;
 	buzzer_off();
 	sei();
-	pcintConfig();
-	timer2Config();
 }
 
 void Bsp::buzzer_off()
 {
 	PORTD &= ~(1<<BUZZER_PIN);
-}
-
-void Bsp::pcintConfig()
-{
-	DDRD &= ~(1<<BUTTON_PIN);
-	PORTD |= 1<<BUTTON_PIN;
-	EICRA |= 1<<ISC01;
-	EICRA &= ~(1<<ISC00);
-	EIMSK |= 1<<INT0;
-}
-
-void Bsp::timer2Config()
-{
-	//CTC mode timer2
-	TCCR2A |= 1<<WGM21 | 1<<WGM20;
-	//1024 preescaler
-	TCCR2B |= 1<<CS22 | 1<<CS21 | 1<<CS20;
-	TIMSK2 |= 1<<OCIE2A;;
-	//10ms
-	OCR2A = 155;
 }
 
 void Bsp::buzzing()
@@ -61,28 +39,60 @@ void Bsp::buzzer_toggle()
 
 void Bsp::standBy()
 {
+	DDRB |= 1<<PB5;
+	PORTB &=~(1<<PB5);
 	sei();
 	set_sleep_mode(SLEEP_MODE_PWR_DOWN);
 	sleep_mode();
+	PORTB |= 1<<PB5;
 }
 
 Pomodoro * pom_ = nullptr;
 TickOneSecond * tick_ = nullptr;
 
+void timer2Config();
+void pcintConfig();
+
 void bsp_input(TickOneSecond * tick, Pomodoro * pomodoro)
 {
 	pom_ = pomodoro;
 	tick_ = tick;
+	timer2Config();
+	pcintConfig();
+}
+
+void timer2Config()
+{
+	//CTC mode timer2
+	TCCR2A |= 1<<WGM21 | 0<<WGM20;
+	//1024 preescaler
+	TCCR2B |= 1<<CS22 | 1<<CS21 | 1<<CS20;
+	TIMSK2 |= 1<<OCIE2A;;
+	TCNT2 = 0;
+	//10ms
+	OCR2A = 155;
+}
+
+void pcintConfig()
+{
+	DDRD &= ~(1<<BUTTON_PIN);
+	PORTD |= 1<<BUTTON_PIN;
+	EICRA |= 1<<ISC01;
+	EICRA &= ~(1<<ISC00);
+	EIMSK |= 1<<INT0;
 }
 
 ISR(INT0_vect)
 {
 	pom_->enable();
-	DDRD |= 1<<PD3;
-	PORTD |= 1<<PD3;
 }
 
 ISR(TIMER2_COMPA_vect)
 {
 	tick_->callTick();
+}
+
+void led_toggle()
+{
+	PIND |= 1<<PD3;
 }

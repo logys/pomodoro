@@ -20,6 +20,7 @@
 
 #include "pomodoro.hpp"
 #include <cstdint>
+#include "bsp.hpp"
 
 int Pomodoro::sessionTime()
 {
@@ -33,8 +34,9 @@ void Pomodoro::enable()
 
 void Pomodoro::add1Second(void)
 {
-	if(enabled_)
+	if(enabled_){
 		current_time_ += 1;
+	}
 	if(current_time_ == session_time_){
 		bsp_->buzzing();
 		bsp_->standBy();
