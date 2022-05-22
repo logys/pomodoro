@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "pomodoro.hpp"
+#include "controller.hpp"
 #include "tickOneSecond.hpp"
 
 class BspStub : public Hal{
@@ -16,6 +17,7 @@ class BspStub : public Hal{
 class PomodoroTest : public ::testing::Test {
 	protected:
 		Pomodoro * pomodoro;
+		Controller * controller;
 		TickOneSecond * tickOneSecond;
 		BspStub * bsp;
 
@@ -23,11 +25,13 @@ class PomodoroTest : public ::testing::Test {
 		{
 			bsp = new BspStub();
 			pomodoro = new Pomodoro(bsp, 1);
-			tickOneSecond = new TickOneSecond(pomodoro);
+			controller = new Controller(pomodoro);
+			tickOneSecond = new TickOneSecond(controller);
 		}
 		virtual void TearDown() override 
 		{
 			delete tickOneSecond;
+			delete controller;
 			delete pomodoro;
 			delete bsp;
 		}
@@ -35,36 +39,35 @@ class PomodoroTest : public ::testing::Test {
 
 TEST_F(PomodoroTest, should_no_count_because_button_no_pressed)
 {
-	pomodoro->add1Second();
-	pomodoro->add1Second();
+	controller->addSignal(Signals::TICK_ONE_SEC);
 
 	ASSERT_EQ(pomodoro->sessionTime(), 0);
 }
 
 TEST_F(PomodoroTest, should_count_because_button_was_pressed)
 {
-	pomodoro->enable();
+	controller->addSignal(Signals::PRESSED);
 
 	constexpr int ticks = 10;
 	for(int i = 0; i <ticks; i++)
-		pomodoro->add1Second();
+		controller->addSignal(Signals::TICK_ONE_SEC);
 
 	ASSERT_EQ(pomodoro->sessionTime(), ticks);
 }
 
 TEST_F(PomodoroTest, should_notify_end_of_session)
 {
-	pomodoro->enable();
+	controller->addSignal(Signals::PRESSED);
 	pomodoro->setTime(59);
 
-	pomodoro->add1Second();
+	controller->addSignal(Signals::TICK_ONE_SEC);
 
 	ASSERT_TRUE(bsp->buzzingCalled());
 }
 
 TEST_F(PomodoroTest, should_be_one_second_for_100_calls_of_10ms)
 {
-	pomodoro->enable();
+	controller->addSignal(Signals::PRESSED);
 
 	for(int i = 0; i<100; i++){
 		tickOneSecond->callTick();
@@ -75,20 +78,20 @@ TEST_F(PomodoroTest, should_be_one_second_for_100_calls_of_10ms)
 
 TEST_F(PomodoroTest, should_call_standby)
 {
-	pomodoro->enable();
+	controller->addSignal(Signals::PRESSED);
 	pomodoro->setTime(59);
 
-	pomodoro->add1Second();
+	controller->addSignal(Signals::TICK_ONE_SEC);
 
 	ASSERT_TRUE(bsp->standByCalled());
 }
 
 TEST_F(PomodoroTest, should_reinit_pomodoro_at_finish)
 {
-	pomodoro->enable();
+	controller->addSignal(Signals::PRESSED);
 
 	for(int i = 0; i<100; i++){
-		pomodoro->add1Second();
+		controller->addSignal(Signals::TICK_ONE_SEC);
 	}
 
 	ASSERT_EQ(pomodoro->sessionTime(), 0);

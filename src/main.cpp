@@ -4,12 +4,16 @@
 
 #define VERSION 0.2.0
 
-int main()
+namespace 
 {
-	Bsp bsp;	
+	BSP::Bsp bsp;
 	Pomodoro pomodoro(&bsp, 25);
 	TickOneSecond tickOneSecond(&pomodoro);
-	bsp_input(&tickOneSecond, &pomodoro);
+}
+
+int main()
+{
+	BSP::bsp_input(&tickOneSecond, &pomodoro);
 
 	while(1){
 		asm("nop");

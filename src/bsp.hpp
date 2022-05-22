@@ -5,6 +5,7 @@
 #include "hal.hpp"
 #include "pomodoro.hpp"
 
+namespace BSP {
 class Bsp : public Hal{
 	public:
 		Bsp();
@@ -17,5 +18,5 @@ class Bsp : public Hal{
 
 void bsp_input(TickOneSecond * tick, Pomodoro * pomodoro);
 void led_toggle();
-
+}
 #endif// BSP_HPP

@@ -8,6 +8,7 @@
 constexpr std::uint8_t BUZZER_PIN = PD4;
 constexpr std::uint8_t BUTTON_PIN = PD2;
 
+using namespace BSP;
 Bsp::Bsp() 
 {
 	//buzzer
@@ -47,6 +48,8 @@ void Bsp::standBy()
 	PORTB |= 1<<PB5;
 }
 
+namespace BSP 
+{
 Pomodoro * pom_ = nullptr;
 TickOneSecond * tick_ = nullptr;
 
@@ -95,4 +98,5 @@ ISR(TIMER2_COMPA_vect)
 void led_toggle()
 {
 	PIND |= 1<<PD3;
+}
 }

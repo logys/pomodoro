@@ -1,15 +1,15 @@
 #ifndef TICKONESECOND_HPP
 #define TICKONESECOND_HPP
 
-#include "pomodoro.hpp"
+#include "controller.hpp"
 #include <cstdint>
 
 class TickOneSecond {
 	public:
-		TickOneSecond(Pomodoro * pomodoro): pomodoro_{pomodoro}{}
+		TickOneSecond(Controller * controller): controller_{controller}{}
 		void callTick();
 	private:
-		Pomodoro * pomodoro_;
+		Controller * controller_;
 		std::int8_t tick_counter_ = 0;
 };
 #endif// TICKONESECOND_HPP
