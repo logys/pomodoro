@@ -4,6 +4,8 @@
 #include "tickOneSecond.hpp"
 #include "hal.hpp"
 #include "pomodoro.hpp"
+#include "controller.hpp"
+#include "signals.hpp"
 
 namespace BSP {
 class Bsp : public Hal{
@@ -16,7 +18,7 @@ class Bsp : public Hal{
 		void buzzer_toggle();
 };
 
-void bsp_input(TickOneSecond * tick, Pomodoro * pomodoro);
+void bsp_input(TickOneSecond * tick, Controller * controller);
 void led_toggle();
 }
 #endif// BSP_HPP

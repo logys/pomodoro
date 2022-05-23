@@ -1,22 +1,26 @@
 #include "bsp.hpp"
 #include "tickOneSecond.hpp"
 #include "pomodoro.hpp"
+#include "controller.hpp"
+#include "circular_buffer.hpp"
 
-#define VERSION 0.2.0
+#define VERSION 0.3.0
 
 namespace 
 {
 	BSP::Bsp bsp;
 	Pomodoro pomodoro(&bsp, 25);
-	TickOneSecond tickOneSecond(&pomodoro);
+	CircularBuffer signals;
+	Controller controller(&pomodoro, &signals);
+	TickOneSecond tickOneSecond(&controller);
 }
 
 int main()
 {
-	BSP::bsp_input(&tickOneSecond, &pomodoro);
+	BSP::bsp_input(&tickOneSecond, &controller);
 
 	while(1){
-		asm("nop");
+		controller.doIt();
 	}
 	return 0;
 }

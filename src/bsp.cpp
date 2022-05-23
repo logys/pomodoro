@@ -4,6 +4,7 @@
 #define F_CPU 16000000UL
 #include <util/delay.h>
 #include <avr/interrupt.h>
+#include "signals.hpp"
 
 constexpr std::uint8_t BUZZER_PIN = PD4;
 constexpr std::uint8_t BUTTON_PIN = PD2;
@@ -50,15 +51,15 @@ void Bsp::standBy()
 
 namespace BSP 
 {
-Pomodoro * pom_ = nullptr;
+Controller * controller_ = nullptr;
 TickOneSecond * tick_ = nullptr;
 
 void timer2Config();
 void pcintConfig();
 
-void bsp_input(TickOneSecond * tick, Pomodoro * pomodoro)
+void bsp_input(TickOneSecond * tick, Controller * controller)
 {
-	pom_ = pomodoro;
+	controller_ = controller;
 	tick_ = tick;
 	timer2Config();
 	pcintConfig();
@@ -87,7 +88,7 @@ void pcintConfig()
 
 ISR(INT0_vect)
 {
-	pom_->enable();
+	controller_->addSignal(Signals::PRESSED);
 }
 
 ISR(TIMER2_COMPA_vect)

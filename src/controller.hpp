@@ -2,15 +2,19 @@
 #define CONTROLLER_HPP
 
 #include "pomodoro.hpp"
-
-enum class Signals {TICK_ONE_SEC, PRESSED};
+#include "circular_buffer.hpp"
+#include "signals.hpp"
 
 class Controller {
 	public:
-		Controller(Pomodoro * pomodoro) : pomodoro_{pomodoro} {}
+		Controller(Pomodoro * pomodoro, CircularBuffer * buffer) :
+		       	pomodoro_{pomodoro}, signals_{buffer}{}
 		void addSignal(Signals signal);
+		void doIt();
 	private:
+		void dispatch(Signals signal);
 		Pomodoro * pomodoro_;
+		CircularBuffer * signals_;
 };
 
 #endif// CONTROLLER_HPP
