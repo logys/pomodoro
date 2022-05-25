@@ -21,8 +21,8 @@
 #ifndef POMODORO_HPP
 #define POMODORO_HPP
 
-#include <cstdint>
 #include "hal.hpp"
+#include <cstdint>
 
 class Pomodoro {
 	public:
@@ -30,14 +30,16 @@ class Pomodoro {
 		{
 			session_time_ = time_minutes*60;
 		}
-		int sessionTime();
+		std::uint16_t currentTime();
 		void enable();
 		void add1Second();
 		void setTime(std::uint16_t sec);
 	private:
-		std::uint16_t session_time_ = 0;
-		std::uint16_t current_time_ = 0;
+		volatile std::uint16_t current_time_ = 0;
+		std::uint16_t session_time_;
 		bool enabled_ = false;
 		Hal * bsp_;
+		void finish_session();
+		bool reachedTime();
 };
 #endif// POMODORO_HPP

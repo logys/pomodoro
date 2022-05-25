@@ -15,7 +15,6 @@ Bsp::Bsp()
 	//buzzer
 	DDRD |= 1<<BUZZER_PIN;
 	buzzer_off();
-	sei();
 }
 
 void Bsp::buzzer_off()
@@ -63,6 +62,9 @@ void bsp_input(TickOneSecond * tick, Controller * controller)
 	tick_ = tick;
 	timer2Config();
 	pcintConfig();
+	sei();
+
+	DDRD |= 1<<PD3;
 }
 
 void timer2Config()
@@ -99,5 +101,12 @@ ISR(TIMER2_COMPA_vect)
 void led_toggle()
 {
 	PIND |= 1<<PD3;
+}
+
+void idle()
+{
+	sei();
+	set_sleep_mode(SLEEP_MODE_IDLE);
+	sleep_mode();
 }
 }

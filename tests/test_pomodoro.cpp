@@ -47,7 +47,7 @@ TEST_F(PomodoroTest, should_no_count_because_button_no_pressed)
 
 	controller->doIt();
 
-	ASSERT_EQ(pomodoro->sessionTime(), 0);
+	ASSERT_EQ(pomodoro->currentTime(), 0);
 }
 
 TEST_F(PomodoroTest, should_count_because_button_was_pressed)
@@ -61,7 +61,7 @@ TEST_F(PomodoroTest, should_count_because_button_was_pressed)
 		controller->doIt();
 	}
 
-	ASSERT_EQ(pomodoro->sessionTime(), ticks);
+	ASSERT_EQ(pomodoro->currentTime(), ticks);
 }
 
 TEST_F(PomodoroTest, should_notify_end_of_session)
@@ -86,7 +86,7 @@ TEST_F(PomodoroTest, should_be_one_second_for_100_calls_of_10ms)
 		controller->doIt();
 	}
 
-	ASSERT_EQ(pomodoro->sessionTime(), 1);
+	ASSERT_EQ(pomodoro->currentTime(), 1);
 }
 
 TEST_F(PomodoroTest, should_call_standby)
@@ -112,5 +112,5 @@ TEST_F(PomodoroTest, should_reinit_pomodoro_at_finish)
 		controller->doIt();
 	}
 
-	ASSERT_EQ(pomodoro->sessionTime(), 0);
+	ASSERT_EQ(pomodoro->currentTime(), 0);
 }

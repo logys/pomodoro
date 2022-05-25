@@ -22,7 +22,7 @@
 #include <cstdint>
 #include "bsp.hpp"
 
-int Pomodoro::sessionTime()
+std::uint16_t Pomodoro::currentTime()
 {
 	return current_time_;
 }
@@ -35,17 +35,28 @@ void Pomodoro::enable()
 void Pomodoro::add1Second(void)
 {
 	if(enabled_){
-		current_time_ += 1;
+		current_time_++;
+		BSP::led_toggle();
 	}
-	if(current_time_ == session_time_){
-		bsp_->buzzing();
-		enabled_ = false;
-		current_time_ = 0;
-		bsp_->standBy();
+	if(reachedTime()){
+		finish_session();
 	}
+}
+
+bool Pomodoro::reachedTime()
+{
+	return currentTime() == session_time_;
 }
 
 void Pomodoro::setTime(std::uint16_t sec)
 {
 	current_time_ = sec;
+}
+
+void Pomodoro::finish_session()
+{
+	bsp_->buzzing();
+	enabled_ = false;
+	setTime(0);
+	bsp_->standBy();
 }

@@ -20,5 +20,6 @@ class Bsp : public Hal{
 
 void bsp_input(TickOneSecond * tick, Controller * controller);
 void led_toggle();
+void idle();
 }
 #endif// BSP_HPP

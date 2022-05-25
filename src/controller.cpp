@@ -1,4 +1,5 @@
 #include "controller.hpp"
+#include "bsp.hpp"
 
 void Controller::addSignal(Signals signal)
 {
@@ -9,6 +10,8 @@ void Controller::doIt()
 {
 	if(signals_->Count > 0)
 		dispatch(signals_->get());
+	//else
+	//	BSP::idle();
 }
 
 void Controller::dispatch(Signals signal)
