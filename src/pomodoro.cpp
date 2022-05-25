@@ -36,7 +36,6 @@ void Pomodoro::add1Second(void)
 {
 	if(enabled_){
 		current_time_++;
-		BSP::led_toggle();
 	}
 	if(reachedTime()){
 		finish_session();

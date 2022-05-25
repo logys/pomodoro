@@ -4,7 +4,7 @@
 #include "controller.hpp"
 #include "circular_buffer.hpp"
 
-#define VERSION 0.3.0
+#define VERSION 0.3.1
 
 namespace 
 {
