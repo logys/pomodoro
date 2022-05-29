@@ -4,14 +4,14 @@
 #include "controller.hpp"
 #include "circular_buffer.hpp"
 
-#define VERSION 0.3.1
+#define VERSION 0.5.0
 
 namespace 
 {
 	BSP::Bsp bsp;
 	Pomodoro pomodoro(&bsp, 25);
 	CircularBuffer signals;
-	Controller controller(&pomodoro, &signals);
+	Controller controller(&pomodoro, &signals, &bsp);
 	TickOneSecond tickOneSecond(&controller);
 }
 

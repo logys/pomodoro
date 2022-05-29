@@ -24,5 +24,7 @@ class Hal {
 	public:
 		virtual void standBy() = 0;
 		virtual void buzzing() = 0;
+		virtual void led_play() = 0;
+		virtual void idle() = 0;
 };
 #endif// HAL_HPP

@@ -29,7 +29,10 @@ std::uint16_t Pomodoro::currentTime()
 
 void Pomodoro::enable()
 {
-	enabled_ = true;
+	if(!enabled_){
+		enabled_ = true;
+		bsp_->led_play();
+	}
 }
 
 void Pomodoro::add1Second(void)

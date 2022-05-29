@@ -5,9 +5,11 @@
 #include <util/delay.h>
 #include <avr/interrupt.h>
 #include "signals.hpp"
+#include <avr/sleep.h>
 
 constexpr std::uint8_t BUZZER_PIN = PD4;
 constexpr std::uint8_t BUTTON_PIN = PD2;
+constexpr std::uint8_t LED_PIN = PD3;
 
 using namespace BSP;
 Bsp::Bsp() 
@@ -36,7 +38,24 @@ void Bsp::buzzer_toggle()
 	PIND |= 1<<BUZZER_PIN;
 }
 
-#include <avr/sleep.h>
+void Bsp::led_play()
+{
+	for(int i = 0; i<6; i++){
+		led_toggle();
+		_delay_ms(500);
+	}
+	led_off();
+}
+
+void Bsp::led_toggle()
+{
+	PIND |= 1<<LED_PIN;
+}
+
+void Bsp::led_off()
+{
+	PORTD &= ~(1<<LED_PIN);
+}
 
 void Bsp::standBy()
 {
@@ -46,6 +65,13 @@ void Bsp::standBy()
 	set_sleep_mode(SLEEP_MODE_PWR_DOWN);
 	sleep_mode();
 	PORTB |= 1<<PB5;
+}
+
+void Bsp::idle()
+{
+	sei();
+	set_sleep_mode(SLEEP_MODE_IDLE);
+	sleep_mode();
 }
 
 namespace BSP 
@@ -101,12 +127,5 @@ ISR(TIMER2_COMPA_vect)
 void led_toggle()
 {
 	PIND |= 1<<PD3;
-}
-
-void idle()
-{
-	sei();
-	set_sleep_mode(SLEEP_MODE_IDLE);
-	sleep_mode();
 }
 }

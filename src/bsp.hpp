@@ -8,18 +8,22 @@
 #include "signals.hpp"
 
 namespace BSP {
-class Bsp : public Hal{
-	public:
-		Bsp();
-		void standBy() override;
-		void buzzing() override;
-	private:
-		void buzzer_off();
-		void buzzer_toggle();
-};
+	class Bsp : public Hal{
+		public:
+			Bsp();
+			void standBy() override;
+			void buzzing() override;
+			void led_play() override;
+			void idle() override;
+		private:
+			void buzzer_off();
+			void buzzer_toggle();
+			void led_off();
+			void led_toggle();
+	};
 
-void bsp_input(TickOneSecond * tick, Controller * controller);
-void led_toggle();
-void idle();
+	void bsp_input(TickOneSecond * tick, Controller * controller);
+	void led_toggle();
+	void idle();
 }
 #endif// BSP_HPP

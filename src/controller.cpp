@@ -3,19 +3,25 @@
 
 void Controller::addSignal(Signals signal)
 {
-	signals_->add(signal);
+	queue_signals_->add(signal);
 }
 
 void Controller::doIt()
 {
-	if(signals_->Count > 0)
-		dispatch(signals_->get());
-	//else
-	//	BSP::idle();
+	if(thereIsSignals())
+		dispatch();
+	else
+		bsp_->idle();
 }
 
-void Controller::dispatch(Signals signal)
+bool Controller::thereIsSignals()
 {
+	return queue_signals_->Count > 0;
+}
+
+void Controller::dispatch()
+{
+	Signals signal = queue_signals_->get();
 	switch (signal) {
 		case Signals::PRESSED:
 			pomodoro_->enable();
