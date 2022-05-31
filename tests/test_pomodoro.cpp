@@ -98,10 +98,11 @@ TEST_F(PomodoroTest, should_be_one_second_for_100_calls_of_10ms)
 TEST_F(PomodoroTest, should_call_standby)
 {
 	pomodoro->setTime(59);
-
 	controller->addSignal(Signals::PRESSED);
 	controller->doIt();
+
 	controller->addSignal(Signals::TICK_ONE_SEC);
+	controller->doIt();
 	controller->doIt();
 
 	ASSERT_TRUE(bsp->standByCalled());
@@ -134,4 +135,14 @@ TEST_F(PomodoroTest, should_call_idle_when_there_is_no_sirgnals)
 	controller->doIt();
 
 	ASSERT_TRUE(bsp->idle_called());
+}
+
+
+TEST_F(PomodoroTest, should_init_standby)
+{
+	controller->addSignal(Signals::POWERDOWN);
+
+	controller->doIt();
+
+	ASSERT_TRUE(bsp->standByCalled());
 }

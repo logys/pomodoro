@@ -4,7 +4,7 @@
 #include "controller.hpp"
 #include "circular_buffer.hpp"
 
-#define VERSION 0.5.0
+#define VERSION 0.6.0
 
 namespace 
 {
@@ -18,6 +18,7 @@ namespace
 int main()
 {
 	BSP::bsp_input(&tickOneSecond, &controller);
+	controller.addSignal(Signals::POWERDOWN);
 
 	while(1){
 		controller.doIt();

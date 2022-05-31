@@ -3,6 +3,7 @@
 
 enum class Signals {
 	PRESSED,
-	TICK_ONE_SEC
+	TICK_ONE_SEC,
+	POWERDOWN
 };
 #endif// SIGNALS_HPP

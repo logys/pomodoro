@@ -40,9 +40,6 @@ void Pomodoro::add1Second(void)
 	if(enabled_){
 		current_time_++;
 	}
-	if(reachedTime()){
-		finish_session();
-	}
 }
 
 bool Pomodoro::reachedTime()
@@ -60,5 +57,4 @@ void Pomodoro::finish_session()
 	bsp_->buzzing();
 	enabled_ = false;
 	setTime(0);
-	bsp_->standBy();
 }

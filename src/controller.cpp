@@ -28,6 +28,13 @@ void Controller::dispatch()
 			break;
 		case Signals::TICK_ONE_SEC:
 			pomodoro_->add1Second();
+			if (pomodoro_->reachedTime()){
+				pomodoro_->finish_session();
+				addSignal(Signals::POWERDOWN);
+			}
+			break;
+		case Signals::POWERDOWN:
+			bsp_->standBy();
 			break;
 	}
 }

@@ -59,19 +59,19 @@ void Bsp::led_off()
 
 void Bsp::standBy()
 {
-	DDRB |= 1<<PB5;
-	PORTB &=~(1<<PB5);
 	sei();
 	set_sleep_mode(SLEEP_MODE_PWR_DOWN);
 	sleep_mode();
-	PORTB |= 1<<PB5;
 }
 
 void Bsp::idle()
 {
+	DDRB |= 1<<PB5;
+	PORTB &=~(1<<PB5);
 	sei();
 	set_sleep_mode(SLEEP_MODE_IDLE);
 	sleep_mode();
+	PORTB |= 1<<PB5;
 }
 
 namespace BSP 
