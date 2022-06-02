@@ -20,7 +20,6 @@
 
 #include "pomodoro.hpp"
 #include <cstdint>
-#include "bsp.hpp"
 
 std::uint16_t Pomodoro::currentTime()
 {

@@ -1,5 +1,4 @@
 #include "controller.hpp"
-#include "bsp.hpp"
 
 void Controller::addSignal(Signals signal)
 {
