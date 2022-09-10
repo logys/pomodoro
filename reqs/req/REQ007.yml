@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  Pause
+level: 3.2.2
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  if the pomodoro is in play when the push button is pressed the pomodoro shall pause play counter and init pause counter time.
