@@ -1,11 +1,11 @@
 active: true
 derived: false
 header: |
-  Visual
-level: 4.1.0
+  Play
+level: 3.0
 links: []
-normative: true
+normative: false
 ref: ''
 reviewed: null
 text: |
-  The device have a led
+  Pomodoro en Play

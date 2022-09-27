@@ -1,4 +1,5 @@
 settings:
   digits: 3
-  prefix: REQ
+  parent: HIGH
+  prefix: LED
   sep: ''

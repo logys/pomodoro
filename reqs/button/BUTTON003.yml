@@ -1,13 +1,11 @@
 active: true
 derived: false
 header: |
-  Introduction
+  Apagado
 level: 1.0
-links:
-- REQ002: null
-- REQ003: null
+links: []
 normative: false
 ref: ''
 reviewed: null
 text: |
-  Device for controlling time study
+  El Pomodoro esta apagado (standby)

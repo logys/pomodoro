@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  Buzzer
+level: 2.0
+links: []
+normative: false
+ref: ''
+reviewed: MIf1-tpzy_iKu9Xv-_7gLJJ3VOsKYN1yUeb-cu2Xq6s=
+text: |
+  El dispositivo contiene una alerta sonora

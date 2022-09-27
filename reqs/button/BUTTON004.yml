@@ -1,0 +1,12 @@
+Implementado: |
+  false
+active: true
+derived: false
+header: ''
+level: 2.2.0
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  Mientras el botón no se suelte, el pomodoro no debera hacer cambios entre play/pause/poweroff

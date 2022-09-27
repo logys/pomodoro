@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  Ahorro
+level: 5.0
+links: []
+normative: true
+ref: ''
+reviewed: 7vLUxepvs4YelRcUJ9x7tfpXtqQjLStd9P5md6QMvVQ=
+text: |
+  El dispositivo debe implementar un modo de ahorro de energía pues funcionará con baterias.

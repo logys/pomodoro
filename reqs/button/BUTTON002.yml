@@ -1,0 +1,13 @@
+Implementado: |
+  False
+active: true
+derived: false
+header: ''
+level: 4.1
+links:
+- HIGH004: null
+normative: true
+ref: ''
+reviewed: 9bQCG8cn9xDgMiscwEH7dHfnEyLvzV-b5vlJkSPGZhs=
+text: |
+  Si el pomodoro está en play y se presiona el botón, el pomodoro debera cambiar a estado de pausa.

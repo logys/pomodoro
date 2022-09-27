@@ -2,19 +2,17 @@
 #define BSP_HPP
 
 #include "tickOneSecond.hpp"
-#include "hal.hpp"
 #include "pomodoro.hpp"
 #include "controller.hpp"
 #include "signals.hpp"
 
-namespace BSP {
-	class Bsp : public Hal{
+	class Bsp{
 		public:
 			Bsp();
-			void standBy() override;
-			void buzzing() override;
-			void led_play() override;
-			void idle() override;
+			void standBy();
+			void buzzing();
+			void led_play();
+			void idle();
 		private:
 			void buzzer_off();
 			void buzzer_toggle();
@@ -25,5 +23,4 @@ namespace BSP {
 	void bsp_input(TickOneSecond * tick, Controller * controller);
 	void led_toggle();
 	void idle();
-}
 #endif// BSP_HPP

@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  Led
+level: 3.0
+links: []
+normative: false
+ref: ''
+reviewed: 6B74C0S6SHcSb7hPZqqJsRzDaLv31u4Xnuk2Y0lNxKs=
+text: |
+  El dispositivo cuenta con un led para alertas visuales

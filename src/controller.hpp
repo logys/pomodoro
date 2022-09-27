@@ -4,17 +4,18 @@
 #include "pomodoro.hpp"
 #include "circular_buffer.hpp"
 #include "signals.hpp"
+#include "bsp.hpp"
 
 class Controller {
 	public:
-		Controller(Pomodoro * pomodoro, CircularBuffer * buffer, Hal * bsp) :
-		       	pomodoro_{pomodoro}, queue_signals_{buffer}, bsp_{bsp}{}
+		Controller(Pomodoro * pomodoro, CircularBuffer * buffer, Bsp * bsp) : 
+			pomodoro_{pomodoro}, queue_signals_{buffer}, bsp_{bsp}{}
 		void addSignal(Signals signal);
 		void doIt();
 	private:
 		Pomodoro * pomodoro_;
 		CircularBuffer * queue_signals_;
-		Hal * bsp_;
+		Bsp * bsp_;
 		void dispatch();
 		bool thereIsSignals();
 };
