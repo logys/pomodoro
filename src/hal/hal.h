@@ -20,11 +20,14 @@
 
 #ifndef HAL_HPP
 #define HAL_HPP
-class Hal {
-	public:
-		virtual void standBy() = 0;
-		virtual void buzzing() = 0;
-		virtual void led_play() = 0;
-		virtual void idle() = 0;
-};
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+	void standBy(void);
+	void idle(void);
+
+#ifdef __cplusplus
+}
+#endif
 #endif// HAL_HPP

@@ -20,6 +20,9 @@
 
 #include "pomodoro.hpp"
 #include <cstdint>
+#include "hal/hal.h"
+#include "services/blinking.hpp"
+#include "services/buzzing.hpp"
 
 std::uint16_t Pomodoro::currentTime()
 {
@@ -30,7 +33,7 @@ void Pomodoro::enable()
 {
 	if(!enabled_){
 		enabled_ = true;
-		bsp_->led_play();
+		led_play();
 	}
 }
 
@@ -53,7 +56,7 @@ void Pomodoro::setTime(std::uint16_t sec)
 
 void Pomodoro::finish_session()
 {
-	bsp_->buzzing();
+	buzzing();
 	enabled_ = false;
 	setTime(0);
 }

@@ -8,10 +8,9 @@
 
 namespace 
 {
-	BSP::Bsp bsp;
-	Pomodoro pomodoro(&bsp, 25);
+	Pomodoro pomodoro(25);
 	CircularBuffer signals;
-	Controller controller(&pomodoro, &signals, &bsp);
+	Controller controller(&pomodoro, &signals);
 	TickOneSecond tickOneSecond(&controller);
 }
 

@@ -21,12 +21,11 @@
 #ifndef POMODORO_HPP
 #define POMODORO_HPP
 
-#include "hal.hpp"
 #include <cstdint>
 
 class Pomodoro {
 	public:
-		Pomodoro(Hal * bsp, std::uint8_t time_minutes) : bsp_{bsp}
+		Pomodoro(std::uint8_t time_minutes)
 		{
 			session_time_ = time_minutes*60;
 		}
@@ -40,6 +39,5 @@ class Pomodoro {
 		volatile std::uint16_t current_time_ = 0;
 		std::uint16_t session_time_;
 		bool enabled_ = false;
-		Hal * bsp_;
 };
 #endif// POMODORO_HPP

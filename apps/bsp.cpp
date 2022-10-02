@@ -24,28 +24,28 @@ void Bsp::buzzer_off()
 	PORTD &= ~(1<<BUZZER_PIN);
 }
 
-void Bsp::buzzing()
-{
-	for(int i = 0; i<6; i++){
-		buzzer_toggle();
-		_delay_ms(500);
-	}
-	buzzer_off();
-}
+//void Bsp::buzzing()
+//{
+//	for(int i = 0; i<6; i++){
+//		buzzer_toggle();
+//		_delay_ms(500);
+//	}
+//	buzzer_off();
+//}
 
 void Bsp::buzzer_toggle()
 {
 	PIND |= 1<<BUZZER_PIN;
 }
 
-void Bsp::led_play()
-{
-	for(int i = 0; i<6; i++){
-		led_toggle();
-		_delay_ms(500);
-	}
-	led_off();
-}
+//void Bsp::led_play()
+//{
+//	for(int i = 0; i<6; i++){
+//		led_toggle();
+//		_delay_ms(500);
+//	}
+//	led_off();
+//}
 
 void Bsp::led_toggle()
 {
@@ -57,22 +57,22 @@ void Bsp::led_off()
 	PORTD &= ~(1<<LED_PIN);
 }
 
-void Bsp::standBy()
-{
-	sei();
-	set_sleep_mode(SLEEP_MODE_PWR_DOWN);
-	sleep_mode();
-}
+//void Bsp::standBy()
+//{
+//	sei();
+//	set_sleep_mode(SLEEP_MODE_PWR_DOWN);
+//	sleep_mode();
+//}
 
-void Bsp::idle()
-{
-	DDRB |= 1<<PB5;
-	PORTB &=~(1<<PB5);
-	sei();
-	set_sleep_mode(SLEEP_MODE_IDLE);
-	sleep_mode();
-	PORTB |= 1<<PB5;
-}
+//void Bsp::idle()
+//{
+//	DDRB |= 1<<PB5;
+//	PORTB &=~(1<<PB5);
+//	sei();
+//	set_sleep_mode(SLEEP_MODE_IDLE);
+//	sleep_mode();
+//	PORTB |= 1<<PB5;
+//}
 
 namespace BSP 
 {
