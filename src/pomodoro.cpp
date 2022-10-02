@@ -19,44 +19,35 @@
 */
 
 #include "pomodoro.hpp"
-#include <cstdint>
 #include "hal/hal.h"
-#include "services/blinking.hpp"
-#include "services/buzzing.hpp"
+
+using namespace Pom;
+
+void Pomodoro::poweroff()
+{
+	state_ = State::PLAY;
+}
+
+void Pomodoro::doIt()
+{
+	switch(state_){
+		case State::POWEROFF:
+			standBy();
+			break;
+	}
+}
 
 std::uint16_t Pomodoro::currentTime()
 {
 	return current_time_;
 }
 
-void Pomodoro::enable()
+State Pomodoro::currentState()
 {
-	if(!enabled_){
-		enabled_ = true;
-		led_play();
-	}
+	return state_;
 }
 
-void Pomodoro::add1Second(void)
+void Pomodoro::edge()
 {
-	if(enabled_){
-		current_time_++;
-	}
-}
-
-bool Pomodoro::reachedTime()
-{
-	return currentTime() == session_time_;
-}
-
-void Pomodoro::setTime(std::uint16_t sec)
-{
-	current_time_ = sec;
-}
-
-void Pomodoro::finish_session()
-{
-	buzzing();
-	enabled_ = false;
-	setTime(0);
+	state_ = Pom::State::PLAY;
 }

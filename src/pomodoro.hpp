@@ -22,22 +22,40 @@
 #define POMODORO_HPP
 
 #include <cstdint>
+#include "services/power.hpp"
 
-class Pomodoro {
-	public:
-		Pomodoro(std::uint8_t time_minutes)
-		{
-			session_time_ = time_minutes*60;
-		}
-		std::uint16_t currentTime();
-		void enable();
-		void add1Second();
-		void setTime(std::uint16_t sec);
-		bool reachedTime();
-		void finish_session();
-	private:
-		volatile std::uint16_t current_time_ = 0;
-		std::uint16_t session_time_;
-		bool enabled_ = false;
+namespace Pom{
+	constexpr int seconds_in_minute = 60;
+
+	enum class State {
+			PLAY,
+			PAUSE,
+			POWEROFF
+	};
+
+	class Pomodoro {
+		private:
+			volatile std::uint16_t current_time_ = 0;
+			std::uint16_t session_time_;
+			bool enabled_ = false;
+			State state_;
+			void poweroff(void);
+		public:
+			Pomodoro(std::uint8_t time_minutes)
+			{
+				session_time_ = time_minutes*seconds_in_minute;
+				state_ = State::POWEROFF;
+			}
+			void doIt();
+			void setState(State state);
+			State currentState();
+			std::uint16_t currentTime();
+			void enable();
+			void add1Second();
+			void setTime(std::uint16_t sec);
+			bool reachedTime();
+			void finish_session();
+			void edge();
+	};
 };
 #endif// POMODORO_HPP

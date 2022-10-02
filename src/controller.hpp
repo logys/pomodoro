@@ -5,6 +5,8 @@
 #include "circular_buffer.hpp"
 #include "signals.hpp"
 
+using namespace Pom;
+
 class Controller {
 	public:
 		Controller(Pomodoro * pomodoro, CircularBuffer * buffer) :
