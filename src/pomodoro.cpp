@@ -22,6 +22,7 @@
 #include "hal/hal.h"
 
 using namespace Pom;
+constexpr int task_period_ms = 10;
 
 void Pomodoro::poweroff()
 {
@@ -34,6 +35,9 @@ void Pomodoro::doIt()
 		case State::POWEROFF:
 			standBy();
 			break;
+		case State::PLAY:
+			current_time_ += task_period_ms;
+			break;
 	}
 }
 
@@ -45,6 +49,11 @@ std::uint16_t Pomodoro::currentTime()
 State Pomodoro::currentState()
 {
 	return state_;
+}
+
+void Pomodoro::setState(State state)
+{
+	state_ = state;
 }
 
 void Pomodoro::edge()
