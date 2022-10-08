@@ -7,6 +7,6 @@ normative: false
 ref: ''
 reviewed: null
 text: |
-  Push Button
+  Led
 
-  Description of the functionalityes related to the push button.
+  This device shows a signal that indicates the current Pomodoro functionality.

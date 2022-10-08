@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: ''
+level: 2.1.0
+links:
+- REQ013: null
+normative: true
+ref: ''
+reviewed: null
+text: |
+  If the Pomodoro reach the end of the session or the end of pause time the Pomodoro shall toggling the buzzer three times.
