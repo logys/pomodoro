@@ -27,6 +27,7 @@ extern "C" {
 	void standBy(void);
 	void idle(void);
 	bool button_read(void);
+	void buzzing(void);
 
 #ifdef __cplusplus
 }

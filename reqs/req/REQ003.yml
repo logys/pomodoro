@@ -2,11 +2,10 @@ active: true
 derived: false
 header: |
   Control
-level: 3.1.0
-links:
-- REQ006: null
+level: 5.1.0
+links: []
 normative: true
 ref: ''
-reviewed: null
+reviewed: tXEQaioJ5xUe7MxCz_ZXPTRglOtOcCg7VNga-aMxQ6c=
 text: |
-  The device is controled by a single push button
+  The device is controled by a single push button, we need to use only one button for save money and space.

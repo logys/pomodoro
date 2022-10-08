@@ -1,11 +1,11 @@
 active: true
 derived: false
 header: |
-  Play
-level: 3.2.1
+  Sound
+level: 6.2.0
 links: []
 normative: true
 ref: ''
-reviewed: null
+reviewed: 2YspWfNznhOfbYfzGn-8cXpF-3XeFBfkg-2AqTqKi3s=
 text: |
-  If the pomodoro is powered off or if is in pause when the push button is pressed the pomodoro shall init the count.
+  The pomodoro should contain a buzzer that emit a auditive signal when the pomodoro finish the session.

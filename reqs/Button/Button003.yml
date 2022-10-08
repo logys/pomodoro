@@ -1,0 +1,12 @@
+active: true
+derived: false
+header: |
+  Toggling
+level: 2.2.0
+links:
+- Button001: null
+normative: true
+ref: ''
+reviewed: null
+text: |
+  When the Pomodoro is on Play/Pause if the user push the button the Pomodoro should change their state to Pause/Play

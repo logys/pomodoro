@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: ''
+level: 2.1.0
+links:
+- Button001: null
+normative: true
+ref: ''
+reviewed: null
+text: |
+  When the Pomodoro is in StandBy, when the user push the button the Pomodoro Shall be change their state to Play

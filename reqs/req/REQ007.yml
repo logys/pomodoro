@@ -1,11 +1,11 @@
 active: true
 derived: false
 header: |
-  Pause
-level: 3.2.2
+  PowerSave
+level: 6.3.0
 links: []
 normative: true
 ref: ''
-reviewed: null
+reviewed: 6VOCws4JDw0yDhskKRPmdtdwRLG4Ck3a8LbgtwXAfdw=
 text: |
-  if the pomodoro is in play when the push button is pressed the pomodoro shall pause play counter and init pause counter time.
+  Because the pomodoro uses a coin cell as source power, he needs to save power, is necesary handle power save modes.

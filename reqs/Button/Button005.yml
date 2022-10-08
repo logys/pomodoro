@@ -1,0 +1,12 @@
+active: true
+derived: false
+header: |
+  Rebound
+level: 2.4.0
+links:
+- Button001: null
+normative: true
+ref: ''
+reviewed: null
+text: |
+  The Pomodoro should handle the rebound issue

@@ -37,6 +37,8 @@ void Pomodoro::doIt()
 			break;
 		case State::PLAY:
 			current_time_ += task_period_ms;
+			if(current_time_ == session_time_)
+				buzzing();
 			break;
 	}
 }
@@ -59,4 +61,9 @@ void Pomodoro::setState(State state)
 void Pomodoro::edge()
 {
 	state_ = Pom::State::PLAY;
+}
+
+void Pomodoro::setTime(uint16_t time)
+{
+	current_time_ = time;
 }

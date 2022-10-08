@@ -7,7 +7,7 @@
 DEFINE_FFF_GLOBALS;
 FAKE_VOID_FUNC(standBy);
 FAKE_VALUE_FUNC(bool, button_read);
-FAKE_VOID_FUNC(buzzer_on);
+FAKE_VOID_FUNC(buzzing);
 
 class PomodoroTest : public ::testing::Test {
 	protected:
@@ -83,7 +83,13 @@ TEST_F(PomodoroTest, when_pomodoro_is_on_play_if_there_is_a_tick_add_10ms)
 
 TEST_F(PomodoroTest, when_pomodoro_reach_time_should_call_buzzing_routine)
 {
-	int get = buzzer_on_fake.call_count;
+	pomodoro->setState(Pom::State::PLAY);
+	int one_minute_ms = 60*1000;
+	pomodoro->setTime(one_minute_ms);
+
+	pomodoro->doIt();
+
+	int get = buzzing_fake.call_count;
 	int want = 1;
 	ASSERT_EQ(get, want);
 }

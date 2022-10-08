@@ -2,10 +2,10 @@ active: true
 derived: false
 header: |
   Visual
-level: 4.1.0
+level: 6.1.0
 links: []
 normative: true
 ref: ''
-reviewed: null
+reviewed: cNPXyCLr4jUTx4CuPP29fA13K6gLtum36jyjk8d2mKI=
 text: |
-  The device have a led
+  The device have one led for visual signalig, this feature is necesary for show an visual signal when the pomodoro changes their state from play to pause and reverse.

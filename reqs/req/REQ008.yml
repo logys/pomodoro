@@ -1,11 +1,11 @@
 active: true
 derived: false
 header: |
-  Poweroff
-level: 3.2.3
+  Hardware
+level: 2.0
 links: []
-normative: true
+normative: false
 ref: ''
-reviewed: null
+reviewed: sUFNJg9rMjlKmU5lhWETKt5PxSbxExN4YNCYzCd9js4=
 text: |
-  when the push button is hold pressed by five seconds or more, the pomodoro shall go to poweroff i. e. satandby.
+  Hardware conections
