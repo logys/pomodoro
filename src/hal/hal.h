@@ -21,6 +21,8 @@
 #ifndef HAL_HPP
 #define HAL_HPP
 
+#include "stdbool.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
