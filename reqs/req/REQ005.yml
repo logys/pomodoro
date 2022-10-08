@@ -1,11 +1,12 @@
 active: true
 derived: false
-header: |
-  Functionality
-level: 4.0
+header: ''
+level: 3.0
 links: []
-normative: true
+normative: false
 ref: ''
 reviewed: WLlJxRjdZiCATg-d2WBbwZEQSIkOXVOQyTalHVVrIII=
 text: |
+  Functionality
+
   This section describe the functionalities of the dedevice.

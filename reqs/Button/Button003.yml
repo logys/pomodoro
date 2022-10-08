@@ -2,7 +2,7 @@ active: true
 derived: false
 header: |
   Toggling
-level: 2.2.0
+level: 2.2
 links:
 - Button001: null
 normative: true

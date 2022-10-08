@@ -1,7 +1,6 @@
 active: true
 derived: false
-header: |
-  Functionalityes
+header: ''
 level: 1.0
 links:
 - REQ003: null
@@ -9,4 +8,6 @@ normative: false
 ref: ''
 reviewed: null
 text: |
+  Push Button
+
   Description of the functionalityes related to the push button.

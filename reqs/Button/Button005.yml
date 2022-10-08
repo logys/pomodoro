@@ -2,7 +2,7 @@ active: true
 derived: false
 header: |
   Rebound
-level: 2.4.0
+level: 2.4
 links:
 - Button001: null
 normative: true
