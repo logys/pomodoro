@@ -23,6 +23,7 @@ target_compile_options(hal PUBLIC
 	-mmcu=atmega328p
 	-Os
 	-Wall
+	-DF_CPU=16000000UL
 	)
 
 target_include_directories(hal PUBLIC 

@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  Tick
+level: 3.5.0
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  The unit time is 10ms, task are executed in cooperative way, a ticksystem should be implemented for this meet.
