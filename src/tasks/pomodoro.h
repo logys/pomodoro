@@ -21,7 +21,8 @@
 #ifndef POMODORO_HPP
 #define POMODORO_HPP
 
-void pomodoro_init(void);
-void pomodoro_doIt();
+void pomodoro_init(int time);
+void pomodoro_doIt(void);
+void pomodoro_pushed(void);
 
 #endif// POMODORO_HPP

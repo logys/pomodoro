@@ -19,12 +19,46 @@
 */
 
 #include "pomodoro.h"
-#include "../hal/hal.h"
+#include "hal/hal.h"
 
-void pomodoro_init(void)
+typedef enum {PLAY, PAUSE, POWEROFF}State;
+
+static State state;
+static long time;
+static long session_time;
+
+void pomodoro_init(int time_minutes)
 {
+	state = POWEROFF;
+	time = 0;
+	session_time = 60*1000UL*time_minutes;
+	buzzer_init();
+	button_init();
 }
 
 void pomodoro_doIt(void)
+{
+	switch(state){
+		case PLAY:
+			time += 10;
+			if(time == session_time){
+				state = POWEROFF;
+				buzzing();
+			}
+			break;
+		case PAUSE:
+			break;
+		case POWEROFF:
+			standBy();
+			state = PLAY;
+			time = 0;
+			led_blink();
+			break;
+		default:
+			return;
+	}
+}
+
+void pomodoro_pushed(void)
 {
 }

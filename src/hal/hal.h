@@ -23,9 +23,13 @@
 
 #include <stdbool.h>
 
+void buzzer_init(void);
+void button_init(void);
+void led_init(void);
 void standBy(void);
 void idle(void);
-bool button_read(void);
+bool button_pushed(void);
 void buzzing(void);
+void led_blink(void);
 
 #endif// HAL_HPP

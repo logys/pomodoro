@@ -8,9 +8,11 @@
 
 int main()
 {
-	pomodoro_init();
+	button_init();
+	buzzer_init();
+	led_init();
+	pomodoro_init(25);
 	input_init();
-
 	while(1){
 		input_doIt();
 		pomodoro_doIt();
