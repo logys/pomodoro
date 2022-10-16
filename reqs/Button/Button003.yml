@@ -9,4 +9,4 @@ normative: true
 ref: ''
 reviewed: null
 text: |
-  When the Pomodoro is on Play/Pause if the user push the button the Pomodoro should change their state to Pause/Play
+  When the Pomodoro is on Play/Pause if the user push the button the Pomodoro shall change their state to Pause/Play

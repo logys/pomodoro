@@ -18,14 +18,13 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA 
 */
 
-#ifndef HAL_HPP
-#define HAL_HPP
+#include "pomodoro.h"
+#include "../hal/hal.h"
 
-#include <stdbool.h>
+void pomodoro_init(void)
+{
+}
 
-void standBy(void);
-void idle(void);
-bool button_read(void);
-void buzzing(void);
-
-#endif// HAL_HPP
+void pomodoro_doIt(void)
+{
+}

@@ -1,8 +1,9 @@
-add_executable(Pomodoro main.cpp)
+add_executable(Pomodoro main.c)
 
 target_link_libraries(Pomodoro PUBLIC 
 	pomodoro 
 	hal
+	input
 	-mmcu=atmega328p 
 	)
 target_compile_options(Pomodoro PUBLIC 
@@ -12,7 +13,6 @@ target_compile_options(Pomodoro PUBLIC
 	)
 target_include_directories(Pomodoro PUBLIC 
 	../src
-	../STL
 	)
 
 add_library(hal STATIC
@@ -28,8 +28,4 @@ target_compile_options(hal PUBLIC
 
 target_include_directories(hal PUBLIC 
 	../src/hal
-	)
-
-target_include_directories(pomodoro PUBLIC 
-	../STL
 	)

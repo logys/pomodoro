@@ -10,4 +10,4 @@ normative: true
 ref: ''
 reviewed: null
 text: |
-  When the Pomodoro is in StandBy, when the user push the button the Pomodoro Shall be change their state to Play
+  When the Pomodoro is in StandBy, if the user push the button then the Pomodoro shall change his state to Play

@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  Reset
+level: 1.2.0
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  When enter to this state the Pomodoro shall reset Pomodoro time acummulated.

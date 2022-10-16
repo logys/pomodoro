@@ -10,4 +10,4 @@ normative: true
 ref: ''
 reviewed: null
 text: |
-  If the button is Pressed for two seconds the Pomodoro should go to StandBy State
+  If the button is pressed for two seconds the Pomodoro shall change ther state to StandBy.
