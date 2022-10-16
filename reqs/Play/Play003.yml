@@ -1,0 +1,12 @@
+active: true
+derived: false
+header: |
+  Button
+level: 1.2.0
+links:
+- BUTTON003: null
+normative: true
+ref: ''
+reviewed: null
+text: |
+  When the state changes to pause the Pomodoro shall save their current acummulated time.

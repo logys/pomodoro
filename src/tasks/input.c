@@ -1,0 +1,38 @@
+#include "input.h"
+#include "hal/hal.h"
+#include "pomodoro.h"
+
+typedef enum {IDLE, REBOUND}State;
+
+static const int TICK_TIME = 10;
+static const int REBOUND_TIME = 200;
+static State state;
+static int time;
+
+void input_init(void)
+{
+	state = IDLE;
+	time = 0;
+}
+
+void input_doIt(void)
+{
+	bool input_pushed = button_pushed();
+	switch(state){
+		case IDLE:
+			if(input_pushed == true){
+				state = REBOUND;
+			}
+			break;
+		case REBOUND:
+			time += TICK_TIME;
+			if(time == REBOUND_TIME && input_pushed == false){
+				state = REBOUND;
+				pomodoro_pushed();
+				time = 0;
+			}
+			break;
+		default:
+			return;
+	}
+}

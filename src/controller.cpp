@@ -1,4 +1,5 @@
 #include "controller.hpp"
+#include "hal/hal.h"
 
 void Controller::addSignal(Signals signal)
 {
@@ -10,7 +11,7 @@ void Controller::doIt()
 	if(thereIsSignals())
 		dispatch();
 	else
-		bsp_->idle();
+		idle();
 }
 
 bool Controller::thereIsSignals()
@@ -33,7 +34,7 @@ void Controller::dispatch()
 			}
 			break;
 		case Signals::POWERDOWN:
-			bsp_->standBy();
+			standBy();
 			break;
 	}
 }

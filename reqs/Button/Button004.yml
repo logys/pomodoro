@@ -1,0 +1,13 @@
+active: true
+derived: false
+header: |
+  PowerDown
+level: 2.3
+links:
+- REQ011: null
+- REQ014: null
+normative: true
+ref: ''
+reviewed: null
+text: |
+  If the button is pressed for two seconds the Pomodoro shall change ther state to StandBy.

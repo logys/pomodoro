@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  Sound
+level: 3.3.0
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  The pomodoro should contain a buzzer that emit auditive signal when the pomodoro finish the session.

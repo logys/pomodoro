@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  PowerSave
+level: 3.4.0
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  Because the pomodoro uses a coin cell as source power, he needs to save power, is necesary handle power save modes.

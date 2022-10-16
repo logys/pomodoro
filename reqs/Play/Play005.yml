@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  Finished
+level: 1.4.0
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  If the acummulated time reaches the session time the Pomodoro transit to poweroff state.
