@@ -3,16 +3,18 @@
 #include "tasks/input.h"
 #include "tasks/pomodoro.h"
 #include "hal/hal.h"
+#include <avr/interrupt.h>
 
 #define VERSION 0.7.0
 
 int main()
 {
+	sei();
 	button_init();
 	buzzer_init();
 	led_init();
-	pomodoro_init(25);
 	input_init();
+	pomodoro_init(1);
 	while(1){
 		input_doIt();
 		pomodoro_doIt();

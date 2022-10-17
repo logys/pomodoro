@@ -26,9 +26,8 @@ void input_doIt(void)
 			break;
 		case REBOUND:
 			time += TICK_TIME;
-			if(time == REBOUND_TIME && input_pushed == false){
-				state = REBOUND;
-				pomodoro_pushed();
+			if(time >= REBOUND_TIME && input_pushed == false){
+				state = IDLE;
 				time = 0;
 			}
 			break;
