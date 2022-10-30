@@ -31,5 +31,6 @@ void idle(void);
 bool button_pushed(void);
 void buzzing(void);
 void led_blink(void);
+void led_blink_slow(void);
 
 #endif// HAL_HPP

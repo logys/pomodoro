@@ -22,10 +22,13 @@
 #include "hal/hal.h"
 #include <stdbool.h>
 
+#define PAUSE_TIME 60UL*1000*5
+
 typedef enum {PLAY, PAUSE, POWEROFF}State;
 
 static State state;
 static long time;
+static long pause_time;
 static long session_time;
 static bool pushed;
 
@@ -33,6 +36,7 @@ void pomodoro_init(int time_minutes)
 {
 	state = POWEROFF;
 	time = 0;
+	pause_time = 0;
 	session_time = 60*1000UL*time_minutes;
 	pushed = false;
 	buzzer_init();
@@ -48,11 +52,29 @@ void pomodoro_doIt(void)
 				state = POWEROFF;
 				buzzing();
 			}
+			else if(pushed == true)
+			{
+				state = PAUSE;
+				led_blink_slow();
+			}
+			pushed = false;
 			break;
 		case PAUSE:
+			pause_time += 10;
+			if(pause_time == PAUSE_TIME){
+				state = POWEROFF;
+				buzzing();
+			}
+			else if(pushed == true)
+			{
+				state = PLAY;
+				led_blink();
+				pause_time = 0;
+			}
+			pushed = false;
 			break;
 		case POWEROFF:
-				standBy();
+			standBy();
 			if(pushed == true)
 			{
 				state = PLAY;

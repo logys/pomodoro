@@ -21,3 +21,11 @@ void led_blink(void)
 		_delay_ms(50);
 	}
 }
+
+void led_blink_slow(void)
+{
+	for(int i = 0; i <10 ; i++){
+		led_toggle();
+		_delay_ms(500);
+	}
+}
