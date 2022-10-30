@@ -20,18 +20,21 @@
 
 #include "pomodoro.h"
 #include "hal/hal.h"
+#include <stdbool.h>
 
 typedef enum {PLAY, PAUSE, POWEROFF}State;
 
 static State state;
 static long time;
 static long session_time;
+static bool pushed;
 
 void pomodoro_init(int time_minutes)
 {
 	state = POWEROFF;
 	time = 0;
 	session_time = 60*1000UL*time_minutes;
+	pushed = false;
 	buzzer_init();
 	button_init();
 }
@@ -49,10 +52,15 @@ void pomodoro_doIt(void)
 		case PAUSE:
 			break;
 		case POWEROFF:
-			standBy();
-			state = PLAY;
-			time = 0;
-			led_blink();
+				standBy();
+			if(pushed == true)
+			{
+				state = PLAY;
+				time = 0;
+				led_blink();
+
+			}
+			pushed = false;
 			break;
 		default:
 			return;
@@ -61,4 +69,5 @@ void pomodoro_doIt(void)
 
 void pomodoro_pushed(void)
 {
+	pushed = true;
 }

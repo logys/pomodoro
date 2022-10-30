@@ -21,6 +21,7 @@ void input_doIt(void)
 	switch(state){
 		case IDLE:
 			if(input_pushed == true){
+				pomodoro_pushed();
 				state = REBOUND;
 			}
 			break;

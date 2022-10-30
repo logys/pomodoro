@@ -3,13 +3,11 @@
 #include "tasks/input.h"
 #include "tasks/pomodoro.h"
 #include "hal/hal.h"
-#include <avr/interrupt.h>
 
 #define VERSION 0.7.0
 
 int main()
 {
-	sei();
 	button_init();
 	buzzer_init();
 	led_init();
