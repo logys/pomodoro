@@ -9,4 +9,6 @@ void standBy(void)
 
 void idle(void)
 {
+	set_sleep_mode(SLEEP_MODE_IDLE);
+	sleep_mode();
 }

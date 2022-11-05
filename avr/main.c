@@ -13,10 +13,11 @@ int main()
 	led_init();
 	input_init();
 	pomodoro_init(1);
+	tick_init();
 	while(1){
 		input_doIt();
 		pomodoro_doIt();
-		_delay_ms(10);
+		idle();
 	}
 	return 0;
 }

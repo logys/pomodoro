@@ -20,6 +20,7 @@ add_library(hal STATIC
 	powermode.c
 	button.c
 	led.c
+	tick.c
 	)
 target_compile_options(hal PUBLIC
 	-mmcu=atmega328p
