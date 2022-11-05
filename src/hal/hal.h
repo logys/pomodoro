@@ -26,6 +26,7 @@
 void buzzer_init(void);
 void button_init(void);
 void led_init(void);
+void tick_init(void);
 void standBy(void);
 void idle(void);
 bool button_pushed(void);

@@ -8,11 +8,12 @@
 
 int main()
 {
+	const int session_time = 25;
 	button_init();
 	buzzer_init();
 	led_init();
 	input_init();
-	pomodoro_init(1);
+	pomodoro_init(session_time);
 	tick_init();
 	while(1){
 		input_doIt();
