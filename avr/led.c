@@ -2,16 +2,16 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-#define LED_PIN PD2
+#define LED_PIN PB1
 
 void led_init(void)
 {
-	DDRD |= 1<<LED_PIN;
+	DDRB |= 1<<LED_PIN;
 }
 
 void led_toggle(void)
 {
-	PIND |= 1<<LED_PIN;
+	PINB |= 1<<LED_PIN;
 }
 
 void led_blink(void)

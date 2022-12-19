@@ -2,23 +2,23 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-#define BUTTON_PIN PD3
+#define BUTTON_PIN PB0
 
 void button_init(void)
 {
-	DDRD &= ~(1<<BUTTON_PIN);
-	PORTD |= 1<<BUTTON_PIN;
+	DDRB &= ~(1<<BUTTON_PIN);
+	PORTB |= 1<<BUTTON_PIN;
 
 	sei();
-	PCICR |= 1<<PCIE2;
-	PCMSK2 |= 1<<PCINT19;
+	GIMSK |= 1<<PCIE;
+	PCMSK |= 1<<PCINT0;
 }
 
 bool button_pushed(void)
 {
-	return PIND & (1<<BUTTON_PIN) ? false : true;
+	return PINB & (1<<BUTTON_PIN) ? false : true;
 }
 
-ISR(PCINT2_vect)
+ISR(PCINT0_vect)
 {
 }

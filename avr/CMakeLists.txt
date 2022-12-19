@@ -4,10 +4,10 @@ target_link_libraries(Pomodoro PUBLIC
 	pomodoro 
 	input
 	hal
-	-mmcu=atmega328p 
+	-mmcu=attiny85 
 	)
 target_compile_options(Pomodoro PUBLIC 
-	-mmcu=atmega328p
+	-mmcu=attiny85 
 	-Os
 	-Wall
 	)
@@ -23,10 +23,20 @@ add_library(hal STATIC
 	tick.c
 	)
 target_compile_options(hal PUBLIC
-	-mmcu=atmega328p
+	-mmcu=attiny85 
 	-Os
 	-Wall
-	-DF_CPU=16000000UL
+	-DF_CPU=1000000UL
+	)
+target_compile_options(pomodoro PUBLIC
+	-mmcu=attiny85 
+	-Os
+	-Wall
+	)
+target_compile_options(input PUBLIC
+	-mmcu=attiny85 
+	-Os
+	-Wall
 	)
 
 target_include_directories(hal PUBLIC 
