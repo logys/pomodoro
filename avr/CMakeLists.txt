@@ -1,17 +1,17 @@
-add_executable(Pomodoro main.c)
+add_executable(${PROJECT_NAME}.elf main.c)
 
-target_link_libraries(Pomodoro PUBLIC 
+target_link_libraries(${PROJECT_NAME}.elf PUBLIC 
 	pomodoro 
 	input
 	hal
 	-mmcu=attiny85 
 	)
-target_compile_options(Pomodoro PUBLIC 
+target_compile_options(${PROJECT_NAME}.elf PUBLIC 
 	-mmcu=attiny85 
 	-Os
 	-Wall
 	)
-target_include_directories(Pomodoro PUBLIC 
+target_include_directories(${PROJECT_NAME}.elf PUBLIC 
 	../src
 	)
 
@@ -42,3 +42,10 @@ target_compile_options(input PUBLIC
 target_include_directories(hal PUBLIC 
 	../src/hal
 	)
+
+add_custom_target(hex ALL
+	COMMAND avr-objcopy -O ihex ${PROJECT_NAME}.elf ${PROJECT_NAME}.hex
+	DEPENDS ${PROJECT_NAME}.elf)
+add_custom_target(size ALL
+	COMMAND avr-size ${PROJECT_NAME}.elf -G
+	DEPENDS ${PROJECT_NAME}.elf)

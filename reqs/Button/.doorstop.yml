@@ -1,5 +1,5 @@
 settings:
   digits: 3
-  parent: REQ
+  parent: Pomodoro
   prefix: Button
   sep: ''
