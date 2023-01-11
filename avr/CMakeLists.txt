@@ -4,12 +4,6 @@ target_link_libraries(${PROJECT_NAME}.elf PUBLIC
 	pomodoro 
 	input
 	hal
-	-mmcu=attiny85 
-	)
-target_compile_options(${PROJECT_NAME}.elf PUBLIC 
-	-mmcu=attiny85 
-	-Os
-	-Wall
 	)
 target_include_directories(${PROJECT_NAME}.elf PUBLIC 
 	../src
@@ -22,21 +16,9 @@ add_library(hal STATIC
 	led.c
 	tick.c
 	)
+
 target_compile_options(hal PUBLIC
-	-mmcu=attiny85 
-	-Os
-	-Wall
 	-DF_CPU=1000000UL
-	)
-target_compile_options(pomodoro PUBLIC
-	-mmcu=attiny85 
-	-Os
-	-Wall
-	)
-target_compile_options(input PUBLIC
-	-mmcu=attiny85 
-	-Os
-	-Wall
 	)
 
 target_include_directories(hal PUBLIC 
