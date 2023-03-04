@@ -6,11 +6,8 @@
 
 int main()
 {
-	const int session_time = 20;
-	button_init();
-	buzzer_init();
-	led_init();
 	input_init();
+	const int session_time = 20;
 	pomodoro_init(session_time);
 	tick_init();
 	while(1){

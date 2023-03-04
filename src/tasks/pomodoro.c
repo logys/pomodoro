@@ -41,6 +41,7 @@ void pomodoro_init(int time_minutes)
 	pushed = false;
 	buzzer_init();
 	button_init();
+	led_init();
 }
 
 void pomodoro_doIt(void)
