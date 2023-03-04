@@ -7,7 +7,7 @@
 
 int main()
 {
-	ADCSRA &= ~(1<<ADEN);
+	powerconfig_init();
 	input_init();
 	const int session_time = 20;
 	pomodoro_init(session_time);
