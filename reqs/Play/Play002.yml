@@ -1,10 +1,11 @@
+Implemented: |
+  True but inacurated
 active: true
 derived: false
 header: |
   Tick
 level: 1.1.0
-links:
-- REQ015: null
+links: []
 normative: true
 ref: ''
 reviewed: null

@@ -1,13 +1,13 @@
+Implemented: |
+  True
 active: true
 derived: false
 header: |
   WeakeUp
 level: 2.1
-links:
-- REQ011: null
-- REQ014: null
+links: []
 normative: true
 ref: ''
 reviewed: null
 text: |
-  When the Pomodoro is in StandBy, if the user push the button then the Pomodoro shall change his state to Play
+  When the Pomodoro is in Poweroff state, if the user push the button then the Pomodoro shall change his state to Play

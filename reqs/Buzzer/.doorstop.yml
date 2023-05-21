@@ -3,3 +3,6 @@ settings:
   parent: Pomodoro
   prefix: Buzzer
   sep: ''
+attributes:
+  publish:
+    - Implemented

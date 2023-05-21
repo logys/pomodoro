@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head><title>Doorstop</title>
+  <meta charset="utf-8" />
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" href="assets/doorstop/bootstrap.min.css" />
+  <link rel="stylesheet" href="assets/doorstop/general.css" />
+  <link type="text/css" rel="stylesheet" href="assets/doorstop/sidebar.css" />
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" ></script>
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+  });
+  </script>
+</head>
+<body>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-2 hidden-sm hidden-xs">
+          <nav id="TOC" class="nav nav-stacked fixed sidebar">
+              <h3>Table of Contents</h3>
+<ul>
+<li><a href="#HIGH001">1.0 Dispositivo para controlar el tiempo de estudio.</a></li>
+<li><a href="#HIGH002">2.0 El dispositivo contiene una alerta sonora</a></li>
+<li><a href="#HIGH003">3.0 El dispositivo cuenta con un led para alertas visuales</a></li>
+<li><a href="#HIGH004">4.0 Todo el dispositvo se controla con un solo botón</a></li>
+<li><a href="#HIGH005">5.0 El dispositivo debe implementar un modo de ahorro de energía pues funcionará con baterias.</a></li>
+</ul>
+          </nav>
+      </div>
+      <div class="col-lg-8" id="main">
+        <h1 id="HIGH001">1.0 Dispositivo para controlar el tiempo de estudio.</h1>
+<h1 id="HIGH002">2.0 El dispositivo contiene una alerta sonora</h1>
+<h1 id="HIGH003">3.0 El dispositivo cuenta con un led para alertas visuales</h1>
+<h1 id="HIGH004">4.0 Todo el dispositvo se controla con un solo botón</h1>
+<h1 id="HIGH005">5.0 El dispositivo debe implementar un modo de ahorro de energía pues funcionará con baterias.</h1>
+      </div>
+    </div>
+</div>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="assets/doorstop/jquery.min.js"></script>
+<script src="assets/doorstop/bootstrap.min.js"></script>
+<script>
+    $(function() {
+        $("table").addClass("table");
+        $("nav ul").addClass("nav nav-stacked");
+        $("nav").affix();
+        $('body').scrollspy({
+          target: '.sidebar'
+        });
+        $("#main a").attr("target", "parent");
+
+  $(window).on('hashchange', function() {
+    $(window).scrollTop($(location.hash.toLowerCase()).offset().top);});
+  });
+</script>
+</body>
+</html>
+

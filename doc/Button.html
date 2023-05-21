@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head><title>Doorstop</title>
+  <meta charset="utf-8" />
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" href="assets/doorstop/bootstrap.min.css" />
+  <link rel="stylesheet" href="assets/doorstop/general.css" />
+  <link type="text/css" rel="stylesheet" href="assets/doorstop/sidebar.css" />
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" ></script>
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+  });
+  </script>
+</head>
+<body>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-2 hidden-sm hidden-xs">
+          <nav id="TOC" class="nav nav-stacked fixed sidebar">
+              <h3>Table of Contents</h3>
+<ul>
+<li><a href="#Button001">1.0 Push Button</a><ul>
+<li><a href="#Button002">2.1 WeakeUp</a></li>
+<li><a href="#Button003">2.2 Toggling</a></li>
+<li><a href="#Button004">2.3 PowerDown</a></li>
+</ul>
+</li>
+</ul>
+          </nav>
+      </div>
+      <div class="col-lg-8" id="main">
+        <h1 id="Button001">1.0 Push Button</h1>
+<p>Description of the functionalityes related to the push button.</p>
+<h2 id="Button002">2.1 WeakeUp <small>Button002</small></h2>
+<p>When the Pomodoro is in Poweroff state, if the user push the button then the Pomodoro shall change his state to Play</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Implemented</td>
+<td>True</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="Button003">2.2 Toggling <small>Button003</small></h2>
+<p>When the Pomodoro is on Play/Pause if the user push the button the Pomodoro shall change their state to Pause/Play</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Implemented</td>
+<td>True</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="Button004">2.3 PowerDown <small>Button004</small></h2>
+<p>If the button is pressed for two seconds the Pomodoro shall change ther state to Poweroff.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Implemented</td>
+<td>True</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+      </div>
+    </div>
+</div>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="assets/doorstop/jquery.min.js"></script>
+<script src="assets/doorstop/bootstrap.min.js"></script>
+<script>
+    $(function() {
+        $("table").addClass("table");
+        $("nav ul").addClass("nav nav-stacked");
+        $("nav").affix();
+        $('body').scrollspy({
+          target: '.sidebar'
+        });
+        $("#main a").attr("target", "parent");
+
+  $(window).on('hashchange', function() {
+    $(window).scrollTop($(location.hash.toLowerCase()).offset().top);});
+  });
+</script>
+</body>
+</html>
+

@@ -21,8 +21,11 @@
 #ifndef POMODORO_HPP
 #define POMODORO_HPP
 
+/* State machine input states */
+void pomodoro_pushed(void);
+
 void pomodoro_init(int time);
 void pomodoro_doIt(void);
-void pomodoro_pushed(void);
+
 
 #endif// POMODORO_HPP

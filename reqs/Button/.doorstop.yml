@@ -3,3 +3,6 @@ settings:
   parent: Pomodoro
   prefix: Button
   sep: ''
+attributes:
+  publish:
+    - Implemented
