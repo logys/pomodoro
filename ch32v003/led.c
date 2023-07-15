@@ -1,31 +1,19 @@
-#include "hal.h"
-#include <avr/io.h>
-#include <util/delay.h>
-
-#define LED_PIN PB1
+#include "led.h"
+#include "ch32v003fun.h"
 
 void led_init(void)
 {
-	DDRB |= 1<<LED_PIN;
+	RCC->APB2PCENR |= RCC_APB2Periph_GPIOD;
+	GPIOD->CFGLR &= ~(0xf<<(4*4));
+	GPIOD->CFGLR |= (GPIO_Speed_10MHz | GPIO_CNF_OUT_PP)<<(4*4);
 }
 
-void led_toggle(void)
+void led_on(void)
 {
-	PINB |= 1<<LED_PIN;
+	GPIOD->BSHR = 1 | (1<<4);
 }
 
-void led_blink(void)
+void led_off(void)
 {
-	for(int i = 0; i <10 ; i++){
-		led_toggle();
-		_delay_ms(50);
-	}
-}
-
-void led_blink_slow(void)
-{
-	for(int i = 0; i <10 ; i++){
-		led_toggle();
-		_delay_ms(500);
-	}
+	GPIOD->BSHR = (1<<16) | (1<<(16+4));
 }
