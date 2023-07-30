@@ -17,3 +17,8 @@ void led_off(void)
 {
 	GPIOD->BSHR = (1<<16) | (1<<(16+4));
 }
+
+void led_toggle(void)
+{
+	GPIOD->OUTDR ^= (1<<4);
+}

@@ -2,6 +2,7 @@ add_executable(${PROJECT_NAME}.elf
 	main.c
 	ch32v003fun.c
 	led.c
+	powermode.c
 )
 
 target_include_directories(${PROJECT_NAME}.elf PUBLIC 
