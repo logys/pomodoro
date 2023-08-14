@@ -12,8 +12,14 @@ int main(void)
 	SystemInit48HSI();
 	led_init();
 	powermode_init();
+	uint32_t counter = 0;
 	while(1){
-		led_toggle();
+		if(counter <= 6000)
+			counter++;
+		else {
+			counter = 0;
+			led_toggle();
+		}
 		powermode_standBy();
 	}
 	return 0;

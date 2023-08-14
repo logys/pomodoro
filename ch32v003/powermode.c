@@ -22,7 +22,7 @@ void powermode_init(void)
 
 	// configure AWU window comparison value
 	PWR->AWUWR &= ~0x3f;
-	PWR->AWUWR |= 63;
+	PWR->AWUWR |= 37;
 
 	// enable AWU
 	PWR->AWUCSR |= (1 << 1);
