@@ -18,7 +18,7 @@ void powermode_init(void)
 	EXTI->FTENR |= EXTI_Line9;
 
 	// configure AWU prescaler
-	PWR->AWUPSC |= PWR_AWU_Prescaler_4096;
+	PWR->AWUPSC |= PWR_AWU_Prescaler_32;
 
 	// configure AWU window comparison value
 	PWR->AWUWR &= ~0x3f;
