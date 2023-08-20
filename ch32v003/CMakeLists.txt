@@ -15,6 +15,7 @@ add_library(hal STATIC
         ch32v003fun.c
 	led.c
 	powermode.c
+	buzzer.c
 )
 
 target_include_directories(hal PUBLIC 
