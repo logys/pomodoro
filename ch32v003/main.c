@@ -7,6 +7,7 @@
 #include "led.h"
 #include "powermode.h"
 #include "buzzer.h"
+#include "button.h"
 
 int main(void)
 {
@@ -14,15 +15,12 @@ int main(void)
 	led_init();
 	powermode_init();
 	buzzer_init();
-	uint32_t counter = 0;
-	buzzer_toggle();
+	button_init();
 	while(1){
-		if(counter <= 600)
-			counter++;
-		else {
-			counter = 0;
-			led_toggle();
-			buzzer_toggle();
+		if(button_pushed()){
+			led_on();
+		}else {
+			led_off();
 		}
 		powermode_standBy();
 	}
