@@ -16,13 +16,16 @@ int main(void)
 	powermode_init();
 	buzzer_init();
 	button_init();
+	uint32_t counter = 0;
+	powermode_standBy();
 	while(1){
-		if(button_pushed()){
-			led_on();
-		}else {
-			led_off();
+		if(counter <= 600)
+			counter++;
+		else {
+			counter = 0;
+			led_toggle();
 		}
-		powermode_standBy();
+		powermode_sleep();
 	}
 	return 0;
 }
