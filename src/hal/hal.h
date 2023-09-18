@@ -30,9 +30,9 @@ void tick_init(void);
 void standBy(void);
 void idle(void);
 bool button_pushed(void);
-void buzzing(void);
+void buzzer_buzzing(void);
 void led_blink(void);
 void led_blink_slow(void);
-void powerconfig_init(void);
+void powermode_standBy(void);
 
 #endif// HAL_HPP

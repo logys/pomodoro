@@ -4,6 +4,8 @@ add_executable(${PROJECT_NAME}.elf
 
 target_link_libraries(${PROJECT_NAME}.elf PUBLIC
 	hal
+	input
+	pomodoro
 )
 
 target_include_directories(${PROJECT_NAME}.elf PUBLIC 

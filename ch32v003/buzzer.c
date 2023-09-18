@@ -1,6 +1,8 @@
 #include "buzzer.h"
 #include "ch32v003fun.h"
 
+#define SYSTEM_CORE_CLOCK 48000000UL
+
 #define PIN_BUZZER 5
 void buzzer_init(void)
 {
@@ -23,4 +25,20 @@ void buzzer_off(void)
 void buzzer_toggle(void)
 {
         GPIOD->OUTDR ^= (1<<PIN_BUZZER);
+}
+
+void buzzer_buzzing(void)
+{
+	buzzer_on();
+	Delay_Ms(100);
+	buzzer_off();
+	Delay_Ms(100);
+	buzzer_on();
+	Delay_Ms(100);
+	buzzer_off();
+	Delay_Ms(100);
+	buzzer_on();
+	Delay_Ms(100);
+	buzzer_off();
+	Delay_Ms(100);
 }

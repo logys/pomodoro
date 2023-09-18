@@ -1,6 +1,8 @@
 #include "led.h"
 #include "ch32v003fun.h"
 
+#define SYSTEM_CORE_CLOCK 48000000UL
+
 #define LED_PIN 4
 void led_init(void)
 {
@@ -23,4 +25,20 @@ void led_off(void)
 void led_toggle(void)
 {
 	GPIOD->OUTDR ^= (1<<LED_PIN);
+}
+
+void led_blink(void)
+{
+	for(int i = 0; i<10; i++){
+		led_toggle();
+		Delay_Ms(50);
+	}
+}
+
+void led_blink_slow(void)
+{
+	for(int i = 0; i<10; i++){
+		led_toggle();
+		Delay_Ms(500);
+	}
 }

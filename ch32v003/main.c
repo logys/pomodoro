@@ -8,6 +8,8 @@
 #include "powermode.h"
 #include "buzzer.h"
 #include "button.h"
+#include "tasks/input.h"
+#include "tasks/pomodoro.h"
 
 int main(void)
 {
@@ -16,17 +18,11 @@ int main(void)
 	buzzer_init();
 	button_init();
 	powermode_init();
-	uint32_t counter = 0;
-	led_toggle();
-	powermode_standBy();
-	led_toggle();
+	input_init();
+	pomodoro_init(1);
 	while(1){
-		if(counter <= 600)
-			counter++;
-		else {
-			counter = 0;
-			led_toggle();
-		}
+		input_doIt();
+		pomodoro_doIt();
 		powermode_sleep();
 	}
 	return 0;
