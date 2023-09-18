@@ -19,8 +19,11 @@
 */
 
 #include "pomodoro.h"
-#include "hal/hal.h"
 #include <stdbool.h>
+#include "buzzer.h"
+#include "led.h"
+#include "button.h"
+#include "powermode.h"
 
 #define PAUSE_TIME 60UL*1000*5
 

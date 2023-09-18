@@ -1,6 +1,6 @@
 #include "input.h"
-#include "hal/hal.h"
 #include "pomodoro.h"
+#include "button.h"
 
 typedef enum {IDLE, REBOUND}State;
 

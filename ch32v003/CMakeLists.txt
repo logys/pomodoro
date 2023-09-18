@@ -9,7 +9,7 @@ target_link_libraries(${PROJECT_NAME}.elf PUBLIC
 )
 
 target_include_directories(${PROJECT_NAME}.elf PUBLIC 
-	#../src
+	../src
 	./
 )
 
