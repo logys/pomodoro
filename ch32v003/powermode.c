@@ -6,6 +6,7 @@
 static void setWakeUp(void);
 static void enableAutoWakeup(void);
 static void disableAutoWakeup(void);
+static void setExternalInterruptWakeup(void);
 
 void powermode_init(void)
 {
@@ -17,6 +18,11 @@ void powermode_init(void)
 	while ((RCC->RSTSCKR & RCC_LSIRDY) == 0) {}
 
 	setWakeUp();
+	setExternalInterruptWakeup();
+}
+
+static void setExternalInterruptWakeup(void)
+{
 }
 
 static void setWakeUp(void)
@@ -33,9 +39,6 @@ static void setWakeUp(void)
 	PWR->AWUWR |= 37;
 
 	enableAutoWakeup();
-
-	// peripheral interrupt controller send to deep sleep
-	PFIC->SCTLR |= (1 << 2);
 }
 
 static void enableAutoWakeup(void)
@@ -47,6 +50,8 @@ static void enableAutoWakeup(void)
 void powermode_standBy(void)
 {
 	disableAutoWakeup();
+	PFIC->SCTLR |= (1 << 2);
+	PWR->CTLR |= PWR_CTLR_PDDS;
 	__WFE();
 	enableAutoWakeup();
 }
@@ -60,6 +65,7 @@ static void disableAutoWakeup(void)
 void powermode_sleep(void)
 {
 	// select standby on power-down
-	PWR->CTLR |= PWR_CTLR_PDDS;
+	PFIC->SCTLR &= ~(1 << 2);
+	PWR->CTLR &= ~PWR_CTLR_PDDS;
 	__WFE();
 }

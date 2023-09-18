@@ -13,11 +13,13 @@ int main(void)
 {
 	SystemInit48HSI();
 	led_init();
-	powermode_init();
 	buzzer_init();
 	button_init();
+	powermode_init();
 	uint32_t counter = 0;
+	led_toggle();
 	powermode_standBy();
+	led_toggle();
 	while(1){
 		if(counter <= 600)
 			counter++;
