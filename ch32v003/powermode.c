@@ -39,6 +39,8 @@ static void setWakeUp(void)
 	PWR->AWUWR |= 37;
 
 	enableAutoWakeup();
+
+	PFIC->SCTLR |= (1 << 2);
 }
 
 static void enableAutoWakeup(void)
@@ -50,7 +52,6 @@ static void enableAutoWakeup(void)
 void powermode_standBy(void)
 {
 	disableAutoWakeup();
-	PFIC->SCTLR |= (1 << 2);
 	PWR->CTLR |= PWR_CTLR_PDDS;
 	__WFE();
 	enableAutoWakeup();
@@ -65,7 +66,5 @@ static void disableAutoWakeup(void)
 void powermode_sleep(void)
 {
 	// select standby on power-down
-	PFIC->SCTLR &= ~(1 << 2);
-	PWR->CTLR &= ~PWR_CTLR_PDDS;
 	__WFE();
 }
