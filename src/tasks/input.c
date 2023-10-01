@@ -36,3 +36,17 @@ void input_doIt(void)
 			return;
 	}
 }
+
+Input input_create(void)
+{
+	return (Input){.time_ms = 0};
+}
+void input_do(Input * input, Pomodoro * pomodoro)
+{
+	bool pressed = button_pushed();
+	bool update_push = pressed && !input->last_pushed 
+		&& (input->time_ms == 0);
+	input->time_ms = update_push ? 50 : input->time_ms-10;
+	pomodoro->button_pressed = update_push ? true : false;
+	input->last_pushed = pressed;
+}
