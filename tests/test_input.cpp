@@ -80,7 +80,7 @@ TEST_F(ButtonTest, after_push_set_rebound_time)
 	input_do(&input, &pomodoro);
 
 	uint32_t get = input.time_ms;
-	uint32_t want = 50;
+	uint32_t want = 200;
 	EXPECT_EQ(want, get);
 }
 
@@ -132,4 +132,17 @@ TEST_F(ButtonTest, pushed_after_rebound_time)
 	bool get = pomodoro.button_pressed;
 	bool want = true;
 	ASSERT_EQ(want, get);
+}
+
+TEST_F(ButtonTest, no_decrease_time_on_edge)
+{
+	button_pushed_fake.return_val = false;
+	input.last_pushed = false;
+	input.time_ms = 0;
+
+	input_do(&input, &pomodoro);
+
+	int get = input.time_ms;
+	int want = 0;
+	EXPECT_EQ(want, get);
 }

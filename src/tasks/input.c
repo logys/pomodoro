@@ -44,9 +44,10 @@ Input input_create(void)
 void input_do(Input * input, Pomodoro * pomodoro)
 {
 	bool pressed = button_pushed();
-	bool update_push = pressed && !input->last_pushed 
+	bool positive_edge = pressed && !input->last_pushed 
 		&& (input->time_ms == 0);
-	input->time_ms = update_push ? 50 : input->time_ms-10;
-	pomodoro->button_pressed = update_push ? true : false;
+	input->time_ms = positive_edge ? REBOUND_TIME : 
+		(input->time_ms>0 ? input->time_ms-10: 0);
+	pomodoro->button_pressed = positive_edge ? true : false;
 	input->last_pushed = pressed;
 }
