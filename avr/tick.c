@@ -1,4 +1,3 @@
-#include "hal.h"
 #include <avr/interrupt.h>
 
 void tick_init(void)

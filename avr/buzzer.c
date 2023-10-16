@@ -1,4 +1,4 @@
-#include "hal.h"
+#include "buzzer.h"
 #include <util/delay.h>
 #include <avr/io.h>
 
@@ -20,7 +20,7 @@ void buzzer_off(void)
 	PORTB &= ~(1<<PIN_BUZZER);
 }
 
-void buzzing(void)
+void buzzer_buzzing(void)
 {
 	buzzer_on();
 	_delay_ms(100);

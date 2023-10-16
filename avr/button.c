@@ -1,6 +1,7 @@
-#include "hal.h"
+#include "button.h"
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <stdbool.h>
 
 #define BUTTON_PIN PB0
 

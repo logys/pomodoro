@@ -1,11 +1,11 @@
-#include "hal.h"
+#include "powermode.h"
 #include <avr/sleep.h>
 #include <avr/io.h>
 
 static void unused_pines_as_input_pullup(void);
 static void adc_disabled(void);
 
-void powerconfig_init(void)
+void powermode_init(void)
 {
 	unused_pines_as_input_pullup();
 	adc_disabled();
@@ -24,13 +24,13 @@ static void adc_disabled(void)
 	ADCSRA &= ~(1<<ADEN);
 }
 
-void standBy(void)
+void powermode_standBy(void)
 {
 	set_sleep_mode(SLEEP_MODE_PWR_DOWN);
 	sleep_mode();
 }
 
-void idle(void)
+void powermode_sleep(void)
 {
 	set_sleep_mode(SLEEP_MODE_IDLE);
 	sleep_mode();
