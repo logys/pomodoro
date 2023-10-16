@@ -1,25 +1,23 @@
-#include "hal.h"
-#include <avr/io.h>
-#include <avr/interrupt.h>
+#include "button.h"
+#include "ch32v003fun.h"
+#include <stdbool.h>
 
-#define BUTTON_PIN PB0
+#define BUTTON_PIN 6
 
 void button_init(void)
 {
-	DDRB &= ~(1<<BUTTON_PIN);
-	PORTB |= 1<<BUTTON_PIN;
+	RCC->APB2PCENR |= RCC_AFIOEN;
+	RCC->APB2PCENR |= RCC_APB2Periph_GPIOD;
+	GPIOD->CFGLR &= ~(0xf<<(4*BUTTON_PIN));
+	GPIOD->CFGLR |= (GPIO_SPEED_IN | GPIO_CNF_IN_PUPD)<<(4*BUTTON_PIN);
+	GPIOD->OUTDR |= (1<<BUTTON_PIN);
 
-	sei();
-	GIMSK |= 1<<PCIE;
-	PCMSK |= 1<<PCINT0;
+	AFIO->EXTICR |= (uint32_t)(0b11 <<(2*BUTTON_PIN));
+	EXTI->EVENR |= EXTI_Line6;
+	EXTI->FTENR |= EXTI_Line6;
 }
 
 bool button_pushed(void)
 {
-	return PINB & (1<<BUTTON_PIN) ? false : true;
+	return (GPIOD->INDR & GPIO_Pin_6) ? false: true;
 }
-
-ISR(PCINT0_vect)
-{
-}
-

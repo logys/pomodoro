@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.11)
 
-project(Pomodoro LANGUAGES C)
+project(Pomodoro LANGUAGES C CXX)
 
 add_subdirectory(src)
 

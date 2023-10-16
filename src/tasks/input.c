@@ -1,6 +1,6 @@
 #include "input.h"
-#include "hal/hal.h"
 #include "pomodoro.h"
+#include "button.h"
 
 typedef enum {IDLE, REBOUND}State;
 
@@ -35,4 +35,19 @@ void input_doIt(void)
 		default:
 			return;
 	}
+}
+
+Input input_create(void)
+{
+	return (Input){.time_ms = 0};
+}
+void input_do(Input * input, Pomodoro * pomodoro)
+{
+	bool pressed = button_pushed();
+	bool positive_edge = pressed && !input->last_pushed 
+		&& (input->time_ms == 0);
+	input->time_ms = positive_edge ? REBOUND_TIME : 
+		(input->time_ms>0 ? input->time_ms-10: 0);
+	pomodoro->button_pressed = positive_edge ? true : false;
+	input->last_pushed = pressed;
 }

@@ -19,8 +19,11 @@
 */
 
 #include "pomodoro.h"
-#include "hal/hal.h"
 #include <stdbool.h>
+#include "buzzer.h"
+#include "led.h"
+#include "button.h"
+#include "powermode.h"
 
 #define PAUSE_TIME 60UL*1000*5
 
@@ -51,7 +54,7 @@ void pomodoro_doIt(void)
 			time += 10;
 			if(time == session_time){
 				state = POWEROFF;
-				buzzing();
+				buzzer_buzzing();
 			}
 			else if(pushed == true)
 			{
@@ -64,7 +67,7 @@ void pomodoro_doIt(void)
 			pause_time += 10;
 			if(pause_time == PAUSE_TIME){
 				state = POWEROFF;
-				buzzing();
+				buzzer_buzzing();
 			}
 			else if(pushed == true)
 			{
@@ -75,7 +78,7 @@ void pomodoro_doIt(void)
 			pushed = false;
 			break;
 		case POWEROFF:
-			standBy();
+			powermode_standBy();
 			if(pushed == true)
 			{
 				state = PLAY;

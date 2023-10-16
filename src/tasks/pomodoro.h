@@ -21,11 +21,22 @@
 #ifndef POMODORO_HPP
 #define POMODORO_HPP
 
+#include <stdbool.h>
+
+typedef struct{
+	bool button_pressed;
+}Pomodoro;
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* State machine input states */
 void pomodoro_pushed(void);
 
 void pomodoro_init(int time);
 void pomodoro_doIt(void);
-
+#ifdef __cplusplus
+}
+#endif
 
 #endif// POMODORO_HPP

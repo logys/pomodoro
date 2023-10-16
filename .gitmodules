@@ -4,3 +4,6 @@
 [submodule "googletest"]
 	path = googletest
 	url = https://github.com/google/googletest
+[submodule "fff"]
+	path = fff
+	url = https://github.com/meekrosoft/fff

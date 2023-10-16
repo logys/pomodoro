@@ -4,11 +4,15 @@ add_library(pomodoro STATIC
 
 target_link_libraries(pomodoro PUBLIC
 	)
-target_include_directories(pomodoro PUBLIC .)
+target_include_directories(pomodoro PUBLIC 
+	./hal
+)
 
 add_library(input STATIC 
 	tasks/input.c
 	)
 target_link_libraries(input PUBLIC
 	)
-target_include_directories(input PUBLIC .)
+target_include_directories(input PUBLIC 
+	./hal
+)

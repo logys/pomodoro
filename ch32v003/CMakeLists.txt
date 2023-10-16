@@ -4,10 +4,12 @@ add_executable(${PROJECT_NAME}.elf
 
 target_link_libraries(${PROJECT_NAME}.elf PUBLIC
 	hal
+	input
+	pomodoro
 )
 
 target_include_directories(${PROJECT_NAME}.elf PUBLIC 
-	#../src
+	../src
 	./
 )
 
@@ -15,6 +17,8 @@ add_library(hal STATIC
         ch32v003fun.c
 	led.c
 	powermode.c
+	buzzer.c
+	button.c
 )
 
 target_include_directories(hal PUBLIC 
