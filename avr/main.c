@@ -10,21 +10,27 @@
 
 #define VERSION 0.8.0
 
+static void hal_init(void);
+
 int main()
+{
+	hal_init();
+	Input input = input_create();
+	Pomodoro pomodoro;
+	pomodoro_init(1);
+	while(1){
+		input_do(&input, &pomodoro);
+		pomodoro_doIt(&pomodoro);
+		powermode_sleep();
+	}
+	return 0;
+}
+
+static void hal_init(void)
 {
 	led_init();
 	button_init();
 	buzzer_init();
 	powermode_init();
-	Input input = input_create();
-	Pomodoro pomodoro;
 	tick_init();
-	while(1){
-		input_do(&input, &pomodoro);
-		if(pomodoro.button_pressed)
-			led_toggle();
-		//pomodoro_doIt();
-		powermode_sleep();
-	}
-	return 0;
 }

@@ -18,7 +18,7 @@ add_library(hal STATIC
 	)
 
 target_compile_options(hal PUBLIC
-	-DF_CPU=1000000UL
+	-DF_CPU=128000UL
 	)
 
 target_include_directories(hal PUBLIC 
