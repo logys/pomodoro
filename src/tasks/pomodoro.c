@@ -42,13 +42,11 @@ void pomodoro_init(int time_minutes)
 	pause_time = 0;
 	session_time = 60*1000UL*time_minutes;
 	pushed = false;
-	buzzer_init();
-	button_init();
-	led_init();
 }
 
-void pomodoro_doIt(void)
+void pomodoro_doIt(Pomodoro *pomodoro)
 {
+	(void)pomodoro;
 	switch(state){
 		case PLAY:
 			time += 10;
@@ -79,14 +77,14 @@ void pomodoro_doIt(void)
 			break;
 		case POWEROFF:
 			powermode_standBy();
-			if(pushed == true)
+			if(pomodoro->button_pressed)
 			{
 				state = PLAY;
 				time = 0;
 				led_blink();
 
 			}
-			pushed = false;
+			pomodoro->button_pressed = false;
 			break;
 		default:
 			return;

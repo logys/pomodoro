@@ -34,7 +34,7 @@ extern "C" {
 void pomodoro_pushed(void);
 
 void pomodoro_init(int time);
-void pomodoro_doIt(void);
+void pomodoro_doIt(Pomodoro *pomodoro);
 #ifdef __cplusplus
 }
 #endif
