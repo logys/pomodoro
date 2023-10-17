@@ -14,8 +14,6 @@ typedef struct{
 extern "C" {
 #endif
 
-void input_init(void);
-void input_doIt(void);
 Input input_create(void);
 void input_do(Input * input, Pomodoro * pomodoro);
 
