@@ -1,4 +1,5 @@
 #include <avr/interrupt.h>
+#include "tick.h"
 
 void tick_init(void)
 {

@@ -5,7 +5,7 @@
 typedef enum {IDLE, REBOUND}State;
 
 static const int TICK_TIME = 10;
-static const int REBOUND_TIME = 200;
+static const int REBOUND_TIME = 50;
 static State state;
 static int time;
 
