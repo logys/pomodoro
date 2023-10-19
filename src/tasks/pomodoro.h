@@ -22,19 +22,24 @@
 #define POMODORO_HPP
 
 #include <stdbool.h>
+#include <stdint.h>
+
+typedef enum {PLAY, PAUSE, POWEROFF}State;
 
 typedef struct{
 	bool button_pressed;
+	State state;
+	uint32_t play_time;
+	uint32_t session_time;
 }Pomodoro;
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /* State machine input states */
-void pomodoro_pushed(void);
-
 void pomodoro_init(int time);
 void pomodoro_doIt(Pomodoro *pomodoro);
+Pomodoro pomodoro_create(uint32_t time_minutes);
 #ifdef __cplusplus
 }
 #endif

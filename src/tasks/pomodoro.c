@@ -24,10 +24,9 @@
 #include "led.h"
 #include "button.h"
 #include "powermode.h"
+#include "tick.h"
 
 #define PAUSE_TIME 60UL*1000*5
-
-typedef enum {PLAY, PAUSE, POWEROFF}State;
 
 static State state;
 static long time;
@@ -47,19 +46,19 @@ void pomodoro_init(int time_minutes)
 void pomodoro_doIt(Pomodoro *pomodoro)
 {
 	(void)pomodoro;
-	switch(state){
+	switch(pomodoro->state){
 		case PLAY:
-			time += 10;
-			if(time == session_time){
-				state = POWEROFF;
+			pomodoro->play_time += TICK_MS;
+			if(pomodoro->play_time == pomodoro->session_time){
+				pomodoro->state = POWEROFF;
 				buzzer_buzzing();
 			}
-			else if(pushed == true)
+			else if(pomodoro->button_pressed == true)
 			{
-				state = PAUSE;
+				pomodoro->state = PAUSE;
 				led_blink_slow();
 			}
-			pushed = false;
+			pomodoro->button_pressed = false;
 			break;
 		case PAUSE:
 			pause_time += 10;
@@ -79,8 +78,8 @@ void pomodoro_doIt(Pomodoro *pomodoro)
 			powermode_standBy();
 			if(pomodoro->button_pressed)
 			{
-				state = PLAY;
-				time = 0;
+				pomodoro->state = PLAY;
+				pomodoro->play_time = 0;
 				led_blink();
 
 			}
@@ -91,7 +90,9 @@ void pomodoro_doIt(Pomodoro *pomodoro)
 	}
 }
 
-void pomodoro_pushed(void)
+Pomodoro pomodoro_create(uint32_t time_minutes)
 {
-	pushed = true;
+	return (Pomodoro){.session_time = (uint32_t)60*(uint32_t)1000*time_minutes,
+			.state = POWEROFF
+	};
 }

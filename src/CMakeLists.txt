@@ -3,10 +3,9 @@ add_library(pomodoro STATIC
 	)
 
 target_link_libraries(pomodoro PUBLIC
-	hal
 	)
 target_include_directories(pomodoro PUBLIC 
-	./hal
+	hal/
 )
 
 add_library(input STATIC 
@@ -16,5 +15,5 @@ target_link_libraries(input PUBLIC
 	pomodoro
 	)
 target_include_directories(input PUBLIC 
-	./hal
+	${PROJECT_SOURCE_DIR}/src/hal/
 )

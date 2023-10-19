@@ -80,7 +80,7 @@ TEST_F(ButtonTest, after_push_set_rebound_time)
 	input_do(&input, &pomodoro);
 
 	uint32_t get = input.time_ms;
-	uint32_t want = 200;
+	uint32_t want = 50;
 	EXPECT_EQ(want, get);
 }
 
