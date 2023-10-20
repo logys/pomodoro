@@ -1,8 +1,6 @@
 #define SYSTEM_CORE_CLOCK 48000000UL
 
-#define VERSION 0.8.0
 #include "ch32v003fun.h"
-
 #define APB_CLOCK SYSTEM_CORE_CLOCK 
 #include "led.h"
 #include "powermode.h"
@@ -11,19 +9,29 @@
 #include "tasks/input.h"
 #include "tasks/pomodoro.h"
 
+#define VERSION 0.8.0
+
+static void hal_init(void);
+
 int main(void)
 {
-	SystemInit48HSI();
-	led_init();
-	buzzer_init();
-	button_init();
-	powermode_init();
-	input_init();
+	hal_init();
+	Input input = input_create();
+	Pomodoro pomodoro = pomodoro_create(1);
 	pomodoro_init(1);
 	while(1){
-		input_doIt();
-		pomodoro_doIt();
+		input_do(&input, &pomodoro);
+		pomodoro_doIt(&pomodoro);
 		powermode_sleep();
 	}
 	return 0;
+}
+
+static void hal_init(void)
+{
+	led_init();
+	button_init();
+	buzzer_init();
+	powermode_init();
+	//tick_init();
 }

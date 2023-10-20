@@ -22,6 +22,7 @@ add_library(hal STATIC
 )
 
 target_include_directories(hal PUBLIC 
+	${PROJECT_SOURCE_DIR}/src/hal
 	./
 )
 add_custom_target(size ALL
