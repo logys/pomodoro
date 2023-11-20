@@ -30,6 +30,7 @@ typedef struct{
 	bool button_pressed;
 	State state;
 	uint32_t play_time;
+	uint32_t pause_time;
 	uint32_t session_time;
 }Pomodoro;
 #ifdef __cplusplus
