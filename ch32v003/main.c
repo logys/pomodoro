@@ -18,8 +18,6 @@ int main(void)
 	hal_init();
 	Input input = input_create();
 	Pomodoro pomodoro = pomodoro_create(1);
-	pomodoro_init(1);
-	powermode_sleep();
 	while(1){
 		input_do(&input, &pomodoro);
 		pomodoro_doIt(&pomodoro);

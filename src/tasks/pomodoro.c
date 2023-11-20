@@ -28,24 +28,9 @@
 
 #define PAUSE_TIME 60UL*1000*5
 
-static State state;
-static long time;
-static long pause_time;
-static long session_time;
-static bool pushed;
-
-void pomodoro_init(int time_minutes)
-{
-	state = POWEROFF;
-	time = 0;
-	pause_time = 0;
-	session_time = 60*1000UL*time_minutes;
-	pushed = false;
-}
-
 void pomodoro_doIt(Pomodoro *pomodoro)
 {
-	(void)pomodoro;
+	bool pressed = pomodoro->button_pressed;
 	switch(pomodoro->state){
 		case PLAY:
 			pomodoro->play_time += TICK_MS;
@@ -53,40 +38,36 @@ void pomodoro_doIt(Pomodoro *pomodoro)
 				pomodoro->state = POWEROFF;
 				buzzer_buzzing();
 			}
-			else if(pomodoro->button_pressed == true)
+			else if(pressed)
 			{
 				pomodoro->state = PAUSE;
 				led_blink_slow();
 			}
-			pomodoro->button_pressed = false;
 			break;
 		case PAUSE:
-			pomodoro->pause_time += 10;
+			pomodoro->pause_time += TICK_MS;
 			if(pomodoro->pause_time == PAUSE_TIME){
 				pomodoro->state = POWEROFF;
 				buzzer_buzzing();
 			}
-			else if(pomodoro->button_pressed == true)
+			else if(pressed)
 			{
 				pomodoro->state = PLAY;
 				led_blink();
 				pomodoro->pause_time = 0;
 			}
-			pomodoro->button_pressed = false;
 			break;
 		case POWEROFF:
 			powermode_standBy();
-			if(pomodoro->button_pressed)
+			if(pressed)
 			{
 				pomodoro->state = PLAY;
 				pomodoro->play_time = 0;
 				led_blink();
 			}
-			pomodoro->button_pressed = false;
 			break;
-		default:
-			return;
 	}
+	pomodoro->button_pressed = false;
 }
 
 Pomodoro pomodoro_create(uint32_t time_minutes)
