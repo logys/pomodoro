@@ -61,18 +61,18 @@ void pomodoro_doIt(Pomodoro *pomodoro)
 			pomodoro->button_pressed = false;
 			break;
 		case PAUSE:
-			pause_time += 10;
-			if(pause_time == PAUSE_TIME){
-				state = POWEROFF;
+			pomodoro->pause_time += 10;
+			if(pomodoro->pause_time == PAUSE_TIME){
+				pomodoro->state = POWEROFF;
 				buzzer_buzzing();
 			}
-			else if(pushed == true)
+			else if(pomodoro->button_pressed == true)
 			{
-				state = PLAY;
+				pomodoro->state = PLAY;
 				led_blink();
-				pause_time = 0;
+				pomodoro->pause_time = 0;
 			}
-			pushed = false;
+			pomodoro->button_pressed = false;
 			break;
 		case POWEROFF:
 			powermode_standBy();
@@ -81,7 +81,6 @@ void pomodoro_doIt(Pomodoro *pomodoro)
 				pomodoro->state = PLAY;
 				pomodoro->play_time = 0;
 				led_blink();
-
 			}
 			pomodoro->button_pressed = false;
 			break;
