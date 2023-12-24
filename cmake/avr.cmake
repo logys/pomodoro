@@ -2,6 +2,7 @@ set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SYSTEM_PROCESSOR "avr")
 
 set(CMAKE_C_COMPILER /usr/bin/avr-gcc)
+set(CMAKE_CXX_COMPILER /usr/bin/avr-g++)
 
 set(COMPILER_AVR_FLAGS "-mmcu=attiny85")
 set(CMAKE_C_FLAGS 

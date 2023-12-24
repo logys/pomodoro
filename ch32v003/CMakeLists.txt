@@ -26,10 +26,10 @@ target_include_directories(hal PUBLIC
 	./
 )
 add_custom_target(size ALL
-	COMMAND /home/antonio/Builds/riscv32-unknown-elf.gcc-10.1.0.rv32e.ilp32e.newlib/bin/riscv32-unknown-elf-size
+	COMMAND /home/antonio/Builds/riscv/bin/riscv64-unknown-elf-size
        	${PROJECT_NAME}.elf -G
 	DEPENDS ${PROJECT_NAME}.elf)
 add_custom_target(bin ALL
-	COMMAND /home/antonio/Builds/riscv/bin/riscv32-unknown-elf-objcopy -O binary
+	COMMAND /home/antonio/Builds/riscv/bin/riscv64-unknown-elf-objcopy -O binary
        	${PROJECT_NAME}.elf ${PROJECT_NAME}.bin
 	DEPENDS ${PROJECT_NAME}.elf)
