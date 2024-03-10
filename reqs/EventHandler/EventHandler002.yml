@@ -1,0 +1,16 @@
+Implemented: |
+  True
+active: true
+derived: false
+header: ''
+level: 3.1.1
+links:
+- EventHandler001: null
+normative: true
+ref: ''
+reviewed: null
+text: |
+  Cada tarea requiere acceso a la interfaz de Event Handler:
+  - Añadir una señal
+  - Consumir una señal
+  - Verificar si hay señales

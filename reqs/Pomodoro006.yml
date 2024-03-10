@@ -1,0 +1,12 @@
+Requirement: ''
+active: true
+derived: false
+header: |
+  EventHandler
+level: 6.1
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  Se requiere un Event handler para evitar las condiciones de carrera.

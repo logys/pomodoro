@@ -1,0 +1,13 @@
+Implemented: ''
+active: true
+derived: false
+header: |
+  AñadirSeñal
+level: 2.1
+links:
+- EventHandler002: null
+normative: true
+ref: ''
+reviewed: null
+text: |
+  Cada tarea puede añadir una señal, el event handler se encargara de almacenarla y consumirla cuando otra tarea la solicite
