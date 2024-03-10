@@ -12,7 +12,6 @@ class ButtonTest : public ::testing::Test {
 	protected:
 		Input input;
 		Pomodoro pomodoro;
-
 		virtual void SetUp() override
 		{
 			input = input_create();

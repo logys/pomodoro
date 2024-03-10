@@ -22,3 +22,4 @@ void input_do(Input * input, Pomodoro * pomodoro);
 #endif
 
 #endif// INPUT_HPP
+
