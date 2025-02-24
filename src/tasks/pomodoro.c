@@ -72,7 +72,8 @@ void pomodoro_doIt(Pomodoro *pomodoro)
 
 Pomodoro pomodoro_create(uint32_t time_minutes)
 {
-	return (Pomodoro){.session_time = (uint32_t)60*(uint32_t)1000*time_minutes,
-			.state = POWEROFF
+	return (Pomodoro){
+		.session_time = (uint32_t)60*(uint32_t)1000*time_minutes,
+		.state = POWEROFF
 	};
 }

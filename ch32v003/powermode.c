@@ -1,7 +1,7 @@
 #define SYSTEM_CORE_CLOCK 48000000UL
 #define APB_CLOCK SYSTEM_CORE_CLOCK
 #include "powermode.h"
-#include "ch32v003fun.h"
+#include "ch32fun.h"
 
 static void setWakeUp(void);
 static void enableAutoWakeup(void);

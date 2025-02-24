@@ -1,6 +1,6 @@
 #define SYSTEM_CORE_CLOCK 48000000UL
 
-#include "ch32v003fun.h"
+#include "ch32fun.h"
 #define APB_CLOCK SYSTEM_CORE_CLOCK 
 #include "led.h"
 #include "powermode.h"

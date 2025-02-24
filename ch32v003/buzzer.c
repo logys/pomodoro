@@ -1,5 +1,5 @@
 #include "buzzer.h"
-#include "ch32v003fun.h"
+#include "ch32fun.h"
 
 #define SYSTEM_CORE_CLOCK 48000000UL
 
