@@ -1,0 +1,13 @@
+State: |
+  Pending
+active: true
+derived: false
+header: |
+  RD-002
+level: 2.0
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  Move togglin and blinking/buzzing signals on outputs to a specific state machine

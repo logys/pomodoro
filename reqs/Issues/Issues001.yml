@@ -1,0 +1,13 @@
+State: |
+  Pending
+active: true
+derived: false
+header: |
+  RD-001
+level: 1.0
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  Extrar output functionality from Pomodoro State Machine to a new entity

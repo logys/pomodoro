@@ -7,6 +7,6 @@ level: 6.1
 links: []
 normative: true
 ref: ''
-reviewed: null
+reviewed: LqdjV8VmixpkA9EJKjU360wo1rFzWfqbctytBeln9WA=
 text: |
   Se requiere un Event handler para evitar las condiciones de carrera.

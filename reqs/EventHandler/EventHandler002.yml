@@ -5,10 +5,10 @@ derived: false
 header: ''
 level: 3.1.1
 links:
-- EventHandler001: null
+- EventHandler001: 2XA8sg3iz1cc85jikplwxcjsCMfOv8jrYK_VGXWAD3U=
 normative: true
 ref: ''
-reviewed: null
+reviewed: J9nedd6cj8vZsmz4u6zvlEqJHdG0wz_g6hJ72xgfxNk=
 text: |
   Cada tarea requiere acceso a la interfaz de Event Handler:
   - Añadir una señal

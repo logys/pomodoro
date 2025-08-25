@@ -6,9 +6,9 @@ header: |
   Finished
 level: 1.4.0
 links:
-- High005: null
+- HIGH005: 7vLUxepvs4YelRcUJ9x7tfpXtqQjLStd9P5md6QMvVQ=
 normative: true
 ref: ''
-reviewed: null
+reviewed: R2yRGNuQZXJPyDyGvMolBQUA6KCNigtaqsOXSO-8NIk=
 text: |
   If the acummulated time reaches the session time the Pomodoro transit to Poweroff state.

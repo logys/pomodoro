@@ -6,9 +6,9 @@ header: |
   Button
 level: 1.2.0
 links:
-- BUTTON003: null
+- Button003: R2j3kBXhY5EZkkJwJnuabkEWW4Y4lWp8uAH0ob7IemY=
 normative: true
 ref: ''
-reviewed: null
+reviewed: u5CYcdoYlqtAZONU4l5PWgxqtPCjE4xw1sDAyjyH5XY=
 text: |
   When the state changes to pause the Pomodoro shall save their current acummulated time.

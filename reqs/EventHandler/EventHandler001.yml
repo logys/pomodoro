@@ -6,9 +6,9 @@ header: |
   EventHandler
 level: 1
 links:
-- pomodoro006: null
+- Pomodoro006: LqdjV8VmixpkA9EJKjU360wo1rFzWfqbctytBeln9WA=
 normative: true
 ref: ''
-reviewed: null
+reviewed: kQf8d8xYtW8BM3bYtOihyGG96bRpcX-KvZhVIUZDUwI=
 text: |
   Para evitar condiciones de carrera, se requiere un event handler que maneje el envio y recepción de mensajes entre tareas así como evitar condiciones de carrera.

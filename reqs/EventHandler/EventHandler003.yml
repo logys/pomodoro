@@ -5,9 +5,9 @@ header: |
   AñadirSeñal
 level: 2.1
 links:
-- EventHandler002: null
+- EventHandler002: FCQsaqhdE8c2LjiGhFqXO1E5OMKuBZeuyKh8XUYFqv8=
 normative: true
 ref: ''
-reviewed: null
+reviewed: h_jThsX0lFvmIH4oo5Bqq-_l0pM4iSgvvHuH4OfA_M0=
 text: |
   Cada tarea puede añadir una señal, el event handler se encargara de almacenarla y consumirla cuando otra tarea la solicite
