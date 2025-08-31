@@ -29,7 +29,7 @@ class PomodoroTest : public ::testing::Test {
 
 TEST_F(PomodoroTest, increase_time)
 {
-	pomodoro.state = POWEROFF;
+	pomodoro.state = PLAY;
 	pomodoro.play_time = 0;
 
 	pomodoro_doIt(&pomodoro);
