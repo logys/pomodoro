@@ -2,9 +2,9 @@ active: true
 derived: false
 header: |
   Button
-level: 4.1
+level: 4.1.0
 links: []
-normative: true
+normative: false
 ref: ''
 reviewed: svSz-HgCiPMgGaD0P_wE8qkp4Wt3e4MLxfBR0RAECaM=
 text: |

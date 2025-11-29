@@ -1,0 +1,11 @@
+State: ''
+active: true
+derived: false
+header: ''
+level: 3.1.2.1.0
+links: []
+normative: true
+ref: ''
+reviewed: HgQiG7vVJL9NcqUzQ8qbSWD04QeTbz-oqupgJoi5MfU=
+text: |
+  El led debe tintinear 10 veces rápidamente (200ms) cuando el pomodoro comienza a contar el tiempo de una sesión

@@ -1,0 +1,12 @@
+State: |
+  Agreed
+active: true
+derived: false
+header: ''
+level: 4.2.2.2.0
+links: []
+normative: true
+ref: ''
+reviewed: L35716JWGfzuHKPTpXK1kaTDIPNGfUHfPfQXIcGlFE0=
+text: |
+  Si la sesión está en progreso y se presiona el botón, la sesion deberá pausarse y una sesion de pausa debera iniciar

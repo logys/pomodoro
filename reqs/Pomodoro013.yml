@@ -1,0 +1,12 @@
+State: |
+  Agreed
+active: true
+derived: false
+header: ''
+level: 4.2.2.1.0
+links: []
+normative: true
+ref: ''
+reviewed: -HqPRq-7BNK7YPX0wC-B0A5UG4nJcIqhBafoEmMst6A=
+text: |
+  Si el pomodoro está apagado y se presiona el boton, el pomodoro debera iniciar una sesión nueva

@@ -1,0 +1,13 @@
+active: true
+derived: false
+header: ''
+level: 4.2.1.0
+links: []
+normative: false
+ref: ''
+reviewed: Me5vN7fCtFc5mwEHZ_xpbjn_IW3A-_fLVkn8ILYoTtc=
+text: |
+  El boton deberá ser una interfaz para:
+   - Iniciar la sesión del pomodoro
+   - Pausar o reanudar la sesión
+   - Apagar el pomodoro

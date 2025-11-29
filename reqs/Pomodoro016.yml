@@ -1,0 +1,12 @@
+State: |
+  Agreed
+active: true
+derived: false
+header: ''
+level: 4.2.2.4.0
+links: []
+normative: true
+ref: ''
+reviewed: 50hDfrVedv8ZIbnDcEe2FnbZTXN5JkxevIaei0O6RTY=
+text: |
+  Si el pomodoro está encendido y se deja presionado el botón durante 5 segundos, el pomodoro debera finalizar cualquier sesión y se apagará.

@@ -1,0 +1,12 @@
+State: |
+  Agreed
+active: true
+derived: false
+header: ''
+level: 4.2.2.3.0
+links: []
+normative: true
+ref: ''
+reviewed: k7Cbl61rFVQCT37rn8nGQ_oTZSSP8pDN8yi2W-g_OVo=
+text: |
+  Si la sesión de pausa está en progreso y se presiona el botón, la sesion de pausa deberá de suspenderse y laa sesion del pomodoro debera resumirse.

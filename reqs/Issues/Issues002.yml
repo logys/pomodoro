@@ -8,6 +8,6 @@ level: 2.0
 links: []
 normative: true
 ref: ''
-reviewed: null
+reviewed: MdyJIYBKKcmLWRUqq1R0j-n54LQ2gjN2ihJTTQsLyeA=
 text: |
   Move togglin and blinking/buzzing signals on outputs to a specific state machine

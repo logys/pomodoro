@@ -1,0 +1,16 @@
+Completed: |
+  False
+State: |
+  Accepted
+State, adasd: ''
+active: true
+derived: false
+header: ''
+level: 2.1.2.1
+links: []
+normative: true
+ref: ''
+reviewed: Ob9-Dk47B1Bo_8FsaSl1QrsMROjwDkOvxNEkscjPt9c=
+state: ''
+text: |
+  El buzzer debe zumbar 5 veces cada 100ms al terminar un ciclo del pomodoro o al terminar el tiempo de pausa
