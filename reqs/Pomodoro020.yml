@@ -1,0 +1,15 @@
+Comment: |
+  El buzzer comanda el apagado, igualmente debe esperarse hasta que termine de zumbar si es que se ha comandado el apagado previamente
+State: |
+  Agree
+active: true
+derived: false
+header: |
+  Buzzer
+level: 5.1.1.2
+links: []
+normative: true
+ref: ''
+reviewed: LtfutU8CmlUaG12vKiwWjgrGT8asn5k4ftvqu2FjmXM=
+text: |
+  Si el Buzzer está zumbando el sw deberar esperar a que termine y posteriormente debe apagarse

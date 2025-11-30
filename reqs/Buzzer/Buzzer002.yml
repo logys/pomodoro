@@ -1,12 +1,14 @@
-Implemented: |
-  True
+Implemented: ''
+State: |
+  Agreed
 active: true
 derived: false
 header: ''
 level: 2.1.0
-links: []
+links:
+- Pomodoro008: Ob9-Dk47B1Bo_8FsaSl1QrsMROjwDkOvxNEkscjPt9c=
 normative: true
 ref: ''
 reviewed: JRIdPGoTSIxffS_dj3wAyHn1qr1OFVaJ5V5hcUOBl_Q=
 text: |
-  When Pomodoro reach the end of the session or the end of pause time the Pomodoro shall toggling the buzzer three times and go to poweroff mode.
+  When Pomodoro reach the end of the session the Pomodoro shall toggling the buzzer.

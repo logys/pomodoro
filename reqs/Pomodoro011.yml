@@ -1,5 +1,5 @@
 State: |
-  Acepted
+  Agreed
 active: true
 derived: false
 header: ''
@@ -9,4 +9,4 @@ normative: true
 ref: ''
 reviewed: OSdf0OEQQcZHsXRXe9-SKPHxI3o83f-7IrN4-s2pFF0=
 text: |
-  El led debe tintinear 10 veces lentamente (500ms) cuando el pomodoro hace una sesión de pausa
+  El led debe tintinear 10 veces lentamente (500ms) cuando el pomodoro inicia una sesión de pausa

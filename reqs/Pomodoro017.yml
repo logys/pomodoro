@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  Apagado
+level: 5.1.1.0
+links: []
+normative: false
+ref: ''
+reviewed: 3_YgyfpCNP5NwrigAElsWlutRGdkQoyhhRXDLBZm0iQ=
+text: |
+  El dispositivo debe entrar en modo ahorro de energía cuando no se este executando alguna sesión, esto incluye apagar el led y el buzzer si estuvieran encendidos

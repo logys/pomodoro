@@ -1,0 +1,13 @@
+State: |
+  Agreed
+active: true
+derived: false
+header: ''
+level: 2.2.0
+links:
+- Pomodoro011: TTYKzLFj1iN6qYh7gCkrW2Le5a-BZtjQ2yfHt3Xtr2I=
+normative: true
+ref: ''
+reviewed: dMbisFaUxH8snRwEFB0S0jncWHtqhURTWniJO6aNnIg=
+text: |
+  El led debe tintinear 10 veces lentamente (500ms) cuando el pomodoro inicia una sesión de pausa

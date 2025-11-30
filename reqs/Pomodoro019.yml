@@ -1,0 +1,15 @@
+Comment: |
+  El led no commanda el apagado, pero igualmente debe esperarse hasta que termine de brillar si es que alguien ya ha comandado el apagado
+State: |
+  Acepted
+active: true
+derived: false
+header: |
+  Led
+level: 5.1.1.1
+links: []
+normative: true
+ref: ''
+reviewed: lHAsGmpqf99hp3pIdLyvWA091TY081eajCNxQ7kZoBo=
+text: |
+  Si el led está parpadeando el sw deberar esperar a que termine y posteriormente debe apagarse

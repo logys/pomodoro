@@ -1,11 +1,14 @@
 Implemented: |
-  True
+  Agreed
+State: |
+  Agreed
 active: true
 derived: false
 header: |
   WeakeUp
 level: 2.1
-links: []
+links:
+- Pomodoro013: -HqPRq-7BNK7YPX0wC-B0A5UG4nJcIqhBafoEmMst6A=
 normative: true
 ref: ''
 reviewed: BSEBHlIdqh2ZKbwrRpg-4UEU-An3GttEXwRt3592iPY=

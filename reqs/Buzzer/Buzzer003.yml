@@ -1,0 +1,13 @@
+State: |
+  Agreed
+active: true
+derived: false
+header: ''
+level: 2.2.0
+links:
+- Pomodoro008: Ob9-Dk47B1Bo_8FsaSl1QrsMROjwDkOvxNEkscjPt9c=
+normative: true
+ref: ''
+reviewed: bOQiJE4TC9ghUvHX1o-aeC6PiYt22FdD0sfVV4TEawU=
+text: |
+  When Pomodoro reach the end of pause time the Pomodoro shall toggling the buzzer.

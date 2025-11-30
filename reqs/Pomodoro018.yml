@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  StandBy
+level: 5.1.2
+links: []
+normative: true
+ref: ''
+reviewed: w0rsrNlSMGiSGcqzaOd-XSXfmDS9zS9NX2Wj6EUCvnA=
+text: |
+  El sistema debera estár en modo ahorro de energía si no hay tareas procesandose

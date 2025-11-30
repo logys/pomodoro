@@ -1,13 +1,16 @@
 Implemented: |
-  True
+  Agreed
+State: |
+  Agreed
 active: true
 derived: false
 header: |
   PowerDown
 level: 2.3
-links: []
+links:
+- Pomodoro016: 50hDfrVedv8ZIbnDcEe2FnbZTXN5JkxevIaei0O6RTY=
 normative: true
 ref: ''
 reviewed: OnfAcxpKxieWTAw9W5aSycmIXOU6RA_JNp5Qwapl0n4=
 text: |
-  If the button is pressed for two seconds the Pomodoro shall change ther state to Poweroff.
+  If the button is pressed for Five seconds the Pomodoro shall change ther state to Poweroff.
