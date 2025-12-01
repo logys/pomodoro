@@ -1,11 +1,14 @@
+State: |
+  Agreed
 active: true
 derived: false
 header: |
   StandBy
 level: 1.1.0
-links: []
+links:
+- Pomodoro018: w0rsrNlSMGiSGcqzaOd-XSXfmDS9zS9NX2Wj6EUCvnA=
 normative: true
 ref: ''
 reviewed: IDJuXcoAfYUtyJK387gwPgaJLlQixZBY0Y4AtIuHvMA=
 text: |
-  When enter to this state the pomodoro shall go to stadby for save power.
+  When enter to this state the pomodoro shall go to standby for save power.

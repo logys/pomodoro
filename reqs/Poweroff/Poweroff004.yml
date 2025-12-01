@@ -1,0 +1,13 @@
+State: |
+  Agreed
+active: true
+derived: false
+header: ''
+level: 1.3.0
+links:
+- Pomodoro020: LtfutU8CmlUaG12vKiwWjgrGT8asn5k4ftvqu2FjmXM=
+normative: true
+ref: ''
+reviewed: Uvlv8lRrwofLYVeynsA7G8l38mlWmvOC8AcqWHwAl2g=
+text: |
+  Si el Buzzer está zumbando el pomodoro deberá esperar a que deje de zumbar antes de apagarse.

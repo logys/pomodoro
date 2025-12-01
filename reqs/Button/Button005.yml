@@ -1,0 +1,13 @@
+State: |
+  Agreed
+active: true
+derived: false
+header: ''
+level: 2.3
+links:
+- Pomodoro015: 0VXxMZblgtaDnrw1Q-fqwqfKoF3jU1nzbMHKv06SE8M=
+normative: true
+ref: ''
+reviewed: etMnb2WASODSHEqkuPnR_9wFsLg1wH1mQMSIfoRBdb4=
+text: |
+  Si la sesión de pausa está corriendo y se presiona el boton, la sesion del pomodoro debera reanudarse.

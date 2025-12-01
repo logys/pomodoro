@@ -1,11 +1,13 @@
+State: |
+  Agreed
 active: true
 derived: false
-header: |
-  Reset
+header: ''
 level: 1.2.0
-links: []
+links:
+- Pomodoro019: lHAsGmpqf99hp3pIdLyvWA091TY081eajCNxQ7kZoBo=
 normative: true
 ref: ''
-reviewed: m6YdW405fmeOlRaN7j561XfmMKiHuSNLbhmDIzvO8zc=
+reviewed: tfoiDSKEOK3FzV_PDdaVVwr3mY3fnPPeTOj2nAXJSsQ=
 text: |
-  When enter to this state the Pomodoro shall reset Pomodoro time acummulated.
+  Si el led está parpadeando el pomodoro deberá esperar a que deje de brillar antes de apagarse.
