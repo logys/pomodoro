@@ -1,5 +1,4 @@
-Implemented: |
-  True but inacurated
+Implemented: ''
 active: true
 derived: false
 header: |
@@ -10,4 +9,4 @@ normative: true
 ref: ''
 reviewed: eSjWJRe5BpL5vdNkL0ZYjnb8c3ca5FMdYs-PIZjt2Fc=
 text: |
-  When there is tick the Pomodoro shall increment their counter in a 10 ms.
+  When there is one tick the Pomodoro shall increment their counter on 10 ms.
